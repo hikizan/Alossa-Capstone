@@ -24,7 +24,7 @@
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/Theme.AlossaCapstone.NoActionBar">
             <intent-filter>
