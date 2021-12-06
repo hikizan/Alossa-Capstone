@@ -19,4 +19,10 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:label="@string/title_akun" />
+
+    <fragment
+        android:id="@+id/navigation_expenditure"
+        android:name="com.alossa.alossacapstone.ui.expenditure.ExpenditureFragment"
+        android:label="@string/title_pengeluaran"
+        tools:layout="@layout/fragment_expenditure" />
 </navigation>

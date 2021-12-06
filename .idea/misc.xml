@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/drawable/ic_add.xml" value="0.3692708333333333" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/activity_confirm_password.xml" value="0.31203703703703706" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/activity_forget_password.xml" value="0.31203703703703706" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/activity_login.xml" value="0.353125" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/activity_main.xml" value="0.353125" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/activity_register.xml" value="0.353125" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/activity_splash_screen.xml" value="0.31203703703703706" />
+        <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/fragment_expenditure.xml" value="0.33" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/fragment_home.xml" value="0.353125" />
+        <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/layout/item_row_expenditure.xml" value="0.5" />
         <entry key="..\:/College/Semester7/SIB_DicodingXKampusMerdeka_(PengembangAplikasiAndroid)/ProjectCapstone/AlossaCapstone/app/src/main/res/menu/bottom_nav_menu.xml" value="0.353125" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/drawable/bg_border.xml" value="0.1265625" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/drawable/bg_radius.xml" value="0.1265625" />
@@ -18,14 +21,13 @@
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_confirm_password.xml" value="0.11" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_forget_password.xml" value="0.1" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_main.xml" value="0.15" />
+        <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_register.xml" value="0.12" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/activity_splash_screen2.xml" value="0.225" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/content_splash_screen.xml" value="0.225" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/fragment_first.xml" value="0.225" />
-        <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/fragment_home.xml" value="0.22" />
-        <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/fragment_second.xml" value="0.11041666666666666" />
+        <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/layout/list_aktivitas.xml" value="0.33" />
         <entry key="..\:/Users/Permana/Documents/Dicoding/Capstone/Alossa-Capstone/app/src/main/res/menu/bottom_nav_menu.xml" value="0.11041666666666666" />
       </map>
