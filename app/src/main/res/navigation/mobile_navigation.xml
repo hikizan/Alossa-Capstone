@@ -25,4 +25,5 @@
         android:name="com.alossa.alossacapstone.ui.expenditure.ExpenditureFragment"
         android:label="@string/title_pengeluaran"
         tools:layout="@layout/fragment_expenditure" />
+
 </navigation>
