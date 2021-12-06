@@ -15,4 +15,6 @@
     <color name="button_bgcolor">#EEEEEE</color>
     <color name="button_bgcolor_press">#2e89b1</color>
     <color name="button_bgcolor_enable">#3db5ea</color>
+
+    <color name="edt_bgcolor_light_gray">#E5E5E5</color>
 </resources>
