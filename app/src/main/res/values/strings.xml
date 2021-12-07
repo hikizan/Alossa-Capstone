@@ -32,4 +32,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="aktivitas_terbaru">Aktivitas Terbaru</string>
+    <string name="silahkan_input_pemasukan_dan_alokasi_terlebih_dahulu">Silahkan input pemasukan dan alokasi terlebih dahulu</string>
+    <string name="input_data">Input Data</string>
+    <string name="_500_000">500.000</string>
+    <string name="tambah_alokasi">Tambah Alokasi</string>
+    <string name="subtmit">Subtmit</string>
+    <string name="check">Check</string>
+    <string name="pemasukan">Pemasukan</string>
+    <string name="apakah_anda_yakin_ingin_menghapus_alokasi_ini">Apakah anda yakin ingin menghapus Alokasi ini?</string>
+    <string name="tidak">Tidak</string>
+    <string name="ya">Ya</string>
+    <string name="hapus_alokais">Hapus Alokais</string>
 </resources>
