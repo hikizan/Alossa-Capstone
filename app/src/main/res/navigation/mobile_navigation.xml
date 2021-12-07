@@ -11,19 +11,28 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
+    <!-- ini halaman apa permana? (from fauzan)
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.alossa.alossacapstone.ui.home.HomeFragment"
-        android:label="@string/title_pengeluaran"/>
+        android:label="@string/title_expenditure"/>
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:label="@string/title_akun" />
+        android:label="@string/title_profile" />
+    -->
 
     <fragment
         android:id="@+id/navigation_expenditure"
         android:name="com.alossa.alossacapstone.ui.expenditure.ExpenditureFragment"
-        android:label="@string/title_pengeluaran"
+        android:label="@string/title_expenditure"
         tools:layout="@layout/fragment_expenditure" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.alossa.alossacapstone.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
 
 </navigation>

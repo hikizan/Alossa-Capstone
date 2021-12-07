@@ -5,36 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.expenditure.InputExpenditureActivity">
+    tools:context=".ui.profile.InputWishlistActivity">
 
-    <RelativeLayout
-        android:id="@+id/rv_dropdown"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tf_namawishlist"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        app:boxBackgroundColor="@color/edt_bgcolor_light_gray"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Spinner
-            android:id="@+id/spinner_alocation_type"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_wishlist_name"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/red_outline"
-            android:popupBackground="@drawable/red_outline"
-            android:spinnerMode="dropdown" />
-
-        <ImageView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/ic_arrow_drop_down" />
-    </RelativeLayout>
+            android:gravity="center_vertical"
+            android:hint="Nama Wishlist"
+            android:inputType="text"
+            android:lines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tf_expenditurename"
+        android:id="@+id/tf_targetdana"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,25 +45,24 @@
         app:boxCornerRadiusTopStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_dropdown">
+        app:layout_constraintTop_toBottomOf="@+id/tf_namawishlist">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_expenditure_name"
+            android:id="@+id/edt_wishlist_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="Nama Pengeluaran"
+            android:hint="Target Dana"
             android:inputType="text"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/tf_duration"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Nominal Pengeluaran"
         app:boxBackgroundColor="@color/edt_bgcolor_light_gray"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
@@ -72,42 +70,31 @@
         app:boxCornerRadiusTopStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tf_expenditurename">
+        app:layout_constraintTop_toBottomOf="@+id/tf_targetdana">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_expenditure_price"
+            android:id="@+id/edt_wishlist_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:gravity="center_vertical"
+            android:hint="Durasi"
             android:inputType="text"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/tv_format_money_dynamic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:gravity="end"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        tools:text="Rp xxx.xxx" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_submit_expenditure"
+        android:id="@+id/btn_submit_wishlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
-        android:text="Tambah Pengeluaran"
+        android:text="Tambah Wishlist"
         android:textSize="14sp"
         android:textStyle="bold"
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_format_money_dynamic" />
+        app:layout_constraintTop_toBottomOf="@+id/tf_duration" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

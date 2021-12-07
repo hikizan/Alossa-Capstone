@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_pengeluaran"
+        android:text="@string/title_expenditure"
         android:textStyle="bold"
         android:textColor="@color/black"/>
         <TextView
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="right|bottom"
-            android:text="@string/title_pengeluaran"
+            android:text="@string/title_expenditure"
             tools:ignore="RtlHardcoded"
             android:textColor="@color/black"/>
 
