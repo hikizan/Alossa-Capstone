@@ -10,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlossaCapstone">
+       <activity
+            android:name=".ui.home.AddExpenditureActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.expenditure.InputExpenditureActivity"
             android:exported="false" />
