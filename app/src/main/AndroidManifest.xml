@@ -11,6 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlossaCapstone">
         <activity
+            android:name=".ui.profile.InputWishlistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.WishlistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.MonthlyReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.expenditure.InputExpenditureActivity"
             android:exported="false" />
         <activity
