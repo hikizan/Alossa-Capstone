@@ -3,28 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:background="@drawable/bg_border"
     android:orientation="horizontal"
-    android:layout_margin="10dp"
     android:padding="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_pengeluaran"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
-
 
     <TextView
+        android:id="@+id/tv_alocation_type_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Tipe Alokasi"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_alocation_nominal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="right|bottom"
-        android:text="@string/title_pengeluaran"
-        tools:ignore="RtlHardcoded"
-        android:textColor="@color/black"/>
-
-
-
-
+        android:text="Rp xxx.xxx"
+        android:textColor="@color/black"
+        tools:ignore="RtlHardcoded" />
 
 </LinearLayout>
