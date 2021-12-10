@@ -20,5 +20,5 @@ interface AlossaDataSource {
     fun getPemasukanById(id: Int): LiveData<List<Pemasukan>>
 
     //Alokasi
-    fun getAlokasiById(id: Int): LiveData<List<Alokasi>>
+    fun getAlokasiByIdUser(id: Int): LiveData<List<Alokasi>>
 }

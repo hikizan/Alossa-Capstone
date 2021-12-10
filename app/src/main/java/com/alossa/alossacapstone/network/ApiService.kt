@@ -70,7 +70,7 @@ interface ApiService {
     //Alokasi
 
     @GET("alokasi/my/{idUser}")
-    fun getAlokasid(
+    fun getAlokasByIdUser(
         @Path("idUser") idUser: Int
     ): Call<AlokasiResponse>
 
