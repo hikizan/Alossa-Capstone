@@ -17,8 +17,8 @@ interface ApiService {
     fun register(@Field("email") email :String,
                  @Field("name") name :String,
                  @Field("password") password: String,
-                 @Field("c_password") c_password:String,
-                 @Field("nohp") nohp:String) : Call<ResponseServe>
+                 @Field("c_password") c_password:String
+    ) : Call<ResponseServe>
 
     @FormUrlEncoded
     @POST("password/create")

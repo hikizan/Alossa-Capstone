@@ -3,39 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.auth.LoginActivity"
     android:background="@drawable/bg_auth">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_radius"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="80dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/bg_radius"
         android:orientation="vertical"
         android:padding="20dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:contentDescription="@string/logo"/>
+            android:contentDescription="@string/logo"
+            android:src="@drawable/logo" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="30sp"
+            android:text="@string/login"
             android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -45,54 +49,83 @@
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:gravity="top"
+                android:inputType="text"
                 android:lines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            app:passwordToggleEnabled="true"
             android:hint="@string/password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:gravity="top"
-                android:lines="1" />
+                android:inputType="textPassword"
+                android:lines="1"
+                android:drawableEnd="@drawable/ic_baseline_remove_red_eye"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/login"
             android:layout_gravity="center"
-            android:background="@drawable/rounded_botton"
             android:layout_marginTop="50dp"
-            android:textColor="@color/white"/>
+            android:background="@drawable/rounded_botton"
+            android:text="@string/login"
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/belum_punya_akun"/>
+                android:text="@string/belum_punya_akun" />
 
             <TextView
+                android:id="@+id/text_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="@string/daftar_disini"
-                android:textColor="@color/red_200"/>
+                android:textColor="@color/red_200" />
         </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/atau" />
 
+        <TextView
+            android:id="@+id/text_forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/lupa_password"
+            android:textColor="@color/red_200"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 </RelativeLayout>

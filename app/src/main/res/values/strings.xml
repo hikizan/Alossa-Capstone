@@ -43,4 +43,6 @@
     <string name="tidak">Tidak</string>
     <string name="ya">Ya</string>
     <string name="hapus_alokais">Hapus Alokais</string>
+    <string name="atau">atau</string>
+    <string name="sudah_punya_akun">Sudah punya akun?</string>
 </resources>
