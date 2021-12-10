@@ -45,11 +45,12 @@
                     android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_alocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"
                         app:layout_constraintTop_toBottomOf="@+id/sc_search"
-                        tools:listitem="@layout/list_aktivitas" />
+                        tools:listitem="@layout/item_row_alocation" />
 
             </LinearLayout>
 

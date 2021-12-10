@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alossa.alossacapstone.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.alossa.alossacapstone.data.model.Alokasi
 import com.alossa.alossacapstone.databinding.FragmentHomeBinding
+import com.alossa.alossacapstone.utils.ViewModelFactory
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
@@ -19,6 +22,13 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var anyCart: AnyChartView
 
+    private lateinit var adapter: AlocationAdapter
+    private lateinit var listAlokasi: List<Alokasi>
+    private val listAlocations: List<Alokasi> = ArrayList()
+    val factory = ViewModelFactory.getInstance()
+    val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
+
     var month = arrayOf("Jan", "Feb", "Mar")
     var dana = arrayOf(200,100, 300)
 
@@ -28,12 +38,30 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        //val root: View = binding.root
+        /*
+        anyCart = binding.cart
+
+        setupPieCart()
+
+         */
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         anyCart = binding.cart
 
         setupPieCart()
-        return root
+
+        viewModel.getAlokasiByIdUser(2).observe(viewLifecycleOwner, { response ->
+            adapter = AlocationAdapter(response)
+        })
+
+        binding.rvAlocation.layoutManager = LinearLayoutManager(context)
+        binding.rvAlocation.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
