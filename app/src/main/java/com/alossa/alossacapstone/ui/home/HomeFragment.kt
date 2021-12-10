@@ -38,30 +38,27 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        //val root: View = binding.root
-        /*
-        anyCart = binding.cart
+        val root: View = binding.root
 
-        setupPieCart()
-
-         */
-        return binding.root
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        anyCart = binding.cart
-
         setupPieCart()
 
         viewModel.getAlokasiByIdUser(2).observe(viewLifecycleOwner, { response ->
-            adapter = AlocationAdapter(response)
+            if (response != null){
+                adapter = AlocationAdapter(response)
+                binding.rvAlocation.layoutManager = LinearLayoutManager(context)
+                binding.rvAlocation.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
+
+
         })
 
-        binding.rvAlocation.layoutManager = LinearLayoutManager(context)
-        binding.rvAlocation.adapter = adapter
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
