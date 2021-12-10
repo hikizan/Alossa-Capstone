@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alossa.alossacapstone.data.AlossaRepository
 import com.alossa.alossacapstone.ui.auth.AuthViewModel
+import com.alossa.alossacapstone.ui.expenditure.ExpenditureViewModel
 
 class ViewModelFactory private constructor(private val mAlossaRepository: AlossaRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -12,6 +13,10 @@ class ViewModelFactory private constructor(private val mAlossaRepository: Alossa
         return when {
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> {
                 AuthViewModel(mAlossaRepository) as T
+            }
+
+            modelClass.isAssignableFrom(ExpenditureViewModel::class.java) -> {
+                ExpenditureViewModel(mAlossaRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

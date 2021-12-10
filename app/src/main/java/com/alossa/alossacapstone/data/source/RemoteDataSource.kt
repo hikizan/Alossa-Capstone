@@ -1,7 +1,7 @@
 package com.alossa.alossacapstone.data.source
 
 import android.util.Log
-import com.alossa.alossacapstone.data.model.ResponseServe
+import com.alossa.alossacapstone.data.model.*
 import com.alossa.alossacapstone.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -97,7 +97,47 @@ class RemoteDataSource {
     }
 
     fun getPemasukanById(callback: LoadPemasukanCallback, id: Int){
+        ApiConfig.getApiService().getPemasukanById(id)
+            .enqueue(object : Callback<PemasukanResponse>{
+                override fun onResponse(
+                    call: Call<PemasukanResponse>,
+                    response: Response<PemasukanResponse>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadPemasukan(response.body()?.data)
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
 
+                override fun onFailure(call: Call<PemasukanResponse>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
+    fun getAlokasiById(callback: LoadAlokasiCallback, id: Int){
+        ApiConfig.getApiService().getAlokasiById(id)
+            .enqueue(object : Callback<AlokasiResponse>{
+                override fun onResponse(
+                    call: Call<AlokasiResponse>,
+                    response: Response<AlokasiResponse>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadAlokasi(response.body()?.data)
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<AlokasiResponse>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
     }
 
     interface LoadAuthCallback{
@@ -105,7 +145,11 @@ class RemoteDataSource {
     }
 
     interface LoadPemasukanCallback{
-        fun onLoadPemasukan(response: ResponseServe?)
+        fun onLoadPemasukan(response: List<Pemasukan>?)
+    }
+
+    interface LoadAlokasiCallback{
+        fun onLoadAlokasi(response: List<Alokasi>?)
     }
 
 
