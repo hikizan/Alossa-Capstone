@@ -1,5 +1,6 @@
 package com.alossa.alossacapstone.network
 
+import com.alossa.alossacapstone.data.model.AlokasiResponse
 import com.alossa.alossacapstone.data.model.PemasukanResponse
 import com.alossa.alossacapstone.data.model.ResponseServe
 import retrofit2.Call
@@ -67,10 +68,11 @@ interface ApiService {
     )
 
     //Alokasi
+
     @GET("alokasi/my/{idUser}")
     fun getAlokasid(
         @Path("idUser") idUser: Int
-    )
+    ): Call<AlokasiResponse>
 
     @FormUrlEncoded
     @POST("alokasi/tambah")
