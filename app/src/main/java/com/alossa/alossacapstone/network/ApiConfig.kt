@@ -7,7 +7,7 @@ class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://alossa.artahu.shop/api/login")
+                .baseUrl("http://alossa.artahu.shop/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             return retrofit.create(ApiService::class.java)
