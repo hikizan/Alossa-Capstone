@@ -67,13 +67,13 @@ interface ApiService {
     )
 
     //Alokasi
-    @GET("pemasukan/my/{idUser}")
+    @GET("alokasi/my/{idUser}")
     fun getAlokasid(
         @Path("idUser") idUser: Int
     )
 
     @FormUrlEncoded
-    @POST("pemasukan/tambah")
+    @POST("alokasi/tambah")
     fun addAlokasi(
 
     )
