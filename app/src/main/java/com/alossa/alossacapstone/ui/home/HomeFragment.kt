@@ -2,16 +2,12 @@ package com.alossa.alossacapstone.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.alossa.alossacapstone.R
-import com.alossa.alossacapstone.data.model.Alokasi
-
 import com.alossa.alossacapstone.databinding.FragmentHomeBinding
 import com.alossa.alossacapstone.utils.ViewModelFactory
 import com.anychart.AnyChart
@@ -26,17 +22,13 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var anyCart: AnyChartView
 
-    private lateinit var adapter: AlocationAdapter
-    private lateinit var listAlocations: List<Alokasi>
-    //private val listAlocations: List<Alokasi> = ArrayList()
-    val factory = ViewModelFactory.getInstance()
 
-    //private lateinit var rvAlocation : RecyclerView
-    //private lateinit var cart: AnyChartView
+    //var month = arrayOf("Jan", "Feb", "Mar")
+    //var dana = arrayOf(200,100, 300)
 
+    var typeAlokasi: Array<String> = arrayOf()
+    var nominalAlokasi: Array<Int> = arrayOf()
 
-    var month = arrayOf("Jan", "Feb", "Mar")
-    var dana = arrayOf(200,100, 300)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,48 +39,70 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //rvAlocation = view.findViewById(R.id.rv_alocation)
-        //cart = view.findViewById(R.id.cart)
 
         anyCart = binding.cart
-        setupPieCart()
 
-        val viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+        val alocationAdapter = AlocationAdapter()
 
-        viewModel.getAlokasiByIdUser(2).observe(viewLifecycleOwner, {
-            if (it != null){
-                listAlocations = it
+        viewModel.getAlokasiByIdUser(2).observe(viewLifecycleOwner, { alocations ->
+            if (alocations != null){
+                alocationAdapter.setAlocation(alocations)
+                alocationAdapter.notifyDataSetChanged()
+
+                /*
+                for (itemString in alocationAdapter.listTypeAlocation){
+                    typeAlokasi += itemString
+                }
+
+                for (itemInt in alocationAdapter.listNominalAlcation){
+                    nominalAlokasi += itemInt
+                }
+
+
+                for (alokasiItem in alocations){
+                    typeAlokasi += alokasiItem.namaAlokasi.toString()
+                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
+                }
+
+                Log.d("HomeFragment", "onCreateView: ambil dari observe: TypeAlokasi = ${typeAlokasi} \n alocations = $alocations")
+
+                 */
+
             }
 
         })
-        //Log.d("HomeFragment", "onCreateView: adapter = $adapter")
-        adapter = AlocationAdapter(listAlocations)
+        Log.d("HomeFragment", "onCreateView: check value in typeAlokasi = $typeAlokasi \n dan nominal Alokasi = $nominalAlokasi")
+
         binding.rvAlocation.layoutManager = LinearLayoutManager(context)
-        binding.rvAlocation.adapter = adapter
-        adapter.notifyDataSetChanged()
+        binding.rvAlocation.setHasFixedSize(true)
+        binding.rvAlocation.adapter = alocationAdapter
+
+        for (itemString in alocationAdapter.listTypeAlocation){
+            typeAlokasi += itemString
+        }
+
+        for (itemInt in alocationAdapter.listNominalAlcation){
+            nominalAlokasi += itemInt
+        }
+
+        setupPieCart(typeAlokasi,nominalAlokasi)
 
         return root
-
-        //return inflater.inflate(R.layout.fragment_home, container, false)
     }
-
-    /*
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-     */
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
-    fun setupPieCart(){
+    fun setupPieCart(mTypeAlokasi: Array<String>, mNominalAlokasi: Array<Int>){
+
         var pie = AnyChart.pie()
         var dataEntrie = ArrayList<DataEntry>()
-        for (item in month.indices){
-            dataEntrie.add(ValueDataEntry(month[item], dana[item]))
+        for (item in mTypeAlokasi.indices){
+            dataEntrie.add(ValueDataEntry(mTypeAlokasi[item], mNominalAlokasi[item]))
         }
 
         pie.data(dataEntrie)
