@@ -81,6 +81,7 @@ class HomeFragment : Fragment() {
 
         for (itemString in alocationAdapter.listTypeAlocation){
             typeAlokasi += itemString
+            Log.d("HomeFragment", "onCreateView: check in for typeAlokasi = $typeAlokasi")
         }
 
         for (itemInt in alocationAdapter.listNominalAlcation){
@@ -103,6 +104,7 @@ class HomeFragment : Fragment() {
         var dataEntrie = ArrayList<DataEntry>()
         for (item in mTypeAlokasi.indices){
             dataEntrie.add(ValueDataEntry(mTypeAlokasi[item], mNominalAlokasi[item]))
+            Log.d("HomeFragmentSetupPie", "setupPieCart: mTypeAlokasi per item = ${mTypeAlokasi[item]}")
         }
 
         pie.data(dataEntrie)
