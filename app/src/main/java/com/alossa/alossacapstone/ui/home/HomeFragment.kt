@@ -1,5 +1,6 @@
 package com.alossa.alossacapstone.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,12 +39,15 @@ class HomeFragment : Fragment() {
 
         anyCart = binding.cart
 
+        setLayoutVisible(false)
+
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         val alocationAdapter = AlocationAdapter()
 
-        viewModel.getAlokasiByIdUser(2).observe(viewLifecycleOwner, { alocations ->
-            if (alocations != null){
+        viewModel.getAlokasiByIdUser(3).observe(viewLifecycleOwner, { alocations ->
+
+            if (alocations.isNotEmpty()){
                 alocationAdapter.setAlocation(alocations)
                 alocationAdapter.notifyDataSetChanged()
 
@@ -51,16 +55,22 @@ class HomeFragment : Fragment() {
                     typeAlokasi += alokasiItem.namaAlokasi.toString()
                     nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
                 }
-
+                setLayoutVisible(true)
                 setupPieCart(typeAlokasi,nominalAlokasi)
+            } else {
+                setLayoutVisible(false)
             }
 
         })
-        Log.d("HomeFragment", "onCreateView: check value in typeAlokasi = $typeAlokasi \n dan nominal Alokasi = $nominalAlokasi")
 
         binding.rvAlocation.layoutManager = LinearLayoutManager(context)
         binding.rvAlocation.setHasFixedSize(true)
         binding.rvAlocation.adapter = alocationAdapter
+
+        binding.btnInputdata.setOnClickListener {
+            val moveToAddExpenditure = Intent(context,AddExpenditureActivity::class.java)
+            startActivity(moveToAddExpenditure)
+        }
 
         return root
     }
@@ -81,6 +91,16 @@ class HomeFragment : Fragment() {
         pie.data(dataEntrie)
         anyCart.setChart(pie)
 
+    }
+
+    fun setLayoutVisible(isFill: Boolean){
+        if (isFill){
+            binding.layoutIfnotnull.visibility = View.VISIBLE
+            binding.layoutIfnull.visibility = View.GONE
+        } else {
+            binding.layoutIfnotnull.visibility = View.INVISIBLE
+            binding.layoutIfnull.visibility = View.VISIBLE
+        }
     }
 
 
