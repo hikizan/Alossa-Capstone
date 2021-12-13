@@ -7,17 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alossa.alossacapstone.databinding.FragmentProfileBinding
+import com.alossa.alossacapstone.ui.auth.LoginActivity
+import com.alossa.alossacapstone.utils.SharedPref
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private lateinit var sharedPreferences: SharedPref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        sharedPreferences = SharedPref(binding.root.context)
         return binding.root
     }
 
@@ -32,6 +36,11 @@ class ProfileFragment : Fragment() {
         binding.borderWishlist.setOnClickListener {
             val moveToWishlist = Intent(requireContext(), WishlistActivity::class.java)
             startActivity(moveToWishlist)
+        }
+        binding.btnLogout.setOnClickListener {
+            sharedPreferences.logout()
+            val moveToLogin = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(moveToLogin)
         }
     }
 
