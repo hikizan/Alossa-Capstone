@@ -11,5 +11,5 @@ class ExpenditureViewModel (private val alossaRepository: AlossaRepository) : Vi
         alossaRepository.getPemasukanById(id)
 
     fun getAlokasiById(id: Int) : LiveData<List<Alokasi>> =
-        alossaRepository.getAlokasiById(id)
+        alossaRepository.getAlokasiByIdUser(id)
 }

@@ -108,9 +108,9 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
         return pemasukanResult
     }
 
-    override fun getAlokasiById(id: Int): LiveData<List<Alokasi>> {
+    override fun getAlokasiByIdUser(idUser: Int): LiveData<List<Alokasi>> {
         val alokasiResult = MutableLiveData<List<Alokasi>>()
-        remoteDataSource.getAlokasiById(object : RemoteDataSource.LoadAlokasiCallback {
+        remoteDataSource.getAlokasiByIdUser(object : RemoteDataSource.LoadAlokasiCallback {
             override fun onLoadAlokasi(response: List<Alokasi>?) {
                 val alokasiList = ArrayList<Alokasi>()
                 if (response != null) {
@@ -126,7 +126,7 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 }
             }
 
-        }, id)
+        }, idUser)
         return alokasiResult
     }
 

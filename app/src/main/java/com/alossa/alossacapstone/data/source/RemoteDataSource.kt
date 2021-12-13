@@ -118,8 +118,9 @@ class RemoteDataSource {
             })
     }
 
-    fun getAlokasiById(callback: LoadAlokasiCallback, id: Int){
-        ApiConfig.getApiService().getAlokasiById(id)
+
+    fun getAlokasiByIdUser(callback: LoadAlokasiCallback, idUser: Int){
+        ApiConfig.getApiService().getAlokasByIdUser(idUser)
             .enqueue(object : Callback<AlokasiResponse>{
                 override fun onResponse(
                     call: Call<AlokasiResponse>,

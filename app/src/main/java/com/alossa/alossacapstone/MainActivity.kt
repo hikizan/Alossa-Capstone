@@ -11,15 +11,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var _binding: ActivityMainBinding
+    private var _activityMainBinding: ActivityMainBinding? = null
+    private val bindingActivityMain get() = _activityMainBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(_binding.root)
+        _activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bindingActivityMain.root)
 
-        val navView: BottomNavigationView = _binding.navView
+        val navView: BottomNavigationView = bindingActivityMain.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         val appBarConfiguration = AppBarConfiguration.Builder(
@@ -28,5 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _activityMainBinding = null
     }
 }
