@@ -22,10 +22,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var anyCart: AnyChartView
 
-
-    //var month = arrayOf("Jan", "Feb", "Mar")
-    //var dana = arrayOf(200,100, 300)
-
     var typeAlokasi: Array<String> = arrayOf()
     var nominalAlokasi: Array<Int> = arrayOf()
 
@@ -51,29 +47,12 @@ class HomeFragment : Fragment() {
                 alocationAdapter.setAlocation(alocations)
                 alocationAdapter.notifyDataSetChanged()
 
-                /*
-                for (itemString in alocationAdapter.listTypeAlocation){
-                    typeAlokasi += itemString
+                for (alokasiItem in alocations) {
+                    typeAlokasi += alokasiItem.namaAlokasi.toString()
+                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
                 }
 
-                for (itemInt in alocationAdapter.listNominalAlcation){
-                    nominalAlokasi += itemInt
-                }
-                 */
-
-
-                for (alokasiItem in alocations.indices){
-                    //typeAlokasi += alokasiItem.namaAlokasi.toString()
-                    //nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
-                    typeAlokasi.set(alokasiItem,alocations[alokasiItem].namaAlokasi.toString())
-                    nominalAlokasi.set(alokasiItem, alocations[alokasiItem].nominal!!.toInt())
-                }
-
-
-                Log.d("HomeFragment", "onCreateView: ambil dari observe: TypeAlokasi = ${typeAlokasi} \n alocations = $alocations")
-
-
-
+                setupPieCart(typeAlokasi,nominalAlokasi)
             }
 
         })
@@ -82,19 +61,6 @@ class HomeFragment : Fragment() {
         binding.rvAlocation.layoutManager = LinearLayoutManager(context)
         binding.rvAlocation.setHasFixedSize(true)
         binding.rvAlocation.adapter = alocationAdapter
-
-        /*
-        for (itemString in alocationAdapter.listTypeAlocation){
-            typeAlokasi += itemString
-            Log.d("HomeFragment", "onCreateView: check in for typeAlokasi = $typeAlokasi")
-        }
-
-        for (itemInt in alocationAdapter.listNominalAlcation){
-            nominalAlokasi += itemInt
-        }
-         */
-
-        setupPieCart(typeAlokasi,nominalAlokasi)
 
         return root
     }
@@ -110,7 +76,6 @@ class HomeFragment : Fragment() {
         var dataEntrie = ArrayList<DataEntry>()
         for (item in mTypeAlokasi.indices){
             dataEntrie.add(ValueDataEntry(mTypeAlokasi[item], mNominalAlokasi[item]))
-            Log.d("HomeFragmentSetupPie", "setupPieCart: mTypeAlokasi per item = ${mTypeAlokasi[item]}")
         }
 
         pie.data(dataEntrie)
