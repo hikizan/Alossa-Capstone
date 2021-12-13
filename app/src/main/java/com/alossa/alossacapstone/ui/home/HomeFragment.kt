@@ -59,16 +59,20 @@ class HomeFragment : Fragment() {
                 for (itemInt in alocationAdapter.listNominalAlcation){
                     nominalAlokasi += itemInt
                 }
+                 */
 
 
-                for (alokasiItem in alocations){
-                    typeAlokasi += alokasiItem.namaAlokasi.toString()
-                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
+                for (alokasiItem in alocations.indices){
+                    //typeAlokasi += alokasiItem.namaAlokasi.toString()
+                    //nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
+                    typeAlokasi.set(alokasiItem,alocations[alokasiItem].namaAlokasi.toString())
+                    nominalAlokasi.set(alokasiItem, alocations[alokasiItem].nominal!!.toInt())
                 }
+
 
                 Log.d("HomeFragment", "onCreateView: ambil dari observe: TypeAlokasi = ${typeAlokasi} \n alocations = $alocations")
 
-                 */
+
 
             }
 
@@ -79,6 +83,7 @@ class HomeFragment : Fragment() {
         binding.rvAlocation.setHasFixedSize(true)
         binding.rvAlocation.adapter = alocationAdapter
 
+        /*
         for (itemString in alocationAdapter.listTypeAlocation){
             typeAlokasi += itemString
             Log.d("HomeFragment", "onCreateView: check in for typeAlokasi = $typeAlokasi")
@@ -87,6 +92,7 @@ class HomeFragment : Fragment() {
         for (itemInt in alocationAdapter.listNominalAlcation){
             nominalAlokasi += itemInt
         }
+         */
 
         setupPieCart(typeAlokasi,nominalAlokasi)
 
