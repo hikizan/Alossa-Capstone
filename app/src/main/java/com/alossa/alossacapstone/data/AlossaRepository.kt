@@ -17,7 +17,9 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 if (response != null) {
                     val res = ResponseServe(
                         msg = response.msg,
-                        status = response.status
+                        status = response.status,
+                        id = response.id,
+                        email = response.email
                     )
                     serverResponse.postValue(res)
                 }

@@ -8,10 +8,14 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.alossa.alossacapstone.MainActivity
 import com.alossa.alossacapstone.R
+import com.alossa.alossacapstone.data.model.ResponseServe
 import com.alossa.alossacapstone.databinding.ActivityLoginBinding
+import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPref
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -24,14 +28,22 @@ class LoginActivity : AppCompatActivity() {
 
         binding.progressBar.visibility = View.GONE
 
-        binding.btnLogin.setOnClickListener{
+        sharedPreferences = SharedPref(this)
+        if (sharedPreferences.getStatusLogin()) {
+            val intent = Intent(this, MainActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+
+        binding.btnLogin.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             val email = binding.loginEmail.text
             val password = binding.loginPassword.text
             viewModel.login(email.toString(), password.toString()).observe(this, { response ->
-                Toast.makeText( this ,response.msg, Toast.LENGTH_LONG).show()
-                if (response.status.equals("success")){
-                        val intent = Intent(this, MainActivity::class.java)
+                Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
+                setLogin(response)
+                if (response.status.equals("success")) {
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -49,5 +61,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    fun setLogin(user: ResponseServe) {
+        sharedPreferences.setStatusLogin(true)
+        sharedPreferences.setId(user.id)
     }
 }
