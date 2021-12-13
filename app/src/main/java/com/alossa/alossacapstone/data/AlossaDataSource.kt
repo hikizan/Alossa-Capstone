@@ -3,6 +3,7 @@ package com.alossa.alossacapstone.data
 import androidx.lifecycle.LiveData
 import com.alossa.alossacapstone.data.model.Alokasi
 import com.alossa.alossacapstone.data.model.Pemasukan
+import com.alossa.alossacapstone.data.model.Pengeluaran
 import com.alossa.alossacapstone.data.model.ResponseServe
 
 interface AlossaDataSource {
@@ -20,5 +21,8 @@ interface AlossaDataSource {
     fun getPemasukanById(id: Int): LiveData<List<Pemasukan>>
 
     //Alokasi
-    fun getAlokasiByIdUser(id: Int): LiveData<List<Alokasi>>
+    fun getAlokasiByIdUser(idUser: Int): LiveData<List<Alokasi>>
+
+    //Pengeluaran
+    fun getPengeluaranByIdUser(idUser: Int): LiveData<List<Pengeluaran>>
 }
