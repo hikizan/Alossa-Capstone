@@ -22,7 +22,7 @@ class ExpenditureAdapter : RecyclerView.Adapter<ExpenditureAdapter.ViewHolder>()
                 tvExpenditureName.text = expenditure.namaPengeluaran
                 tvExpenditurePrice.text = expenditure.danaPengeluaran.toString()
                 tvExpenditureDate.text = expenditure.createdAt
-                tvExpenditureType.text = expenditure.idAlokasi.toString()
+                tvExpenditureType.text = expenditure.namaAlokasi
             }
         }
     }

@@ -1,10 +1,7 @@
 package com.alossa.alossacapstone.data
 
 import androidx.lifecycle.LiveData
-import com.alossa.alossacapstone.data.model.Alokasi
-import com.alossa.alossacapstone.data.model.Pemasukan
-import com.alossa.alossacapstone.data.model.Pengeluaran
-import com.alossa.alossacapstone.data.model.ResponseServe
+import com.alossa.alossacapstone.data.model.*
 
 interface AlossaDataSource {
 
@@ -25,4 +22,5 @@ interface AlossaDataSource {
 
     //Pengeluaran
     fun getPengeluaranByIdUser(idUser: Int): LiveData<List<Pengeluaran>>
+    fun addPengeluaran(idUser: Int, idAlokasi: Int, danaPengeluaran: Int, namaPengeluaran: String): LiveData<ResponseServe>
 }

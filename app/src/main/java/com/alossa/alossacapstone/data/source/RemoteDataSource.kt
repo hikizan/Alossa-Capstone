@@ -163,6 +163,29 @@ class RemoteDataSource {
 
     }
 
+    fun addPengeluaran(callback: LoadAddPengeluaranCallback, idUser: Int, idAlokasi: Int, danaPengeluaran: Int, namaPengeluaran: String){
+        ApiConfig.getApiService().addPengeluaran(idUser, idAlokasi, danaPengeluaran, namaPengeluaran)
+            .enqueue(object : Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadAddPengeluaran(response.body())
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
@@ -177,6 +200,10 @@ class RemoteDataSource {
 
     interface LoadPengeluaranCallback{
         fun onLoadPengeluaran(response: List<Pengeluaran>?)
+    }
+
+    interface LoadAddPengeluaranCallback{
+        fun onLoadAddPengeluaran(response: ResponseServe?)
     }
 
 
