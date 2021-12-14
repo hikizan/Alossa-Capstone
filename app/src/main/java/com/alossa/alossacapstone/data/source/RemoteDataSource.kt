@@ -118,7 +118,6 @@ class RemoteDataSource {
             })
     }
 
-
     fun getAlokasiByIdUser(callback: LoadAlokasiCallback, idUser: Int){
         ApiConfig.getApiService().getAlokasByIdUser(idUser)
             .enqueue(object : Callback<AlokasiResponse>{
@@ -141,6 +140,29 @@ class RemoteDataSource {
             })
     }
 
+    fun getPengeluaranByIdUser(callback: LoadPengeluaranCallback, idUser: Int){
+        ApiConfig.getApiService().getPengeluaranByIdUser(idUser)
+            .enqueue(object: Callback<PengeluaranResponse>{
+                override fun onResponse(
+                    call: Call<PengeluaranResponse>,
+                    response: Response<PengeluaranResponse>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadPengeluaran(response.body()?.data)
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<PengeluaranResponse>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
@@ -151,6 +173,10 @@ class RemoteDataSource {
 
     interface LoadAlokasiCallback{
         fun onLoadAlokasi(response: List<Alokasi>?)
+    }
+
+    interface LoadPengeluaranCallback{
+        fun onLoadPengeluaran(response: List<Pengeluaran>?)
     }
 
 
