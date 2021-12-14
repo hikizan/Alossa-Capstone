@@ -45,4 +45,6 @@
     <string name="hapus_alokais">Hapus Alokais</string>
     <string name="atau">atau</string>
     <string name="sudah_punya_akun">Sudah punya akun?</string>
+    <string name="nama_alokasi">Nama Alokasi</string>
+    <string name="nominal">Nominal</string>
 </resources>

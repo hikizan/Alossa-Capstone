@@ -5,11 +5,9 @@ import android.content.SharedPreferences
 
 class SharedPref(mContext : Context)  {
     val login = "session_status"
-    val nama = "nama"
-    val role = "role"
     val id = "id"
-    val mypref = "MAIN_PRF"
-    val sp: SharedPreferences
+    private val mypref = "MAIN_PRF"
+    private val sp: SharedPreferences
 
     init {
         sp = mContext.getSharedPreferences(mypref, Context.MODE_PRIVATE)

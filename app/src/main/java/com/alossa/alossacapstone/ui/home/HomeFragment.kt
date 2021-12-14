@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alossa.alossacapstone.databinding.FragmentHomeBinding
+import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
@@ -41,13 +42,13 @@ class HomeFragment : Fragment() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         val alocationAdapter = AlocationAdapter()
+        val sharedPref = SharedPref(root.context)
 
-        viewModel.getAlokasiByIdUser(2).observe(viewLifecycleOwner, { alocations ->
+        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
 
             if (alocations.isNotEmpty()){
                 alocationAdapter.setAlocation(alocations)
                 alocationAdapter.notifyDataSetChanged()
-
                 for (alokasiItem in alocations) {
                     typeAlokasi += alokasiItem.namaAlokasi.toString()
                     nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
