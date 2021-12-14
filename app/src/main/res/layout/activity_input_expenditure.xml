@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center_vertical"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 

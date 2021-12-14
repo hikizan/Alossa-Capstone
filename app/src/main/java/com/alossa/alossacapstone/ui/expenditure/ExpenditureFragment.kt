@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alossa.alossacapstone.databinding.FragmentExpenditureBinding
+import com.alossa.alossacapstone.utils.ViewModelFactory
 
 class ExpenditureFragment : Fragment() {
 
@@ -23,6 +26,22 @@ class ExpenditureFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
+        val expenditureAdapter = ExpenditureAdapter()
+
+        viewModel.getPengeluaranByIdUser(2).observe(viewLifecycleOwner, { expenditures ->
+            if (expenditures.isNotEmpty()){
+                expenditureAdapter.setExpenditures(expenditures)
+                expenditureAdapter.notifyDataSetChanged()
+
+            }
+        })
+
+        binding.rvExpenditure.layoutManager = LinearLayoutManager(context)
+        binding.rvExpenditure.setHasFixedSize(true)
+        binding.rvExpenditure.adapter = expenditureAdapter
 
         binding.fabAddExpenditure.setOnClickListener {
             val moveToInput = Intent(requireContext(), InputExpenditureActivity::class.java)
