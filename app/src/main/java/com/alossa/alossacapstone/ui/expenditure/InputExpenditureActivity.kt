@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alossa.alossacapstone.databinding.ActivityInputExpenditureBinding
 import com.alossa.alossacapstone.utils.ViewModelFactory
+import android.R
+
+
+
 
 
 class InputExpenditureActivity : AppCompatActivity() {
@@ -22,10 +26,9 @@ class InputExpenditureActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
 
-
         addItemsOnSpinner()
 
-        val getFromDropDown = _binding.spinnerAlocationType.selectedItem.toString()
+        var getFromDropDown = _binding.spinnerAlocationType.toString()
         Log.d("InputExpenditure", "onCreate: getFromDropDown = $getFromDropDown")
 
 
@@ -51,8 +54,10 @@ class InputExpenditureActivity : AppCompatActivity() {
             this,
             android.R.layout.simple_spinner_item, list
         )
+
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         _binding.spinnerAlocationType.setAdapter(dataAdapter)
+        _binding.spinnerAlocationType.setSelection(1)
 
     }
 }
