@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alossa.alossacapstone.data.model.Alokasi
 import com.alossa.alossacapstone.data.model.Pemasukan
+import com.alossa.alossacapstone.data.model.Pengeluaran
 import com.alossa.alossacapstone.data.model.ResponseServe
 import com.alossa.alossacapstone.data.model.WishList
 import com.alossa.alossacapstone.data.source.RemoteDataSource
@@ -171,12 +172,37 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                         wishListList.add(wishList)
                     }
                     wishListResult.postValue(wishListList)
+                      }
+            }
+
+        }, idUser)
+       return wishListResult
+    }
+    
+    override fun getPengeluaranByIdUser(idUser: Int): LiveData<List<Pengeluaran>> {
+        val pengeluaranResult = MutableLiveData<List<Pengeluaran>>()
+        remoteDataSource.getPengeluaranByIdUser(object : RemoteDataSource.LoadPengeluaranCallback {
+            override fun onLoadPengeluaran(response: List<Pengeluaran>?) {
+                val pengeluaranList = ArrayList<Pengeluaran>()
+                if (response != null){
+                    for (pengeluaranResponse in response){
+                        val pengeluaran = Pengeluaran(
+                            namaPengeluaran = pengeluaranResponse.namaPengeluaran,
+                            danaPengeluaran = pengeluaranResponse.danaPengeluaran,
+                            idAlokasi = pengeluaranResponse.idAlokasi,
+                            createdAt = pengeluaranResponse.createdAt
+                        )
+                        pengeluaranList.add(pengeluaran)
+                    }
+                    pengeluaranResult.postValue(pengeluaranList)
                 }
             }
 
         }, idUser)
-        return wishListResult
+          return pengeluaranResult
     }
+      
+
 
     companion object {
         @Volatile

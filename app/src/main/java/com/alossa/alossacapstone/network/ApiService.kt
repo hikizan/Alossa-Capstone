@@ -2,6 +2,7 @@ package com.alossa.alossacapstone.network
 
 import com.alossa.alossacapstone.data.model.AlokasiResponse
 import com.alossa.alossacapstone.data.model.PemasukanResponse
+import com.alossa.alossacapstone.data.model.PengeluaranResponse
 import com.alossa.alossacapstone.data.model.ResponseServe
 import com.alossa.alossacapstone.data.model.WishlistResponse
 import retrofit2.Call
@@ -57,13 +58,13 @@ interface ApiService {
     )
 
     //Pengeluaran
-    @GET("pemasukan/my/{idUser}")
-    fun getPengeluaranById(
+    @GET("pengeluaran/my/{idUser}")
+    fun getPengeluaranByIdUser(
         @Path("idUser") idUser: Int
-    )
+    ): Call<PengeluaranResponse>
 
     @FormUrlEncoded
-    @POST("pemasukan/tambah")
+    @POST("pengeluaran/tambah")
     fun addPengeluaran(
 
     )

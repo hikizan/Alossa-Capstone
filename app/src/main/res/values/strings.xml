@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AlossaCapstone</string>
+    <string name="app_name">Alossa</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -31,7 +31,7 @@
     <string name="kode">Kode</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="aktivitas_terbaru">Aktivitas Terbaru</string>
+    <string name="aktivitas_terbaru">Sisa tiap Alokasi</string>
     <string name="silahkan_input_pemasukan_dan_alokasi_terlebih_dahulu">Silahkan input pemasukan dan alokasi terlebih dahulu</string>
     <string name="input_data">Input Data</string>
     <string name="_500_000">500.000</string>
