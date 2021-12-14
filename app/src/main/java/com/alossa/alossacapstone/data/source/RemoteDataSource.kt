@@ -158,12 +158,15 @@ class RemoteDataSource {
                         callback.onLoadWishList(response.body()?.data)
                         Log.d("succes", response.code().toString())
                     } else {
-                         Log.d("fail", response.message())
+                        Log.d("fail", response.message())
                     }
                 }
+
                 override fun onFailure(call: Call<WishlistResponse>, t: Throwable) {
                     Log.d("fail", t.message.toString())
                 }
+            })
+    }
 
 
     fun getPengeluaranByIdUser(callback: LoadPengeluaranCallback, idUser: Int){
@@ -180,7 +183,7 @@ class RemoteDataSource {
                         Log.d("fail", response.message())
                     }
                 }
-                
+
                 override fun onFailure(call: Call<PengeluaranResponse>, t: Throwable) {
                     Log.d("fail", t.message.toString())
                 }
