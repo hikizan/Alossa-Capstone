@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.alossa.alossacapstone.data.model.Alokasi
 import com.alossa.alossacapstone.data.model.Pemasukan
 import com.alossa.alossacapstone.data.model.ResponseServe
+import com.alossa.alossacapstone.data.model.WishList
 import com.alossa.alossacapstone.data.source.RemoteDataSource
 
 class AlossaRepository private constructor(private val remoteDataSource: RemoteDataSource) :
@@ -130,6 +131,51 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
 
         }, idUser)
         return alokasiResult
+    }
+
+    override fun addAlokasi(
+        idUser: Int,
+        namaAlokias: String,
+        idPemasukan: Int,
+        nominal: Int
+    ): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.addAlokasi(object : RemoteDataSource.LoadAddAlokasi {
+            override fun onLoadAlokasi(response: ResponseServe?) {
+                if (response != null) {
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status,
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, idUser, namaAlokias, idPemasukan, nominal)
+        return serverResponse
+    }
+
+    override fun getWishListByIdUser(idUser: Int): LiveData<List<WishList>> {
+        val wishListResult = MutableLiveData<List<WishList>>()
+        remoteDataSource.getWishListByIdUser(object : RemoteDataSource.LoadWishListCallback {
+            override fun onLoadWishList(response: List<WishList>?) {
+                val wishListList = ArrayList<WishList>()
+                if (response != null) {
+                    for (wishlistResponse in response) {
+                        val wishList = WishList(
+                            targetDana = wishlistResponse.targetDana,
+                            createdAt = wishlistResponse.createdAt,
+                            id = wishlistResponse.id,
+                            status = wishlistResponse.status
+                        )
+                        wishListList.add(wishList)
+                    }
+                    wishListResult.postValue(wishListList)
+                }
+            }
+
+        }, idUser)
+        return wishListResult
     }
 
     companion object {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg_border"
+    android:background="@drawable/bg_radius"
     android:padding="50dp">
 
     <TextView
@@ -15,36 +15,39 @@
         android:textColor="@color/black"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:hint="@string/pemasukan">
+        android:hint="@string/nama_alokasi">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtx_nama_alokasi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:gravity="top"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:hint="@string/pemasukan">
+        android:hint="@string/nominal">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtx_nominal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:gravity="top"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add_alokasi"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

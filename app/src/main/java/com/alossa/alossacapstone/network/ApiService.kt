@@ -3,6 +3,7 @@ package com.alossa.alossacapstone.network
 import com.alossa.alossacapstone.data.model.AlokasiResponse
 import com.alossa.alossacapstone.data.model.PemasukanResponse
 import com.alossa.alossacapstone.data.model.ResponseServe
+import com.alossa.alossacapstone.data.model.WishlistResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -44,13 +45,13 @@ interface ApiService {
     ): Call<PemasukanResponse>
 
     //Wishlist
-    @GET("pemasukan/my/{idUser}")
+    @GET("wishlist/my/{idUser}")
     fun getWishlistById(
         @Path("idUser") idUser: Int
-    )
+    ): Call<WishlistResponse>
 
     @FormUrlEncoded
-    @POST("pemasukan/tambah")
+    @POST("wishlist/tambah")
     fun addWishlist(
 
     )
@@ -77,8 +78,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("alokasi/tambah")
     fun addAlokasi(
-
-    )
+        @Field("idUser") idUser: Int,
+        @Field("namaAlokasi") namaAlokias: String,
+        @Field("idPemasukan") idPemasukan: Int,
+        @Field("nominal") nominal: Int
+    ): Call<ResponseServe>
 
     @GET()
     fun deleteAlokasi(

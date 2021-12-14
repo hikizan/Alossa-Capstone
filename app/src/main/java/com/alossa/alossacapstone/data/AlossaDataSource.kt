@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.alossa.alossacapstone.data.model.Alokasi
 import com.alossa.alossacapstone.data.model.Pemasukan
 import com.alossa.alossacapstone.data.model.ResponseServe
+import com.alossa.alossacapstone.data.model.WishList
 
 interface AlossaDataSource {
 
@@ -21,4 +22,10 @@ interface AlossaDataSource {
 
     //Alokasi
     fun getAlokasiByIdUser(id: Int): LiveData<List<Alokasi>>
+
+    fun addAlokasi(idUser: Int, namaAlokias: String, idPemasukan: Int, nominal: Int): LiveData<ResponseServe>
+
+    //WishList
+    fun getWishListByIdUser(id: Int): LiveData<List<WishList>>
+
 }
