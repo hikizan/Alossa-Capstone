@@ -20,8 +20,8 @@ class InputExpenditureActivity : AppCompatActivity() {
     private lateinit var factory: ViewModelFactory
     private lateinit var viewModelFromHome: HomeViewModel
 
-    val listIdAlocation: MutableList<Int> = ArrayList()
-    val listNameAlocation: MutableList<String> = ArrayList()
+    private val listIdAlocation = ArrayList<Int>()
+    private val listNameAlocation = ArrayList<String>()
     var number: Int? = null
     var getStringFromDropdown: String? = null
     var getIdAlocationSelected: Int? = null
@@ -40,14 +40,16 @@ class InputExpenditureActivity : AppCompatActivity() {
             if (alocations.isNotEmpty()){
                 for (alokasiItem in alocations){
                     listNameAlocation.add(alokasiItem.namaAlokasi.toString())
-                    alokasiItem.id?.let { listIdAlocation.add(it.toInt()) }
+                    alokasiItem.id?.let { listIdAlocation.add(it) }
+                    Log.d("InputExpenditure", "onCreate: Check idAlokasi = ${alokasiItem.id} ")
                 }
-                Log.d("InputExpenditure", "onObserve: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
-                        "idAlokasi = $getIdAlocationSelected \n number = $number")
+                Log.d("InputExpenditure", "onObserve: listAlokasiName = $listNameAlocation \n listAlokasiId = $listIdAlocation \n" +
+                        "alocations = $alocations")
+
+                addItemsOnSpinner(listNameAlocation, listIdAlocation)
             }
         })
 
-        addItemsOnSpinner()
 
 
         //var getFromDropDown = _binding.spinnerAlocationType.selectedItemPosition.toString()
@@ -68,7 +70,7 @@ class InputExpenditureActivity : AppCompatActivity() {
 
     }
 
-    fun addItemsOnSpinner() {
+    fun addItemsOnSpinner(mListNameAlocation: ArrayList<String>, mListIdAlocation: ArrayList<Int>) {
         /*
         list.add("Uang Makan")
         list.add("Kebutuhan")
@@ -76,7 +78,7 @@ class InputExpenditureActivity : AppCompatActivity() {
          */
         val dataAdapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item, listNameAlocation
+            android.R.layout.simple_spinner_item, mListNameAlocation
         )
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -85,8 +87,8 @@ class InputExpenditureActivity : AppCompatActivity() {
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
                 number = position
-                getStringFromDropdown = listNameAlocation[position]
-                getIdAlocationSelected = listIdAlocation[position]
+                getStringFromDropdown = mListNameAlocation[position]
+                getIdAlocationSelected = mListIdAlocation[position]
                 Log.d("InputExpenditure", "onItemSelected: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
                         "idAlokasi = $getIdAlocationSelected \n number = $number")
             }
