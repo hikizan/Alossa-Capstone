@@ -120,6 +120,7 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 if (response != null) {
                     for (alokasiResponse in response) {
                         val alokasi = Alokasi(
+                            id = alokasiResponse.id,
                             nominal = alokasiResponse.nominal,
                             createdAt = alokasiResponse.createdAt,
                             namaAlokasi = alokasiResponse.namaAlokasi
@@ -153,6 +154,23 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
             }
 
         }, idUser, namaAlokias, idPemasukan, nominal)
+        return serverResponse
+    }
+
+    override fun deleteAlokasi(idAlokasi: Int): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.deleteAlokasi(object : RemoteDataSource.LoadAddAlokasi {
+            override fun onLoadAlokasi(response: ResponseServe?) {
+                if (response != null) {
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status,
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, idAlokasi)
         return serverResponse
     }
 

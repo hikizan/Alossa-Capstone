@@ -218,6 +218,24 @@ class RemoteDataSource {
             })
     }
 
+    fun deleteAlokasi(callback: LoadAddAlokasi, idAlokasi: Int){
+        ApiConfig.getApiService().deleteAlokasi(idAlokasi)
+            .enqueue(object : Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    callback.onLoadAlokasi(response.body())
+                    Log.d("succes", response.code().toString())
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
