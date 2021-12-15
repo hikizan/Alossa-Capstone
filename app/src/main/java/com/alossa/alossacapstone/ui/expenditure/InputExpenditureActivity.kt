@@ -7,15 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alossa.alossacapstone.databinding.ActivityInputExpenditureBinding
 import com.alossa.alossacapstone.utils.ViewModelFactory
-import android.R
-
-
-
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
 
 
 class InputExpenditureActivity : AppCompatActivity() {
 
     private lateinit var _binding: ActivityInputExpenditureBinding
+
+    var number: Int? = null
+    var getStringFromDropdown: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +30,8 @@ class InputExpenditureActivity : AppCompatActivity() {
 
         addItemsOnSpinner()
 
-        var getFromDropDown = _binding.spinnerAlocationType.toString()
-        Log.d("InputExpenditure", "onCreate: getFromDropDown = $getFromDropDown")
+        //var getFromDropDown = _binding.spinnerAlocationType.selectedItemPosition.toString()
+        //Log.d("InputExpenditure", "onCreate: getFromDropDown = $getFromDropDown")
 
 
         _binding.btnSubmitExpenditure.setOnClickListener {
@@ -39,7 +41,8 @@ class InputExpenditureActivity : AppCompatActivity() {
             val idUser = 2 //masih hardcode
 
              */
-            Log.d("InputExpenditure", "fun addItemsOnSpinner: getFromDropDown = $getFromDropDown")
+            Log.d("InputExpenditure", "fun addItemsOnSpinner: getFromDropDown = $getStringFromDropdown")
+            Log.d("InputExpenditure", "onclick button : posisi yang dipilih = $number")
         }
 
 
@@ -57,7 +60,20 @@ class InputExpenditureActivity : AppCompatActivity() {
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         _binding.spinnerAlocationType.setAdapter(dataAdapter)
-        _binding.spinnerAlocationType.setSelection(1)
+        _binding.spinnerAlocationType.setOnItemSelectedListener(object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+                number = position
+                getStringFromDropdown = list[position]
+                Log.d("InputExpenditure", "onItemSelected: posisi yang dipilih = $number")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Toast.makeText(this,"Pilih Tipe Alokasi Terlebih Dahulu",Toast.LENGTH_SHORT)
+                Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
+            }
+
+        })
 
     }
 }
