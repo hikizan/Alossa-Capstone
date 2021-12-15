@@ -1,20 +1,17 @@
 package com.alossa.alossacapstone.ui.expenditure
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alossa.alossacapstone.databinding.ActivityInputExpenditureBinding
-import com.alossa.alossacapstone.utils.ViewModelFactory
-import android.view.View
-import android.widget.AdapterView
-import android.widget.TextView
-import android.widget.Toast
-import com.alossa.alossacapstone.R
 import com.alossa.alossacapstone.ui.home.HomeViewModel
+import com.alossa.alossacapstone.utils.SharedPref
+import com.alossa.alossacapstone.utils.ViewModelFactory
 
 
 class InputExpenditureActivity : AppCompatActivity() {
@@ -34,18 +31,18 @@ class InputExpenditureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         _binding = ActivityInputExpenditureBinding.inflate(layoutInflater)
-        setContentView(_binding.root)
+        val root: View = _binding.root
+        setContentView(root)
+        supportActionBar?.title = "Input Pengeluaran"
 
+        val sharedPref = SharedPref(root.context)
         factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
         viewModelFromHome = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
-        val namaPengeluaranAlokasi = _binding.edtExpenditureName.text.toString().trim()
-        var danaPengeluaranAlokasi = _binding.edtExpenditurePrice.text.toString().trim()
-
         listIdAlocation.add(0)
         listNameAlocation.add("Pilih Tipe Alokasi...")
-        viewModelFromHome.getAlokasiByIdUser(2).observe(this,{ alocations ->
+        viewModelFromHome.getAlokasiByIdUser(sharedPref.getId()).observe(this,{ alocations ->
             if (alocations.isNotEmpty()){
                 for (alokasiItem in alocations){
                     listNameAlocation.add(alokasiItem.namaAlokasi.toString())
@@ -60,26 +57,26 @@ class InputExpenditureActivity : AppCompatActivity() {
         })
 
         _binding.btnSubmitExpenditure.setOnClickListener {
+
             if (getIdAlocationSelected == 0){
                 Toast.makeText(this, "Pilih Tipe Alokasi Dahulu!", Toast.LENGTH_SHORT).show()
             }else{
-                val namaPengeluaran = namaPengeluaranAlokasi
-                val danaPengeluaran = danaPengeluaranAlokasi.toInt()
+                val namaPengeluaran = _binding.edtExpenditureName.text.toString().trim()
+                val danaPengeluaran = _binding.edtExpenditurePrice.text.toString().trim()
                 val idAlokasi = getIdAlocationSelected!!
-                val idUser = 2 //masih hardcode
-                viewModel.addPengeluaran(idUser, idAlokasi, danaPengeluaran, namaPengeluaran).observe(this, { response ->
+                val idUser = sharedPref.getId()
+                viewModel.addPengeluaran(idUser, idAlokasi, danaPengeluaran.toInt(), namaPengeluaran).observe(this, { response ->
                     Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
                     if (response.status.equals("success")) {
-                        val intent = Intent(this, ExpenditureFragment::class.java)
-                        startActivity(intent)
+                        //val intent = Intent(applicationContext, ExpenditureFragment::class.java)
+                        //startActivity(intent)
                         finish()
                     }
                 })
+                Log.d("InputExpenditure", "onclick button: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
+                        "idAlokasi = $getIdAlocationSelected \n danaPengeluaran = ${danaPengeluaran.toInt()}\n namaPengeluaran = $namaPengeluaran")
             }
 
-
-            Log.d("InputExpenditure", "onclick button: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
-                    "idAlokasi = $getIdAlocationSelected \n number = $number")
         }
 
     }
