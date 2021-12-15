@@ -16,7 +16,8 @@ import com.alossa.alossacapstone.utils.ViewModelFactory
 
 class InputExpenditureActivity : AppCompatActivity() {
 
-    private lateinit var _binding: ActivityInputExpenditureBinding
+    private var _binding: ActivityInputExpenditureBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var factory: ViewModelFactory
     private lateinit var viewModelFromHome: HomeViewModel
@@ -31,7 +32,7 @@ class InputExpenditureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         _binding = ActivityInputExpenditureBinding.inflate(layoutInflater)
-        val root: View = _binding.root
+        val root: View = binding.root
         setContentView(root)
         supportActionBar?.title = "Input Pengeluaran"
 
@@ -47,22 +48,23 @@ class InputExpenditureActivity : AppCompatActivity() {
                 for (alokasiItem in alocations){
                     listNameAlocation.add(alokasiItem.namaAlokasi.toString())
                     alokasiItem.id?.let { listIdAlocation.add(it) }
-                    Log.d("InputExpenditure", "onCreate: Check idAlokasi = ${alokasiItem.id} ")
                 }
                 Log.d("InputExpenditure", "onObserve: listAlokasiName = $listNameAlocation \n listAlokasiId = $listIdAlocation \n" +
-                        "alocations = $alocations")
+                        "alocations = $alocations \n idUser = ${sharedPref.getId()}")
 
                 addItemsOnSpinner(listNameAlocation, listIdAlocation)
+            }else{
+                Log.d("InputExpenditure", "onObserve: else: idUser = ${sharedPref.getId()} ")
             }
         })
 
-        _binding.btnSubmitExpenditure.setOnClickListener {
+        binding.btnSubmitExpenditure.setOnClickListener {
 
             if (getIdAlocationSelected == 0){
                 Toast.makeText(this, "Pilih Tipe Alokasi Dahulu!", Toast.LENGTH_SHORT).show()
             }else{
-                val namaPengeluaran = _binding.edtExpenditureName.text.toString().trim()
-                val danaPengeluaran = _binding.edtExpenditurePrice.text.toString().trim()
+                val namaPengeluaran = binding.edtExpenditureName.text.toString().trim()
+                val danaPengeluaran = binding.edtExpenditurePrice.text.toString().trim()
                 val idAlokasi = getIdAlocationSelected!!
                 val idUser = sharedPref.getId()
                 viewModel.addPengeluaran(idUser, idAlokasi, danaPengeluaran.toInt(), namaPengeluaran).observe(this, { response ->
@@ -89,11 +91,11 @@ class InputExpenditureActivity : AppCompatActivity() {
         )
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        _binding.spinnerAlocationType.setAdapter(dataAdapter)
+        binding.spinnerAlocationType.setAdapter(dataAdapter)
 
-        _binding.spinnerAlocationType.setPrompt("Pilih Tipe Alokasi")
+        binding.spinnerAlocationType.setPrompt("Pilih Tipe Alokasi")
 
-        _binding.spinnerAlocationType.setOnItemSelectedListener(object :
+        binding.spinnerAlocationType.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
                 number = position
@@ -104,10 +106,15 @@ class InputExpenditureActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
-                _binding.spinnerAlocationType
+                binding.spinnerAlocationType
             }
 
         })
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
