@@ -9,19 +9,23 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alossa.alossacapstone.databinding.FragmentExpenditureBinding
+import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
 
 class ExpenditureFragment : Fragment() {
 
     private var _binding: FragmentExpenditureBinding? = null
     private val binding get() = _binding!!
+    private lateinit var root: View
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExpenditureBinding.inflate(inflater, container, false)
-        return binding.root
+        root = binding.root
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,8 +34,9 @@ class ExpenditureFragment : Fragment() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
         val expenditureAdapter = ExpenditureAdapter()
+        val sharedPref = SharedPref(root.context)
 
-        viewModel.getPengeluaranByIdUser(2).observe(viewLifecycleOwner, { expenditures ->
+        viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
                 expenditureAdapter.setExpenditures(expenditures)
                 expenditureAdapter.notifyDataSetChanged()

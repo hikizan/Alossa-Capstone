@@ -66,9 +66,11 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("pengeluaran/tambah")
-    fun addPengeluaran(
-
-    )
+    fun addPengeluaran(@Field("idUser") idUser: Int,
+                       @Field("idAlokasi") idAlokasi: Int,
+                       @Field("danaPengeluaran") danaPengeluaran: Int,
+                       @Field("namaPengeluaran") namaPengeluaran: String
+    ) : Call<ResponseServe>
 
     //Alokasi
 
