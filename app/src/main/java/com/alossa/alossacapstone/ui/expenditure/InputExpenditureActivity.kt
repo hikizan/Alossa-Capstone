@@ -1,5 +1,7 @@
 package com.alossa.alossacapstone.ui.expenditure
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -9,7 +11,9 @@ import com.alossa.alossacapstone.databinding.ActivityInputExpenditureBinding
 import com.alossa.alossacapstone.utils.ViewModelFactory
 import android.view.View
 import android.widget.AdapterView
+import android.widget.TextView
 import android.widget.Toast
+import com.alossa.alossacapstone.R
 import com.alossa.alossacapstone.ui.home.HomeViewModel
 
 
@@ -36,6 +40,11 @@ class InputExpenditureActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
         viewModelFromHome = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
+        val namaPengeluaranAlokasi = _binding.edtExpenditureName.text.toString().trim()
+        var danaPengeluaranAlokasi = _binding.edtExpenditurePrice.text.toString().trim()
+
+        listIdAlocation.add(0)
+        listNameAlocation.add("Pilih Tipe Alokasi...")
         viewModelFromHome.getAlokasiByIdUser(2).observe(this,{ alocations ->
             if (alocations.isNotEmpty()){
                 for (alokasiItem in alocations){
@@ -50,32 +59,33 @@ class InputExpenditureActivity : AppCompatActivity() {
             }
         })
 
-
-
-        //var getFromDropDown = _binding.spinnerAlocationType.selectedItemPosition.toString()
-        //Log.d("InputExpenditure", "onCreate: getFromDropDown = $getFromDropDown")
-
-
         _binding.btnSubmitExpenditure.setOnClickListener {
-            /*
-            val namaPengeluaran = _binding.edtExpenditureName
-            val danaAlokasi = _binding.edtExpenditurePrice
-            val idUser = 2 //masih hardcode
+            if (getIdAlocationSelected == 0){
+                Toast.makeText(this, "Pilih Tipe Alokasi Dahulu!", Toast.LENGTH_SHORT).show()
+            }else{
+                val namaPengeluaran = namaPengeluaranAlokasi
+                val danaPengeluaran = danaPengeluaranAlokasi.toInt()
+                val idAlokasi = getIdAlocationSelected!!
+                val idUser = 2 //masih hardcode
+                viewModel.addPengeluaran(idUser, idAlokasi, danaPengeluaran, namaPengeluaran).observe(this, { response ->
+                    Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
+                    if (response.status.equals("success")) {
+                        val intent = Intent(this, ExpenditureFragment::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                })
+            }
 
-             */
+
             Log.d("InputExpenditure", "onclick button: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
                     "idAlokasi = $getIdAlocationSelected \n number = $number")
         }
 
-
     }
 
     fun addItemsOnSpinner(mListNameAlocation: ArrayList<String>, mListIdAlocation: ArrayList<Int>) {
-        /*
-        list.add("Uang Makan")
-        list.add("Kebutuhan")
-        list.add("Uang Jajan")
-         */
+
         val dataAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item, mListNameAlocation
@@ -83,6 +93,9 @@ class InputExpenditureActivity : AppCompatActivity() {
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         _binding.spinnerAlocationType.setAdapter(dataAdapter)
+
+        _binding.spinnerAlocationType.setPrompt("Pilih Tipe Alokasi")
+
         _binding.spinnerAlocationType.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
@@ -93,9 +106,8 @@ class InputExpenditureActivity : AppCompatActivity() {
                         "idAlokasi = $getIdAlocationSelected \n number = $number")
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                //Toast.makeText(this,"Pilih Tipe Alokasi Terlebih Dahulu",Toast.LENGTH_SHORT)
-                //Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+                _binding.spinnerAlocationType
             }
 
         })
