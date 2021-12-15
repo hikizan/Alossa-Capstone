@@ -21,9 +21,10 @@ import com.alossa.alossacapstone.utils.ViewModelFactory
 class AddExpenditureActivity : AppCompatActivity() {
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var sharedPref : SharedPref
-    private lateinit var alokasiAdapter : AlokasiAdapter
+    private lateinit var sharedPref: SharedPref
+    private lateinit var alokasiAdapter: AlokasiAdapter
     private lateinit var recycler: RecyclerView
+    var totalAlokasi = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +39,12 @@ class AddExpenditureActivity : AppCompatActivity() {
 
         initAction()
 
-        viewModel.getWihsListByIdUser(sharedPref.getId()).observe(this, { wishlist->
-            var totalAlokasi = 0
-            for (listWishlist in wishlist){
-                if (listWishlist.status==1){
+        val pemasukan = binding.edtxPemasukan.text
+        var sisaDana = 0
+
+        viewModel.getWihsListByIdUser(sharedPref.getId()).observe(this, { wishlist ->
+            for (listWishlist in wishlist) {
+                if (listWishlist.status == 1) {
                     totalAlokasi += listWishlist.targetDana
                 }
             }
@@ -52,7 +55,24 @@ class AddExpenditureActivity : AppCompatActivity() {
             alokasiAdapter.setAlokasi(it)
         })
 
-        with(recycler){
+        binding.btnCheck.setOnClickListener {
+            if (pemasukan.toString().isNotEmpty()) {
+                if (pemasukan.toString().toLong() < totalAlokasi) {
+                    Toast.makeText(
+                        this,
+                        "Pemasukan lebih kecil dari dana wishlist",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    sisaDana = (pemasukan.toString().toLong() - totalAlokasi).toInt()
+                    binding.txtSisaDana.text = "Rp.$sisaDana"
+                }
+            }else{
+                println("Empty")
+            }
+        }
+
+        with(recycler) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = alokasiAdapter
@@ -67,23 +87,37 @@ class AddExpenditureActivity : AppCompatActivity() {
                 val nominal = this.findViewById<EditText>(R.id.edtx_nominal).text
                 val btnSubmit = this.findViewById<Button>(R.id.btn_add_alokasi)
                 btnSubmit.setOnClickListener {
-                    viewModel.addAlokasi(sharedPref.getId(), namaAlokasi.toString(),1, nominal.toString().toInt())
-                        .observe(this@AddExpenditureActivity , {response->
-                            Toast.makeText(this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG).show()
-                            if (response.status.equals("success")){
+                    viewModel.addAlokasi(
+                        sharedPref.getId(),
+                        namaAlokasi.toString(),
+                        1,
+                        nominal.toString().toInt()
+                    )
+                        .observe(this@AddExpenditureActivity, { response ->
+                            Toast.makeText(
+                                this@AddExpenditureActivity,
+                                response.msg,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            if (response.status.equals("success")) {
                                 this.dismiss()
-                                viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(this@AddExpenditureActivity, {
-                                    alokasiAdapter.setAlokasi(it)
-                                })
+                                viewModel.getAlokasiByIdUser(sharedPref.getId())
+                                    .observe(this@AddExpenditureActivity, {
+                                        for (alokasi in it){
+                                            sisaDana -= alokasi.nominal
+                                        }
+                                        alokasiAdapter.setAlokasi(it)
+                                        binding.txtSisaDana.text = "Rp.$sisaDana"
+                                    })
                             }
                         })
                 }
-             }.show()
+            }.show()
         }
     }
 
-    fun initAction(){
-        val itemTouchHelper = ItemTouchHelper(object :ItemTouchHelper.Callback(){
+    fun initAction() {
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
@@ -101,15 +135,17 @@ class AddExpenditureActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val alokasi = (viewHolder as AlokasiAdapter.AlokasiViewHolder).getAlokasi
-                println("sadsa "+alokasi.id)
-                viewModel.deleteAlokasi(alokasi.id).observe(this@AddExpenditureActivity, {response->
-                    Toast.makeText(this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG).show()
-                    if (response.status.equals("success")){
-                        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(this@AddExpenditureActivity, {
-                            alokasiAdapter.setAlokasi(it)
-                        })
-                    }
-                })
+                viewModel.deleteAlokasi(alokasi.id)
+                    .observe(this@AddExpenditureActivity, { response ->
+                        Toast.makeText(this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG)
+                            .show()
+                        if (response.status.equals("success")) {
+                            viewModel.getAlokasiByIdUser(sharedPref.getId())
+                                .observe(this@AddExpenditureActivity, {
+                                    alokasiAdapter.setAlokasi(it)
+                                })
+                        }
+                    })
             }
 
         })
