@@ -2,10 +2,10 @@ package com.alossa.alossacapstone.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class AlokasiResponse(
+data class WishlistResponse(
 
     @field:SerializedName("data")
-    val data: List<Alokasi>? = null,
+    val data: List<WishList>? = null,
 
     @field:SerializedName("errors")
     val errors: Any? = null,
@@ -17,27 +17,29 @@ data class AlokasiResponse(
     val status: String? = null
 )
 
-data class Alokasi(
+data class WishList(
 
     @field:SerializedName("idUser")
     val idUser: Int? = null,
 
-    @field:SerializedName("nominal")
-    val nominal: Int? = null,
+    @field:SerializedName("idAlokasi")
+    val idAlokasi: Int? = null,
 
     @field:SerializedName("updated_at")
     val updatedAt: String? = null,
 
-    @field:SerializedName("namaAlokasi")
-    val namaAlokasi: String? = null,
+    @field:SerializedName("targetDana")
+    val targetDana: Int = 0,
 
     @field:SerializedName("created_at")
     val createdAt: String? = null,
 
     @field:SerializedName("id")
-    val id: Int = 0,
+    val id: Int? = null,
 
-    @field:SerializedName("idPemasukan")
-    val idPemasukan: Int? = null,
+    @field:SerializedName("durasi")
+    val durasi: Int? = null,
 
+    @field:SerializedName("status")
+    val status: Int? = null
 )

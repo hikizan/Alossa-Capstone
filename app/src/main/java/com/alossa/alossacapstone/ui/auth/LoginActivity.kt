@@ -41,8 +41,8 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.loginPassword.text
             viewModel.login(email.toString(), password.toString()).observe(this, { response ->
                 Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
-                setLogin(response)
                 if (response.status.equals("success")) {
+                    setLogin(response)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()

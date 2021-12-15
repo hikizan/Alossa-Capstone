@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
             if (alocations.isNotEmpty()){
                 alocationAdapter.setAlocation(alocations)
                 alocationAdapter.notifyDataSetChanged()
-
                 for (alokasiItem in alocations) {
                     typeAlokasi += alokasiItem.namaAlokasi.toString()
                     nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
