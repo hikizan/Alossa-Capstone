@@ -119,8 +119,7 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                             id = alokasiResponse.id,
                             nominal = alokasiResponse.nominal,
                             createdAt = alokasiResponse.createdAt,
-                            namaAlokasi = alokasiResponse.namaAlokasi,
-                            id = alokasiResponse.id
+                            namaAlokasi = alokasiResponse.namaAlokasi
                         )
                         alokasiList.add(alokasi)
                     }
