@@ -6,6 +6,7 @@ import com.alossa.alossacapstone.data.model.PengeluaranResponse
 import com.alossa.alossacapstone.data.model.ResponseServe
 import com.alossa.alossacapstone.data.model.WishlistResponse
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.*
 
 interface ApiService {
@@ -85,10 +86,10 @@ interface ApiService {
         @Field("nominal") nominal: Int
     ): Call<ResponseServe>
 
-    @GET()
+    @GET("alokasi/hapus/{idAlokasi}")
     fun deleteAlokasi(
-
-    )
+        @Path("idAlokasi") idAlokasi: Int
+    ): Call<ResponseServe>
 
     @FormUrlEncoded
     @POST()

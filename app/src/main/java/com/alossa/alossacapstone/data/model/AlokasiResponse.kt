@@ -35,7 +35,7 @@ data class Alokasi(
     val createdAt: String? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int = 0,
 
     @field:SerializedName("idPemasukan")
     val idPemasukan: Int? = null,

@@ -27,6 +27,7 @@ interface AlossaDataSource {
 
     fun addAlokasi(idUser: Int, namaAlokias: String, idPemasukan: Int, nominal: Int): LiveData<ResponseServe>
 
+    fun deleteAlokasi(idAlokasi: Int): LiveData<ResponseServe>
     //WishList
     fun getWishListByIdUser(id: Int): LiveData<List<WishList>>
 
