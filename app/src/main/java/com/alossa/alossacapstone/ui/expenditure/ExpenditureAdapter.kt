@@ -18,11 +18,12 @@ class ExpenditureAdapter : RecyclerView.Adapter<ExpenditureAdapter.ViewHolder>()
 
     class ViewHolder(var binding: ItemRowExpenditureBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(expenditure: Pengeluaran){
+            val nominalPengeluaran = "Rp.${expenditure.danaPengeluaran}"
             with(binding) {
                 tvExpenditureName.text = expenditure.namaPengeluaran
-                tvExpenditurePrice.text = expenditure.danaPengeluaran.toString()
+                tvExpenditurePrice.text = nominalPengeluaran
                 tvExpenditureDate.text = expenditure.createdAt
-                tvExpenditureType.text = expenditure.idAlokasi.toString()
+                tvExpenditureType.text = expenditure.namaAlokasi
             }
         }
     }

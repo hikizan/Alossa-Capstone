@@ -38,5 +38,8 @@ data class Pengeluaran(
 	val id: Int? = null,
 
 	@field:SerializedName("namaPengeluaran")
-	val namaPengeluaran: String? = null
+	val namaPengeluaran: String? = null,
+
+	@field:SerializedName("namaAlokasi")
+	val namaAlokasi: String? = null
 )

@@ -2,11 +2,7 @@ package com.alossa.alossacapstone.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.alossa.alossacapstone.data.model.Alokasi
-import com.alossa.alossacapstone.data.model.Pemasukan
-import com.alossa.alossacapstone.data.model.Pengeluaran
-import com.alossa.alossacapstone.data.model.ResponseServe
-import com.alossa.alossacapstone.data.model.WishList
+import com.alossa.alossacapstone.data.model.*
 import com.alossa.alossacapstone.data.source.RemoteDataSource
 
 class AlossaRepository private constructor(private val remoteDataSource: RemoteDataSource) :
@@ -233,7 +229,8 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                             namaPengeluaran = pengeluaranResponse.namaPengeluaran,
                             danaPengeluaran = pengeluaranResponse.danaPengeluaran,
                             idAlokasi = pengeluaranResponse.idAlokasi,
-                            createdAt = pengeluaranResponse.createdAt
+                            createdAt = pengeluaranResponse.createdAt,
+                            namaAlokasi = pengeluaranResponse.namaAlokasi
                         )
                         pengeluaranList.add(pengeluaran)
                     }
@@ -245,6 +242,29 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
           return pengeluaranResult
     }
       
+
+    override fun addPengeluaran(
+        idUser: Int,
+        idAlokasi: Int,
+        danaPengeluaran: Int,
+        namaPengeluaran: String
+    ): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.addPengeluaran(object : RemoteDataSource.LoadAddPengeluaranCallback {
+            override fun onLoadAddPengeluaran(response: ResponseServe?) {
+                if (response != null){
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, idUser, idAlokasi, danaPengeluaran, namaPengeluaran)
+
+        return serverResponse
+    }
 
 
     companion object {
