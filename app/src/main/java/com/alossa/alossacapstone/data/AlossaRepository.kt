@@ -185,7 +185,9 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                             targetDana = wishlistResponse.targetDana,
                             createdAt = wishlistResponse.createdAt,
                             id = wishlistResponse.id,
-                            status = wishlistResponse.status
+                            status = wishlistResponse.status,
+                            durasi =  wishlistResponse.durasi,
+                            namaBarang = wishlistResponse.namaBarang
                         )
                         wishListList.add(wishList)
                     }
@@ -196,7 +198,30 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
         }, idUser)
        return wishListResult
     }
-    
+
+    override fun addWishList(
+        idUser: Int,
+        namaBarang: String,
+        idAlokasi: Int,
+        targetDana: Int,
+        durasi: Int,
+        status: Int
+    ): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.addWishList(object : RemoteDataSource.LoadAddWishList {
+            override fun onAddWishList(response: ResponseServe?) {
+                if (response != null) {
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status,
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+        }, idUser, namaBarang, idAlokasi, targetDana, durasi, status)
+        return serverResponse
+    }
+
     override fun getPengeluaranByIdUser(idUser: Int): LiveData<List<Pengeluaran>> {
         val pengeluaranResult = MutableLiveData<List<Pengeluaran>>()
         remoteDataSource.getPengeluaranByIdUser(object : RemoteDataSource.LoadPengeluaranCallback {

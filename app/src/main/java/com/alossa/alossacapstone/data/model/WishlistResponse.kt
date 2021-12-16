@@ -25,6 +25,9 @@ data class WishList(
     @field:SerializedName("idAlokasi")
     val idAlokasi: Int? = null,
 
+    @field:SerializedName("namaBarang")
+    val namaBarang: String? =null,
+
     @field:SerializedName("updated_at")
     val updatedAt: String? = null,
 
@@ -38,7 +41,7 @@ data class WishList(
     val id: Int? = null,
 
     @field:SerializedName("durasi")
-    val durasi: Int? = null,
+    val durasi: Int = 0,
 
     @field:SerializedName("status")
     val status: Int? = null

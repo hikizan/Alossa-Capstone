@@ -6,6 +6,7 @@ import com.alossa.alossacapstone.data.AlossaRepository
 import com.alossa.alossacapstone.ui.auth.AuthViewModel
 import com.alossa.alossacapstone.ui.expenditure.ExpenditureViewModel
 import com.alossa.alossacapstone.ui.home.HomeViewModel
+import com.alossa.alossacapstone.ui.profile.ProfilViewModel
 
 class ViewModelFactory private constructor(private val mAlossaRepository: AlossaRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -22,6 +23,10 @@ class ViewModelFactory private constructor(private val mAlossaRepository: Alossa
 
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(mAlossaRepository) as T
+            }
+
+            modelClass.isAssignableFrom(ProfilViewModel::class.java) -> {
+                ProfilViewModel(mAlossaRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

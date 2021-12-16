@@ -24,23 +24,25 @@ class AddExpenditureActivity : AppCompatActivity() {
     private lateinit var sharedPref: SharedPref
     private lateinit var alokasiAdapter: AlokasiAdapter
     private lateinit var recycler: RecyclerView
+    private lateinit var binding: ActivityAddExpenditureBinding
     var totalAlokasi = 0
+    var sisaDana = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityAddExpenditureBinding.inflate(layoutInflater)
+        binding = ActivityAddExpenditureBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val factory = ViewModelFactory.getInstance()
+        val pemasukan = binding.edtxPemasukan.text
+
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         sharedPref = SharedPref(this)
         alokasiAdapter = AlokasiAdapter()
         recycler = binding.rvAlokasi
 
         initAction()
-
-        val pemasukan = binding.edtxPemasukan.text
-        var sisaDana = 0
 
         viewModel.getWihsListByIdUser(sharedPref.getId()).observe(this, { wishlist ->
             for (listWishlist in wishlist) {
@@ -67,7 +69,7 @@ class AddExpenditureActivity : AppCompatActivity() {
                     sisaDana = (pemasukan.toString().toLong() - totalAlokasi).toInt()
                     binding.txtSisaDana.text = "Rp.$sisaDana"
                 }
-            }else{
+            } else {
                 println("Empty")
             }
         }
@@ -87,30 +89,38 @@ class AddExpenditureActivity : AppCompatActivity() {
                 val nominal = this.findViewById<EditText>(R.id.edtx_nominal).text
                 val btnSubmit = this.findViewById<Button>(R.id.btn_add_alokasi)
                 btnSubmit.setOnClickListener {
-                    viewModel.addAlokasi(
-                        sharedPref.getId(),
-                        namaAlokasi.toString(),
-                        1,
-                        nominal.toString().toInt()
-                    )
-                        .observe(this@AddExpenditureActivity, { response ->
+                    if (nominal.toString().isNotEmpty()) {
+                        if ((sisaDana - nominal.toString().toInt()) >= 0) {
+                            sisaDana -= nominal.toString().toInt()
+                            binding.txtSisaDana.text = "Rp.$sisaDana"
+                            viewModel.addAlokasi(
+                                sharedPref.getId(),
+                                namaAlokasi.toString(),
+                                1,
+                                nominal.toString().toInt()
+                            )
+                                .observe(this@AddExpenditureActivity, { response ->
+                                    Toast.makeText(
+                                        this@AddExpenditureActivity,
+                                        response.msg,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    if (response.status.equals("success")) {
+                                        this.dismiss()
+                                        viewModel.getAlokasiByIdUser(sharedPref.getId())
+                                            .observe(this@AddExpenditureActivity, {
+                                                alokasiAdapter.setAlokasi(it)
+                                            })
+                                    }
+                                })
+                        } else {
                             Toast.makeText(
                                 this@AddExpenditureActivity,
-                                response.msg,
+                                "Dana tidak cukup sisa dana anda $sisaDana",
                                 Toast.LENGTH_LONG
                             ).show()
-                            if (response.status.equals("success")) {
-                                this.dismiss()
-                                viewModel.getAlokasiByIdUser(sharedPref.getId())
-                                    .observe(this@AddExpenditureActivity, {
-                                        for (alokasi in it){
-                                            sisaDana -= alokasi.nominal
-                                        }
-                                        alokasiAdapter.setAlokasi(it)
-                                        binding.txtSisaDana.text = "Rp.$sisaDana"
-                                    })
-                            }
-                        })
+                        }
+                    }
                 }
             }.show()
         }
@@ -137,9 +147,11 @@ class AddExpenditureActivity : AppCompatActivity() {
                 val alokasi = (viewHolder as AlokasiAdapter.AlokasiViewHolder).getAlokasi
                 viewModel.deleteAlokasi(alokasi.id)
                     .observe(this@AddExpenditureActivity, { response ->
-                        Toast.makeText(this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG)
+                        Toast.makeText( this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG)
                             .show()
                         if (response.status.equals("success")) {
+                            sisaDana += alokasi.nominal
+                            binding.txtSisaDana.text = "Rp.$sisaDana"
                             viewModel.getAlokasiByIdUser(sharedPref.getId())
                                 .observe(this@AddExpenditureActivity, {
                                     alokasiAdapter.setAlokasi(it)
