@@ -125,7 +125,7 @@ class RemoteDataSource {
     }
 
 
-    fun getAlokasiByIdUser(callback: LoadAlokasiCallback, idUser: Int){
+    fun getAlokasiByIdUser(callback: LoadAlokasiCallback, idUser: Int) {
         ApiConfig.getApiService().getAlokasByIdUser(idUser)
             .enqueue(object : Callback<AlokasiResponse> {
                 override fun onResponse(
@@ -168,18 +168,55 @@ class RemoteDataSource {
             })
     }
 
+    fun addWishList(
+        callback: LoadAddWishList,
+        idUser: Int,
+        namaBarang: String,
+        idAlokasi: Int,
+        targetDana: Int,
+        durasi: Int,
+        status: Int
+    ) {
+        println(idUser)
+        println(namaBarang)
+        println(idAlokasi)
+        println(targetDana)
+        println(durasi)
+        println(status)
 
-    fun getPengeluaranByIdUser(callback: LoadPengeluaranCallback, idUser: Int){
+        ApiConfig.getApiService().addWishlist(idUser, namaBarang, idAlokasi, targetDana, durasi, status)
+            .enqueue(object :Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    if (response.isSuccessful) {
+                        callback.onAddWishList(response.body())
+                        Log.d("succes", response.code().toString())
+                    } else {
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
+
+    fun getPengeluaranByIdUser(callback: LoadPengeluaranCallback, idUser: Int) {
         ApiConfig.getApiService().getPengeluaranByIdUser(idUser)
-            .enqueue(object: Callback<PengeluaranResponse>{
+            .enqueue(object : Callback<PengeluaranResponse> {
                 override fun onResponse(
                     call: Call<PengeluaranResponse>,
                     response: Response<PengeluaranResponse>
                 ) {
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         callback.onLoadPengeluaran(response.body()?.data)
                         Log.d("succes", response.code().toString())
-                    }else{
+                    } else {
                         Log.d("fail", response.message())
                     }
                 }
@@ -218,9 +255,9 @@ class RemoteDataSource {
             })
     }
 
-    fun deleteAlokasi(callback: LoadAddAlokasi, idAlokasi: Int){
+    fun deleteAlokasi(callback: LoadAddAlokasi, idAlokasi: Int) {
         ApiConfig.getApiService().deleteAlokasi(idAlokasi)
-            .enqueue(object : Callback<ResponseServe>{
+            .enqueue(object : Callback<ResponseServe> {
                 override fun onResponse(
                     call: Call<ResponseServe>,
                     response: Response<ResponseServe>
@@ -235,6 +272,7 @@ class RemoteDataSource {
 
             })
     }
+
 
     fun addPengeluaran(callback: LoadAddPengeluaranCallback, idUser: Int, idAlokasi: Int, danaPengeluaran: Int, namaPengeluaran: String){
         ApiConfig.getApiService().addPengeluaran(idUser, idAlokasi, danaPengeluaran, namaPengeluaran)
@@ -275,10 +313,15 @@ class RemoteDataSource {
         fun onLoadWishList(response: List<WishList>?)
     }
 
+    interface LoadAddWishList {
+        fun onAddWishList(response: ResponseServe?)
+    }
+
     interface LoadAddAlokasi {
         fun onLoadAlokasi(response: ResponseServe?)
     }
-    interface LoadPengeluaranCallback{
+
+    interface LoadPengeluaranCallback {
         fun onLoadPengeluaran(response: List<Pengeluaran>?)
     }
 

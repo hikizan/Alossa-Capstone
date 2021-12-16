@@ -23,7 +23,7 @@ data class Alokasi(
     val idUser: Int? = null,
 
     @field:SerializedName("nominal")
-    val nominal: Int? = null,
+    val nominal: Int = 0,
 
     @field:SerializedName("updated_at")
     val updatedAt: String? = null,

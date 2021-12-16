@@ -55,8 +55,13 @@ interface ApiService {
     @FormUrlEncoded
     @POST("wishlist/tambah")
     fun addWishlist(
-
-    )
+        @Field("idUser") idUser: Int,
+        @Field("namaBarang") namaBarang: String,
+        @Field("idAlokasi") idAlokasi: Int,
+        @Field("targetDana") targetDana: Int,
+        @Field("durasi") durasi: Int,
+        @Field("status") status: Int
+    ): Call<ResponseServe>
 
     //Pengeluaran
     @GET("pengeluaran/my/{idUser}")
@@ -73,7 +78,6 @@ interface ApiService {
     ) : Call<ResponseServe>
 
     //Alokasi
-
     @GET("alokasi/my/{idUser}")
     fun getAlokasByIdUser(
         @Path("idUser") idUser: Int

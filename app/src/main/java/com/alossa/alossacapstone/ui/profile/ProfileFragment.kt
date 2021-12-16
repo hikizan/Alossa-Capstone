@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.borderWishlist.setOnClickListener {
-            val moveToWishlist = Intent(requireContext(), WishlistActivity::class.java)
+            val moveToWishlist = Intent(binding.root.context, WishlistActivity::class.java)
             startActivity(moveToWishlist)
         }
         binding.btnLogout.setOnClickListener {

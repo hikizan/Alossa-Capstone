@@ -47,4 +47,6 @@
     <string name="sudah_punya_akun">Sudah punya akun?</string>
     <string name="nama_alokasi">Nama Alokasi</string>
     <string name="nominal">Nominal</string>
+    <string name="_0">0</string>
+    <string name="alokasi">Alokasi</string>
 </resources>
