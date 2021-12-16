@@ -3,8 +3,6 @@ package com.alossa.alossacapstone.ui.expenditure
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.alossa.alossacapstone.data.AlossaRepository
-import com.alossa.alossacapstone.data.model.Alokasi
-import com.alossa.alossacapstone.data.model.Pemasukan
 import com.alossa.alossacapstone.data.model.Pengeluaran
 import com.alossa.alossacapstone.data.model.ResponseServe
 
@@ -19,4 +17,7 @@ class ExpenditureViewModel(private val alossaRepository: AlossaRepository) : Vie
 
     fun addPengeluaran(idUser: Int, idAlokasi: Int, danaPengeluaran: Int, namaPengeluaran: String): LiveData<ResponseServe> =
         alossaRepository.addPengeluaran(idUser, idAlokasi, danaPengeluaran, namaPengeluaran)
+
+    fun updateNominalAlokasi(id: Int, nominal: Int, namaAlokasi: String): LiveData<ResponseServe> =
+        alossaRepository.updateNominalAlokasi(id, nominal, namaAlokasi)
 }

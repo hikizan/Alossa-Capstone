@@ -297,6 +297,28 @@ class RemoteDataSource {
 
     }
 
+    fun updateNominalAlokasi(callback: LoadUpdateNominalAlokasiCallback, id: Int, nominal: Int, namaAlokasi: String){
+        ApiConfig.getApiService().updateNominalAlokasi(id, nominal, namaAlokasi)
+            .enqueue(object : Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadUpdateNominalAlokasi(response.body())
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
@@ -327,6 +349,10 @@ class RemoteDataSource {
 
     interface LoadAddPengeluaranCallback{
         fun onLoadAddPengeluaran(response: ResponseServe?)
+    }
+
+    interface LoadUpdateNominalAlokasiCallback{
+        fun onLoadUpdateNominalAlokasi(response: ResponseServe?)
     }
 
 
