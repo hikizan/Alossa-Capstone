@@ -24,9 +24,10 @@ class InputExpenditureActivity : AppCompatActivity() {
 
     private val listIdAlocation = ArrayList<Int>()
     private val listNameAlocation = ArrayList<String>()
-    var number: Int? = null
-    var getStringFromDropdown: String? = null
+    private val listNominalAlocation = ArrayList<Int>()
+    var getNameAlocationSelected: String? = null
     var getIdAlocationSelected: Int? = null
+    var getNominalAlocationSelected: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,48 +44,75 @@ class InputExpenditureActivity : AppCompatActivity() {
 
         listIdAlocation.add(0)
         listNameAlocation.add("Pilih Tipe Alokasi...")
+        listNominalAlocation.add(0)
         viewModelFromHome.getAlokasiByIdUser(sharedPref.getId()).observe(this,{ alocations ->
             if (alocations.isNotEmpty()){
                 for (alokasiItem in alocations){
                     listNameAlocation.add(alokasiItem.namaAlokasi.toString())
-                    alokasiItem.id?.let { listIdAlocation.add(it) }
+                    alokasiItem.id.let { listIdAlocation.add(it) }
+                    listNominalAlocation.add(alokasiItem.nominal)
                 }
                 Log.d("InputExpenditure", "onObserve: listAlokasiName = $listNameAlocation \n listAlokasiId = $listIdAlocation \n" +
                         "alocations = $alocations \n idUser = ${sharedPref.getId()}")
 
-                addItemsOnSpinner(listNameAlocation, listIdAlocation)
+                addItemsOnSpinner(listNameAlocation, listIdAlocation, listNominalAlocation)
             }else{
                 Log.d("InputExpenditure", "onObserve: else: idUser = ${sharedPref.getId()} ")
             }
         })
 
         binding.btnSubmitExpenditure.setOnClickListener {
-
+            val namaPengeluaran = binding.edtExpenditureName.text.toString().trim()
+            val danaPengeluaran = binding.edtExpenditurePrice.text.toString().trim()
             if (getIdAlocationSelected == 0){
                 Toast.makeText(this, "Pilih Tipe Alokasi Dahulu!", Toast.LENGTH_SHORT).show()
+            }else if(danaPengeluaran.isEmpty() || namaPengeluaran.isEmpty()){
+                Toast.makeText(this, "semua field harus diisi!", Toast.LENGTH_SHORT).show()
             }else{
-                val namaPengeluaran = binding.edtExpenditureName.text.toString().trim()
-                val danaPengeluaran = binding.edtExpenditurePrice.text.toString().trim()
                 val idAlokasi = getIdAlocationSelected!!
                 val idUser = sharedPref.getId()
-                viewModel.addPengeluaran(idUser, idAlokasi, danaPengeluaran.toInt(), namaPengeluaran).observe(this, { response ->
-                    Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
-                    if (response.status.equals("success")) {
-                        //val intent = Intent(applicationContext, ExpenditureFragment::class.java)
-                        //startActivity(intent)
-                        finish()
-                    }
-                })
-                Log.d("InputExpenditure", "onclick button: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
-                        "idAlokasi = $getIdAlocationSelected \n danaPengeluaran = ${danaPengeluaran.toInt()}\n namaPengeluaran = $namaPengeluaran")
+
+                val updateNominalAlokasi: Int = getNominalAlocationSelected.minus(danaPengeluaran.toInt())
+                if (updateNominalAlokasi >= 0){
+                    viewModel.updateNominalAlokasi(idAlokasi, updateNominalAlokasi, getNameAlocationSelected.toString()).observe(this, { response ->
+                        if (response.status.equals("success")){
+                            Log.d("InputExpenditure", "cekUpdateAlokasi success: idAlokasi = $idAlokasi \nupdateNominalAlokasi = $updateNominalAlokasi \ngetNameAloacationSelected = $getNameAlocationSelected")
+                        }else{
+                            //Toast.makeText(this, "Sisa dana pada alokasi ${getNameAlocationSelected} \ntidak mencukupi", Toast.LENGTH_SHORT).show()
+                            Log.d("InputExpenditure", "cekUpdateAlokasi notSuccess: idAlokasi = $idAlokasi \nupdateNominalAlokasi = $updateNominalAlokasi \ngetNameAloacationSelected = $getNameAlocationSelected \n\nstatus = ${response.status}")
+                        }
+                        //Log.d("InputExpenditure", "cekUpdateAlokasi notInPercabangan: idAlokasi = $idAlokasi \nupdateNominalAlokasi = $updateNominalAlokasi \ngetNameAloacationSelected = $getNameAlocationSelected \n\nstatus = ${response.status}")
+                    })
+
+                    viewModel.addPengeluaran(idUser, idAlokasi, danaPengeluaran.toInt(),
+                        namaPengeluaran
+                    ).observe(this, { response ->
+                        Toast.makeText(this, response.msg, Toast.LENGTH_LONG).show()
+                        if (response.status.equals("success")) {
+                            //val intent = Intent(applicationContext, ExpenditureFragment::class.java)
+                            //startActivity(intent)
+                            finish()
+                        }
+                    })
+
+                    /*
+                    Log.d("InputExpenditure", "onclick button: alokasi yang dipilih: nama alokasi = $getNameAlocationSelected \n" +
+                            "idAlokasi = $getIdAlocationSelected \n namaPengeluaran = $namaPengeluaran \n nominalAlokasi - danaPengeluaran => $getNominalAlocationSelected - ${danaPengeluaran.toInt()} = $updateNominalAlokasi\n" +
+                            "namaAlokasi = $getNameAlocationSelected")
+                     */
+
+
+                }else{
+                    Toast.makeText(this, "Sisa dana pada alokasi ${getNameAlocationSelected} \ntidak mencukupi", Toast.LENGTH_SHORT).show()
+                }
+
             }
 
         }
 
     }
 
-    fun addItemsOnSpinner(mListNameAlocation: ArrayList<String>, mListIdAlocation: ArrayList<Int>) {
-
+    fun addItemsOnSpinner(mListNameAlocation: ArrayList<String>, mListIdAlocation: ArrayList<Int>, mListNominalAlocation: ArrayList<Int>) {
         val dataAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item, mListNameAlocation
@@ -98,11 +126,11 @@ class InputExpenditureActivity : AppCompatActivity() {
         binding.spinnerAlocationType.setOnItemSelectedListener(object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-                number = position
-                getStringFromDropdown = mListNameAlocation[position]
+                getNameAlocationSelected = mListNameAlocation[position]
                 getIdAlocationSelected = mListIdAlocation[position]
-                Log.d("InputExpenditure", "onItemSelected: alokasi yang dipilih: nama alokasi = $getStringFromDropdown \n" +
-                        "idAlokasi = $getIdAlocationSelected \n number = $number")
+                getNominalAlocationSelected = mListNominalAlocation[position]
+                Log.d("InputExpenditure", "onItemSelected: alokasi yang dipilih: nama alokasi = $getNameAlocationSelected \n" +
+                        "idAlokasi = $getIdAlocationSelected \n nominalAlokasi = $getNominalAlocationSelected")
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {

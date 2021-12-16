@@ -266,6 +266,28 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
         return serverResponse
     }
 
+    override fun updateNominalAlokasi(
+        id: Int,
+        nominal: Int,
+        namaAlokasi: String
+    ): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.updateNominalAlokasi(object : RemoteDataSource.LoadUpdateNominalAlokasiCallback {
+            override fun onLoadUpdateNominalAlokasi(response: ResponseServe?) {
+                if (response != null){
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, id, nominal, namaAlokasi)
+
+        return serverResponse
+    }
+
 
     companion object {
         @Volatile

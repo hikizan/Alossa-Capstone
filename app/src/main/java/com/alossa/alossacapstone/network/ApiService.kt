@@ -77,6 +77,13 @@ interface ApiService {
                        @Field("namaPengeluaran") namaPengeluaran: String
     ) : Call<ResponseServe>
 
+    @FormUrlEncoded
+    @POST("alokasi/update/nominal")
+    fun updateNominalAlokasi(@Field("id") id: Int,
+                             @Field("nominal") nominal: Int,
+                             @Field("namaAlokasi") namaAlokasi: String
+    ) : Call<ResponseServe>
+
     //Alokasi
     @GET("alokasi/my/{idUser}")
     fun getAlokasByIdUser(

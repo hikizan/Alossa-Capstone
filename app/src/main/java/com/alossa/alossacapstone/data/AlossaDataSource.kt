@@ -15,16 +15,19 @@ interface AlossaDataSource {
 
     fun resetPassword(email: String, token:String, password: String): LiveData<ResponseServe>
 
+
     //Pemasukan
     fun getPemasukanById(id: Int): LiveData<List<Pemasukan>>
 
-    //Alokasi
 
+    //Alokasi
     fun getAlokasiByIdUser(id: Int): LiveData<List<Alokasi>>
 
     fun addAlokasi(idUser: Int, namaAlokias: String, idPemasukan: Int, nominal: Int): LiveData<ResponseServe>
 
     fun deleteAlokasi(idAlokasi: Int): LiveData<ResponseServe>
+
+
     //WishList
     fun getWishListByIdUser(id: Int): LiveData<List<WishList>>
 
@@ -33,6 +36,10 @@ interface AlossaDataSource {
 
     //Pengeluaran
     fun getPengeluaranByIdUser(idUser: Int): LiveData<List<Pengeluaran>>
+
     fun addPengeluaran(idUser: Int, idAlokasi: Int, danaPengeluaran: Int, namaPengeluaran: String): LiveData<ResponseServe>
+
+    fun updateNominalAlokasi(id: Int, nominal: Int, namaAlokasi: String): LiveData<ResponseServe>
+
 
 }
