@@ -42,9 +42,9 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("pemasukan/tambah")
-    fun addExpenditure(
-
-    ): Call<PemasukanResponse>
+    fun addPemasukan(@Field("idUser") idUser: Int,
+                     @Field("danaPemasukan") danaPemasukan: Int
+    ): Call<ResponseServe>
 
     //Wishlist
     @GET("wishlist/my/{idUser}")

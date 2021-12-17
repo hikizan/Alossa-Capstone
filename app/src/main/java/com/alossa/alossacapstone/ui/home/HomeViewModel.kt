@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.alossa.alossacapstone.data.AlossaRepository
 import com.alossa.alossacapstone.data.model.Alokasi
+import com.alossa.alossacapstone.data.model.Pemasukan
 import com.alossa.alossacapstone.data.model.ResponseServe
 import com.alossa.alossacapstone.data.model.WishList
 
@@ -21,4 +22,9 @@ class HomeViewModel(private val alossaRepository: AlossaRepository) : ViewModel(
     fun deleteAlokasi(idAlokasi:Int): LiveData<ResponseServe> =
         alossaRepository.deleteAlokasi(idAlokasi)
 
+    fun addPemasukan(idUser: Int, danaPemasukan: Int) =
+        alossaRepository.addPemasukan(idUser, danaPemasukan)
+
+    fun getPemasukanByIdUser(id: Int): LiveData<List<Pemasukan>> =
+        alossaRepository.getPemasukanById(id)
 }
