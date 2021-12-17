@@ -83,24 +83,26 @@ class AddExpenditureActivity : AppCompatActivity() {
                             binding.btnCheck.isEnabled = false
                             binding.btnAddAlokasi.visibility = View.VISIBLE
                             binding.btnSubmit.visibility = View.VISIBLE
-                        }
-                    })
 
-                    viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { incomes ->
-                        if (incomes.isNotEmpty()){
-                            for (alokasiItem in incomes){
-                                alokasiItem.id?.let { idPemasukan -> listIdIncome.add(idPemasukan) }
-                            }
+                            viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { incomes ->
+                                if (incomes.isNotEmpty()){
+                                    for (alokasiItem in incomes){
+                                        alokasiItem.id?.let { idPemasukan -> listIdIncome.add(idPemasukan) }
+                                    }
 
-                            for (getLatestPostion in 0..listIdIncome.size){
-                                if (getLatestPostion == (listIdIncome.size - 1)){
-                                    getIdIncomesCreated = listIdIncome[getLatestPostion]
-                                    Log.d("AddExpenditure", "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion")
+                                    for (getLatestPostion in 0..listIdIncome.size){
+                                        if (getLatestPostion == (listIdIncome.size - 1)){
+                                            getIdIncomesCreated = listIdIncome[getLatestPostion]
+                                            Log.d("AddExpenditure", "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion")
+                                        }
+                                    }
                                 }
-                            }
+                                Log.d("AddExpenditure", "onClick: btnCheck: listIdIncome = $listIdIncome")
+                            })
                         }
-                        Log.d("AddExpenditure", "onClick: btnCheck: listIdIncome = $listIdIncome")
                     })
+
+
 
                 }
             } else {
