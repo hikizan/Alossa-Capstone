@@ -41,5 +41,7 @@ interface AlossaDataSource {
 
     fun updateNominalAlokasi(id: Int, nominal: Int, namaAlokasi: String): LiveData<ResponseServe>
 
+    //Laporan Bulanan
+    fun getLaporanBulanan(idUser: Int, bulan:Int, tahun: Int): LiveData<LaporanResponse>
 
 }

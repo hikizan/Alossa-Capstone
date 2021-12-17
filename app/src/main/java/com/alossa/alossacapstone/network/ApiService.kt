@@ -1,10 +1,6 @@
 package com.alossa.alossacapstone.network
 
-import com.alossa.alossacapstone.data.model.AlokasiResponse
-import com.alossa.alossacapstone.data.model.PemasukanResponse
-import com.alossa.alossacapstone.data.model.PengeluaranResponse
-import com.alossa.alossacapstone.data.model.ResponseServe
-import com.alossa.alossacapstone.data.model.WishlistResponse
+import com.alossa.alossacapstone.data.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.*
@@ -110,6 +106,14 @@ interface ApiService {
 
     )
 
+
+    //Laporan
+    @GET("laporan/my/{idUser}/{bulan}/{tahun}")
+    fun getLaporanBulanan(
+        @Path("idUser") idUser: Int,
+        @Path("bulan") bulan: Int,
+        @Path("tahun") tahun: Int
+    ): Call<LaporanResponse>
 
 
 }
