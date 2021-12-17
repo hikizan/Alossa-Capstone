@@ -95,6 +95,7 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 if (response != null) {
                     for (pemasukanResponse in response) {
                         val pemasukan = Pemasukan(
+                            id = pemasukanResponse.id,
                             danaPemasukan = pemasukanResponse.danaPemasukan,
                             createdAt = pemasukanResponse.createdAt
                         )
@@ -106,6 +107,23 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
 
         }, id)
         return pemasukanResult
+    }
+
+    override fun addPemasukan(idUser: Int, danaPemasukan: Int): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.addPemasukan(object : RemoteDataSource.LoadAddPemasukanCallback {
+            override fun onLoadAddPemasukan(response: ResponseServe?) {
+                if (response != null){
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, idUser, danaPemasukan)
+        return serverResponse
     }
 
     override fun getAlokasiByIdUser(idUser: Int): LiveData<List<Alokasi>> {

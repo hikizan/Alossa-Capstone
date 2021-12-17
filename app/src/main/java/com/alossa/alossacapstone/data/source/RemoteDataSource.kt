@@ -124,6 +124,28 @@ class RemoteDataSource {
             })
     }
 
+    fun addPemasukan(callback: LoadAddPemasukanCallback, idUser: Int, danaPemasukan: Int){
+        ApiConfig.getApiService().addPemasukan(idUser, danaPemasukan)
+            .enqueue(object : Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadAddPemasukan(response.body())
+                        Log.d("success", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
 
     fun getAlokasiByIdUser(callback: LoadAlokasiCallback, idUser: Int) {
         ApiConfig.getApiService().getAlokasByIdUser(idUser)
@@ -347,6 +369,10 @@ class RemoteDataSource {
 
     interface LoadPemasukanCallback {
         fun onLoadPemasukan(response: List<Pemasukan>?)
+    }
+
+    interface LoadAddPemasukanCallback {
+        fun onLoadAddPemasukan(response: ResponseServe?)
     }
 
     interface LoadAlokasiCallback {
