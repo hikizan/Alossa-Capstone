@@ -20,6 +20,8 @@ class WishlistActivity : AppCompatActivity() {
         _binding = ActivityWishlistBinding.inflate(layoutInflater)
         setContentView(_binding.root)
 
+        supportActionBar?.title = "Wishlist"
+
         _binding.fabAddWishlist.setOnClickListener {
             val moveToInputWishlist = Intent(this, InputWishlistActivity::class.java)
             startActivity(moveToInputWishlist)

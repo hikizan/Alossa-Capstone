@@ -22,6 +22,12 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var anyCart: AnyChartView
+    private lateinit var root: View
+
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var factory: ViewModelFactory
+    private lateinit var sharedPref: SharedPref
+    private lateinit var alocationAdapter: AlocationAdapter
 
     var typeAlokasi: Array<String> = arrayOf()
     var nominalAlokasi: Array<Int> = arrayOf()
@@ -34,15 +40,15 @@ class HomeFragment : Fragment() {
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        root = binding.root
 
 
         anyCart = binding.cart
 
-        val factory = ViewModelFactory.getInstance()
-        val viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
-        val alocationAdapter = AlocationAdapter()
-        val sharedPref = SharedPref(root.context)
+        factory = ViewModelFactory.getInstance()
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+        alocationAdapter = AlocationAdapter()
+        sharedPref = SharedPref(root.context)
 
         viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
 
@@ -76,6 +82,30 @@ class HomeFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
+
+            if (alocations.isNotEmpty()){
+                alocationAdapter.setAlocation(alocations)
+                alocationAdapter.notifyDataSetChanged()
+                for (alokasiItem in alocations) {
+                    typeAlokasi += alokasiItem.namaAlokasi.toString()
+                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
+                }
+                setLayoutVisible(true)
+                setupPieCart(typeAlokasi,nominalAlokasi)
+            } else {
+                setLayoutVisible(false)
+            }
+
+        })
+
+        binding.rvAlocation.layoutManager = LinearLayoutManager(context)
+        binding.rvAlocation.setHasFixedSize(true)
+        binding.rvAlocation.adapter = alocationAdapter
     }
 
     fun setupPieCart(mTypeAlokasi: Array<String>, mNominalAlokasi: Array<Int>){

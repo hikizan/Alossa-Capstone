@@ -18,10 +18,6 @@ class ExpenditureFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var root: View
 
-    private lateinit var viewModel: ExpenditureViewModel
-    private lateinit var factory: ViewModelFactory
-    private lateinit var sharedPref: SharedPref
-    private lateinit var expenditureAdapter: ExpenditureAdapter
 
 
     override fun onCreateView(
@@ -36,10 +32,11 @@ class ExpenditureFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        factory = ViewModelFactory.getInstance()
-        viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
-        expenditureAdapter = ExpenditureAdapter()
-        sharedPref = SharedPref(root.context)
+
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
+        val expenditureAdapter = ExpenditureAdapter()
+        val sharedPref = SharedPref(root.context)
 
 
 
@@ -64,6 +61,11 @@ class ExpenditureFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
+        val expenditureAdapter = ExpenditureAdapter()
+        val sharedPref = SharedPref(root.context)
+
         viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
                 expenditureAdapter.setExpenditures(expenditures)
@@ -71,10 +73,6 @@ class ExpenditureFragment : Fragment() {
 
             }
         })
-
-        binding.rvExpenditure.layoutManager = LinearLayoutManager(context)
-        binding.rvExpenditure.setHasFixedSize(true)
-        binding.rvExpenditure.adapter = expenditureAdapter
     }
 
 }

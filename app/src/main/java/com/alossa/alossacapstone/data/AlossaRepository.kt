@@ -95,6 +95,7 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 if (response != null) {
                     for (pemasukanResponse in response) {
                         val pemasukan = Pemasukan(
+                            id = pemasukanResponse.id,
                             danaPemasukan = pemasukanResponse.danaPemasukan,
                             createdAt = pemasukanResponse.createdAt
                         )
@@ -106,6 +107,23 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
 
         }, id)
         return pemasukanResult
+    }
+
+    override fun addPemasukan(idUser: Int, danaPemasukan: Int): LiveData<ResponseServe> {
+        val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.addPemasukan(object : RemoteDataSource.LoadAddPemasukanCallback {
+            override fun onLoadAddPemasukan(response: ResponseServe?) {
+                if (response != null){
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, idUser, danaPemasukan)
+        return serverResponse
     }
 
     override fun getAlokasiByIdUser(idUser: Int): LiveData<List<Alokasi>> {
@@ -284,6 +302,33 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
             }
 
         }, id, nominal, namaAlokasi)
+
+        return serverResponse
+    }
+
+    override fun getLaporanBulanan(
+        idUser: Int,
+        bulan: Int,
+        tahun: Int
+    ): LiveData<LaporanResponse> {
+        val serverResponse = MutableLiveData<LaporanResponse>()
+        remoteDataSource.getLaporanBulanan(object : RemoteDataSource.LoadLaporanBulanan {
+            override fun onLoadLaporanBulanan(response: LaporanResponse?) {
+                if (response != null){
+                    val res = LaporanResponse(
+                        status = response.status,
+                        sisa = response.sisa,
+                        pemasukan = response.pemasukan,
+                        pengeluaran = response.pengeluaran,
+                        alokasi = response.alokasi,
+                        msg = response.msg,
+                        content = response.content
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, idUser, bulan, tahun)
 
         return serverResponse
     }

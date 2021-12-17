@@ -23,7 +23,6 @@ class ExpenditureFragment : Fragment() {
     private lateinit var sharedPref: SharedPref
     private lateinit var expenditureAdapter: ExpenditureAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +39,6 @@ class ExpenditureFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
         expenditureAdapter = ExpenditureAdapter()
         sharedPref = SharedPref(root.context)
-
-
 
         viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
@@ -63,7 +60,6 @@ class ExpenditureFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
                 expenditureAdapter.setExpenditures(expenditures)

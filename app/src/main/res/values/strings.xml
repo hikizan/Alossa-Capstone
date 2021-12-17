@@ -36,7 +36,7 @@
     <string name="input_data">Input Data</string>
     <string name="_500_000">500.000</string>
     <string name="tambah_alokasi">Tambah Alokasi</string>
-    <string name="subtmit">Subtmit</string>
+    <string name="subtmit">Submit</string>
     <string name="check">Check</string>
     <string name="pemasukan">Pemasukan</string>
     <string name="apakah_anda_yakin_ingin_menghapus_alokasi_ini">Apakah anda yakin ingin menghapus Alokasi ini?</string>
@@ -49,4 +49,19 @@
     <string name="nominal">Nominal</string>
     <string name="_0">0</string>
     <string name="alokasi">Alokasi</string>
+
+    <string-array name="month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>

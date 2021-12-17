@@ -19,6 +19,8 @@ interface AlossaDataSource {
     //Pemasukan
     fun getPemasukanById(id: Int): LiveData<List<Pemasukan>>
 
+    fun addPemasukan(idUser: Int, danaPemasukan: Int): LiveData<ResponseServe>
+
 
     //Alokasi
     fun getAlokasiByIdUser(id: Int): LiveData<List<Alokasi>>
@@ -41,5 +43,7 @@ interface AlossaDataSource {
 
     fun updateNominalAlokasi(id: Int, nominal: Int, namaAlokasi: String): LiveData<ResponseServe>
 
+    //Laporan Bulanan
+    fun getLaporanBulanan(idUser: Int, bulan:Int, tahun: Int): LiveData<LaporanResponse>
 
 }
