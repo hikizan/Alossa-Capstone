@@ -19,6 +19,7 @@ class ExpenditureFragment : Fragment() {
     private lateinit var root: View
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,10 +32,13 @@ class ExpenditureFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
         val expenditureAdapter = ExpenditureAdapter()
         val sharedPref = SharedPref(root.context)
+
+
 
         viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
@@ -52,6 +56,23 @@ class ExpenditureFragment : Fragment() {
             val moveToInput = Intent(requireContext(), InputExpenditureActivity::class.java)
             startActivity(moveToInput)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory)[ExpenditureViewModel::class.java]
+        val expenditureAdapter = ExpenditureAdapter()
+        val sharedPref = SharedPref(root.context)
+
+        viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
+            if (expenditures.isNotEmpty()){
+                expenditureAdapter.setExpenditures(expenditures)
+                expenditureAdapter.notifyDataSetChanged()
+
+            }
+        })
     }
 
 }
