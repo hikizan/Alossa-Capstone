@@ -24,10 +24,12 @@ import com.alossa.alossacapstone.utils.ViewModelFactory
 class AddExpenditureActivity : AppCompatActivity() {
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var factory: ViewModelFactory
     private lateinit var sharedPref: SharedPref
     private lateinit var alokasiAdapter: AlokasiAdapter
     private lateinit var recycler: RecyclerView
     private lateinit var binding: ActivityAddExpenditureBinding
+    private lateinit var pemasukan: String
     var totalAlokasi = 0
     var sisaDana = 0
 
@@ -39,8 +41,8 @@ class AddExpenditureActivity : AppCompatActivity() {
         binding = ActivityAddExpenditureBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val factory = ViewModelFactory.getInstance()
-        val pemasukan = binding.edtxPemasukan.text
+        factory = ViewModelFactory.getInstance()
+        pemasukan = binding.edtxPemasukan.text.toString()
 
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         sharedPref = SharedPref(this)
@@ -63,46 +65,18 @@ class AddExpenditureActivity : AppCompatActivity() {
         })
 
         binding.btnCheck.setOnClickListener {
-            if (pemasukan.toString().isNotEmpty()) {
-                if (pemasukan.toString().toLong() < totalAlokasi) {
+            if (pemasukan.isNotEmpty()) {
+                if (pemasukan.toLong() < totalAlokasi) {
                     Toast.makeText(
                         this,
                         "Pemasukan lebih kecil dari dana wishlist",
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    sisaDana = (pemasukan.toString().toLong() - totalAlokasi).toInt()
+                    sisaDana = (pemasukan.toLong() - totalAlokasi).toInt()
                     binding.txtSisaDana.text = "Rp.$sisaDana"
 
-                    viewModel.addPemasukan(sharedPref.getId(), pemasukan.toString().trim().toInt()).observe(this, {
-                        if (it.status.equals("success")){
-                            Log.d("AddExpenditure", "onClick: btnCheck: nominal pemasukan = ${pemasukan.toString()} ")
-                            binding.edtxPemasukan.setTextColor(Color.GRAY)
-                            binding.edtxPemasukan.inputType = InputType.TYPE_NULL
-                            binding.btnCheck.setBackgroundResource(R.drawable.red_outline)
-                            binding.btnCheck.isEnabled = false
-                            binding.btnAddAlokasi.visibility = View.VISIBLE
-                            binding.btnSubmit.visibility = View.VISIBLE
-
-                            viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { incomes ->
-                                if (incomes.isNotEmpty()){
-                                    for (alokasiItem in incomes){
-                                        alokasiItem.id?.let { idPemasukan -> listIdIncome.add(idPemasukan) }
-                                    }
-
-                                    for (getLatestPostion in 0..listIdIncome.size){
-                                        if (getLatestPostion == (listIdIncome.size - 1)){
-                                            getIdIncomesCreated = listIdIncome[getLatestPostion]
-                                            Log.d("AddExpenditure", "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion")
-                                        }
-                                    }
-                                }
-                                Log.d("AddExpenditure", "onClick: btnCheck: listIdIncome = $listIdIncome")
-                            })
-                        }
-                    })
-
-
+                    onCheckedButton()
 
                 }
             } else {
@@ -116,10 +90,10 @@ class AddExpenditureActivity : AppCompatActivity() {
             adapter = alokasiAdapter
         }
 
-        //sebelum muncul dialog kasih if kondisi dahulu untuk check idpemasukan
+
         binding.btnAddAlokasi.setOnClickListener {
             Log.d("AddExpenditure", "onClick: btnAddAlokasi: idPemasukan = $getIdIncomesCreated ")
-            /*
+
             if (getIdIncomesCreated != null){
 
                 Dialog(this).apply {
@@ -167,8 +141,41 @@ class AddExpenditureActivity : AppCompatActivity() {
 
             }
 
-             */
         }
+
+        binding.btnSubmit.setOnClickListener {
+            
+        }
+    }
+
+    fun onCheckedButton(){
+        viewModel.addPemasukan(sharedPref.getId(), pemasukan.trim().toInt()).observe(this, {
+            if (it.status.equals("success")){
+                Log.d("AddExpenditure", "onClick: btnCheck: nominal pemasukan = ${pemasukan} ")
+                binding.edtxPemasukan.setTextColor(Color.GRAY)
+                binding.edtxPemasukan.inputType = InputType.TYPE_NULL
+                binding.btnCheck.setBackgroundResource(R.drawable.red_outline)
+                binding.btnCheck.isEnabled = false
+                binding.btnAddAlokasi.visibility = View.VISIBLE
+                binding.btnSubmit.visibility = View.VISIBLE
+
+                viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { incomes ->
+                    if (incomes.isNotEmpty()){
+                        for (alokasiItem in incomes){
+                            alokasiItem.id?.let { idPemasukan -> listIdIncome.add(idPemasukan) }
+                        }
+
+                        for (getLatestPostion in 0..listIdIncome.size){
+                            if (getLatestPostion == (listIdIncome.size - 1)){
+                                getIdIncomesCreated = listIdIncome[getLatestPostion]
+                                Log.d("AddExpenditure", "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion")
+                            }
+                        }
+                    }
+                    Log.d("AddExpenditure", "onClick: btnCheck: listIdIncome = $listIdIncome")
+                })
+            }
+        })
     }
 
     fun initAction() {
