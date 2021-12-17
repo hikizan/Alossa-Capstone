@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         alocationAdapter = AlocationAdapter()
         sharedPref = SharedPref(root.context)
-
+        
         viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
 
             if (alocations.isNotEmpty()){
