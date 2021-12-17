@@ -34,7 +34,7 @@ class AlokasiAdapter : RecyclerView.Adapter<AlokasiAdapter.AlokasiViewHolder>() 
        val alokasi = listAlokasi[position]
         holder.getAlokasi = alokasi
         holder.binding.apply {
-            tvAlocationNominal.text = alokasi.nominal.toString()
+            tvAlocationNominal.text = "Rp.${alokasi.nominal}"
             tvAlocationTypeName.text = alokasi.namaAlokasi.toString()
             }
         }

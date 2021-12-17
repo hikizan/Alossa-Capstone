@@ -341,6 +341,28 @@ class RemoteDataSource {
             })
     }
 
+    fun getLaporanBulanan(callback: LoadLaporanBulanan, idUser: Int, bulan: Int, tahun:Int){
+        ApiConfig.getApiService().getLaporanBulanan(idUser, bulan, tahun)
+            .enqueue(object : Callback<LaporanResponse>{
+                override fun onResponse(
+                    call: Call<LaporanResponse>,
+                    response: Response<LaporanResponse>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadLaporanBulanan(response.body())
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<LaporanResponse>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
@@ -379,6 +401,10 @@ class RemoteDataSource {
 
     interface LoadUpdateNominalAlokasiCallback{
         fun onLoadUpdateNominalAlokasi(response: ResponseServe?)
+    }
+
+    interface LoadLaporanBulanan{
+        fun onLoadLaporanBulanan(response: LaporanResponse?)
     }
 
 

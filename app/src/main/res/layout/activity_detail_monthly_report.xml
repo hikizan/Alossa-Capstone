@@ -7,27 +7,16 @@
     android:padding="16dp"
     tools:context=".ui.profile.DetailMonthlyReportActivity">
 
-    <TextView
-        android:id="@+id/tv_tahun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tahun 2021"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/ll_border1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/bgwhite_with_redoutline"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tahun"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.46">
 
         <TextView
