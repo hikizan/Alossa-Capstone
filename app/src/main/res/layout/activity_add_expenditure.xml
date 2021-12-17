@@ -112,14 +112,17 @@
             android:layout_gravity="center"
             android:background="@drawable/rounded_botton"
             android:text="@string/tambah_alokasi"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:layout_margin="10dp"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_submit"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/rounded_botton"
             android:text="@string/subtmit"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:layout_margin="10dp"/>
     </LinearLayout>

@@ -1,12 +1,15 @@
 package com.alossa.alossacapstone.ui.home
 
 import android.app.Dialog
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -28,6 +31,8 @@ class AddExpenditureActivity : AppCompatActivity() {
     var totalAlokasi = 0
     var sisaDana = 0
 
+    private val listIdIncome = ArrayList<Int>()
+    var getIdIncomesCreated: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +73,35 @@ class AddExpenditureActivity : AppCompatActivity() {
                 } else {
                     sisaDana = (pemasukan.toString().toLong() - totalAlokasi).toInt()
                     binding.txtSisaDana.text = "Rp.$sisaDana"
+
+                    viewModel.addPemasukan(sharedPref.getId(), pemasukan.toString().trim().toInt()).observe(this, {
+                        if (it.status.equals("success")){
+                            Log.d("AddExpenditure", "onClick: btnCheck: nominal pemasukan = ${pemasukan.toString()} ")
+                            binding.edtxPemasukan.setTextColor(Color.GRAY)
+                            binding.edtxPemasukan.inputType = InputType.TYPE_NULL
+                            binding.btnCheck.setBackgroundResource(R.drawable.red_outline)
+                            binding.btnCheck.isEnabled = false
+                            binding.btnAddAlokasi.visibility = View.VISIBLE
+                            binding.btnSubmit.visibility = View.VISIBLE
+                        }
+                    })
+
+                    viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { incomes ->
+                        if (incomes.isNotEmpty()){
+                            for (alokasiItem in incomes){
+                                alokasiItem.id?.let { idPemasukan -> listIdIncome.add(idPemasukan) }
+                            }
+
+                            for (getLatestPostion in 0..listIdIncome.size){
+                                if (getLatestPostion == (listIdIncome.size - 1)){
+                                    getIdIncomesCreated = listIdIncome[getLatestPostion]
+                                    Log.d("AddExpenditure", "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion")
+                                }
+                            }
+                        }
+                        Log.d("AddExpenditure", "onClick: btnCheck: listIdIncome = $listIdIncome")
+                    })
+
                 }
             } else {
                 println("Empty")
@@ -80,49 +114,58 @@ class AddExpenditureActivity : AppCompatActivity() {
             adapter = alokasiAdapter
         }
 
+        //sebelum muncul dialog kasih if kondisi dahulu untuk check idpemasukan
         binding.btnAddAlokasi.setOnClickListener {
-            Dialog(this).apply {
-                requestWindowFeature(Window.FEATURE_NO_TITLE)
-                setCancelable(true)
-                setContentView(R.layout.activity_tambah_alokasi)
-                val namaAlokasi = this.findViewById<EditText>(R.id.edtx_nama_alokasi).text
-                val nominal = this.findViewById<EditText>(R.id.edtx_nominal).text
-                val btnSubmit = this.findViewById<Button>(R.id.btn_add_alokasi)
-                btnSubmit.setOnClickListener {
-                    if (nominal.toString().isNotEmpty()) {
-                        if ((sisaDana - nominal.toString().toInt()) >= 0) {
-                            sisaDana -= nominal.toString().toInt()
-                            binding.txtSisaDana.text = "Rp.$sisaDana"
-                            viewModel.addAlokasi(
-                                sharedPref.getId(),
-                                namaAlokasi.toString(),
-                                1,
-                                nominal.toString().toInt()
-                            )
-                                .observe(this@AddExpenditureActivity, { response ->
-                                    Toast.makeText(
-                                        this@AddExpenditureActivity,
-                                        response.msg,
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                    if (response.status.equals("success")) {
-                                        this.dismiss()
-                                        viewModel.getAlokasiByIdUser(sharedPref.getId())
-                                            .observe(this@AddExpenditureActivity, {
-                                                alokasiAdapter.setAlokasi(it)
-                                            })
-                                    }
-                                })
-                        } else {
-                            Toast.makeText(
-                                this@AddExpenditureActivity,
-                                "Dana tidak cukup sisa dana anda $sisaDana",
-                                Toast.LENGTH_LONG
-                            ).show()
+            Log.d("AddExpenditure", "onClick: btnAddAlokasi: idPemasukan = $getIdIncomesCreated ")
+            /*
+            if (getIdIncomesCreated != null){
+
+                Dialog(this).apply {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    setCancelable(true)
+                    setContentView(R.layout.activity_tambah_alokasi)
+                    val namaAlokasi = this.findViewById<EditText>(R.id.edtx_nama_alokasi).text
+                    val nominal = this.findViewById<EditText>(R.id.edtx_nominal).text
+                    val btnSubmit = this.findViewById<Button>(R.id.btn_add_alokasi)
+                    btnSubmit.setOnClickListener {
+                        if (nominal.toString().isNotEmpty()) {
+                            if ((sisaDana - nominal.toString().toInt()) >= 0) {
+                                sisaDana -= nominal.toString().toInt()
+                                binding.txtSisaDana.text = "Rp.$sisaDana"
+                                viewModel.addAlokasi(
+                                    sharedPref.getId(),
+                                    namaAlokasi.toString(),
+                                    getIdIncomesCreated!!,
+                                    nominal.toString().toInt()
+                                )
+                                    .observe(this@AddExpenditureActivity, { response ->
+                                        Toast.makeText(
+                                            this@AddExpenditureActivity,
+                                            response.msg,
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        if (response.status.equals("success")) {
+                                            this.dismiss()
+                                            viewModel.getAlokasiByIdUser(sharedPref.getId())
+                                                .observe(this@AddExpenditureActivity, {
+                                                    alokasiAdapter.setAlokasi(it)
+                                                })
+                                        }
+                                    })
+                            } else {
+                                Toast.makeText(
+                                    this@AddExpenditureActivity,
+                                    "Dana tidak cukup sisa dana anda $sisaDana",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
                     }
-                }
-            }.show()
+                }.show()
+
+            }
+
+             */
         }
     }
 

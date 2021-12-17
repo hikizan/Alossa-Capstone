@@ -95,6 +95,7 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 if (response != null) {
                     for (pemasukanResponse in response) {
                         val pemasukan = Pemasukan(
+                            id = pemasukanResponse.id,
                             danaPemasukan = pemasukanResponse.danaPemasukan,
                             createdAt = pemasukanResponse.createdAt
                         )
