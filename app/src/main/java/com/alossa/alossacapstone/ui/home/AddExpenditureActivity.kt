@@ -29,7 +29,7 @@ class AddExpenditureActivity : AppCompatActivity() {
     private lateinit var alokasiAdapter: AlokasiAdapter
     private lateinit var recycler: RecyclerView
     private lateinit var binding: ActivityAddExpenditureBinding
-    private lateinit var pemasukan: String
+    private var pemasukan: String? = null
     var totalAlokasi = 0
     var sisaDana = 0
 
@@ -65,22 +65,27 @@ class AddExpenditureActivity : AppCompatActivity() {
         })
 
         binding.btnCheck.setOnClickListener {
-            if (pemasukan.isNotEmpty()) {
-                if (pemasukan.toLong() < totalAlokasi) {
+            pemasukan = binding.edtxPemasukan.text.toString()
+            if (pemasukan.isNullOrEmpty()) {
+                Toast.makeText(this,"Input field Pemasukan dulu ya", Toast.LENGTH_SHORT).show()
+                println("Empty")
+                Log.d("AddExpenditure", "onClick: btnCheck: pemasukan = $pemasukan ")
+
+            } else {
+                Log.d("AddExpenditure", "onClick: btnCheck: from else branch pemasukan = $pemasukan ")
+                if (pemasukan!!.toLong() < totalAlokasi) {
                     Toast.makeText(
                         this,
                         "Pemasukan lebih kecil dari dana wishlist",
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    sisaDana = (pemasukan.toLong() - totalAlokasi).toInt()
+                    sisaDana = (pemasukan!!.toLong() - totalAlokasi).toInt()
                     binding.txtSisaDana.text = "Rp.$sisaDana"
 
                     onCheckedButton()
 
                 }
-            } else {
-                println("Empty")
             }
         }
 
@@ -144,12 +149,16 @@ class AddExpenditureActivity : AppCompatActivity() {
         }
 
         binding.btnSubmit.setOnClickListener {
-            
+            if (sisaDana == 0){
+                finish()
+            }else{
+                Toast.makeText(this, "Alokasikan dana yang tersisa :)", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     fun onCheckedButton(){
-        viewModel.addPemasukan(sharedPref.getId(), pemasukan.trim().toInt()).observe(this, {
+        viewModel.addPemasukan(sharedPref.getId(), pemasukan!!.trim().toInt()).observe(this, {
             if (it.status.equals("success")){
                 Log.d("AddExpenditure", "onClick: btnCheck: nominal pemasukan = ${pemasukan} ")
                 binding.edtxPemasukan.setTextColor(Color.GRAY)
