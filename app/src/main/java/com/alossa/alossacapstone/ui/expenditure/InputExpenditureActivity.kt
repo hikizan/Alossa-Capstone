@@ -62,7 +62,7 @@ class InputExpenditureActivity : AppCompatActivity() {
         binding.btnSubmitExpenditure.setOnClickListener {
             val namaPengeluaran = binding.edtExpenditureName.text.toString().trim()
             val danaPengeluaran = binding.edtExpenditurePrice.text.toString().trim()
-            if (getIdAlocationSelected == 0) {
+            if (getIdAlocationSelected == 0 || getIdAlocationSelected == null) {
                 Toast.makeText(this, "Pilih Tipe Alokasi Dahulu!", Toast.LENGTH_SHORT).show()
             } else if (danaPengeluaran.isEmpty() || namaPengeluaran.isEmpty()) {
                 Toast.makeText(this, "semua field harus diisi!", Toast.LENGTH_SHORT).show()
