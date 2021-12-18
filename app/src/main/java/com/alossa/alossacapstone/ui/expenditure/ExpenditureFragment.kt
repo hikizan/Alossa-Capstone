@@ -70,6 +70,9 @@ class ExpenditureFragment : Fragment() {
                 expenditureAdapter.setExpenditures(expenditures)
                 expenditureAdapter.notifyDataSetChanged()
 
+                binding.progressBar.visibility = View.INVISIBLE
+            }else{
+                binding.progressBar.visibility = View.VISIBLE
             }
         })
 
