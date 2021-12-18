@@ -42,7 +42,7 @@ class ExpenditureFragment : Fragment() {
         sharedPref = SharedPref(root.context)
 
 
-
+        /*
         viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
                 expenditureAdapter.setExpenditures(expenditures)
@@ -54,6 +54,7 @@ class ExpenditureFragment : Fragment() {
         binding.rvExpenditure.layoutManager = LinearLayoutManager(context)
         binding.rvExpenditure.setHasFixedSize(true)
         binding.rvExpenditure.adapter = expenditureAdapter
+         */
 
         binding.fabAddExpenditure.setOnClickListener {
             val moveToInput = Intent(requireContext(), InputExpenditureActivity::class.java)
