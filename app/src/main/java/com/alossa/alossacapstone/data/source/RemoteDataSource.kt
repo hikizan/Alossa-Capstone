@@ -102,8 +102,8 @@ class RemoteDataSource {
             })
     }
 
-    fun getPemasukanById(callback: LoadPemasukanCallback, id: Int) {
-        ApiConfig.getApiService().getPemasukanById(id)
+    fun getPemasukanById(callback: LoadPemasukanCallback, idUser: Int) {
+        ApiConfig.getApiService().getPemasukanById(idUser)
             .enqueue(object : Callback<PemasukanResponse> {
                 override fun onResponse(
                     call: Call<PemasukanResponse>,
