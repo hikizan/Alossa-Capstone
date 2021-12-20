@@ -5,18 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.alossa.alossacapstone.adapter.WishlistAdapter
 import com.alossa.alossacapstone.databinding.ActivityWishlistBinding
 import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
 import android.widget.Toast
 
-import com.alossa.alossacapstone.MainActivity
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
+import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 
@@ -31,6 +30,9 @@ class WishlistActivity : AppCompatActivity() {
         setContentView(_binding.root)
 
         supportActionBar?.title = "Wishlist"
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        _binding.progressBar.visibility = View.VISIBLE
 
         _binding.fabAddWishlist.setOnClickListener {
             val moveToInputWishlist = Intent(this, InputWishlistActivity::class.java)
@@ -44,6 +46,7 @@ class WishlistActivity : AppCompatActivity() {
 
         viewModel.getWishlistById(sharedPref.getId()).observe(this, {
             wishlistAdapter.setWishlist(it)
+            _binding.progressBar.visibility = View.GONE
         })
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
              IntentFilter("custom-message")
@@ -67,5 +70,10 @@ class WishlistActivity : AppCompatActivity() {
                 }
             })
           }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

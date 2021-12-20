@@ -177,12 +177,6 @@ class RemoteDataSource {
         durasi: Int,
         status: Int
     ) {
-        println(idUser)
-        println(namaBarang)
-        println(idAlokasi)
-        println(targetDana)
-        println(durasi)
-        println(status)
 
         ApiConfig.getApiService().addWishlist(idUser, namaBarang, idAlokasi, targetDana, durasi, status)
             .enqueue(object :Callback<ResponseServe>{

@@ -18,6 +18,11 @@ class InputWishlistActivity : AppCompatActivity() {
 
         _binding = ActivityInputWishlistBinding.inflate(layoutInflater)
         setContentView(_binding.root)
+
+        supportActionBar?.title = "Tambah Wishlist"
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[ProfilViewModel::class.java]
         val sharedPref = SharedPref(this)
@@ -44,5 +49,10 @@ class InputWishlistActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
