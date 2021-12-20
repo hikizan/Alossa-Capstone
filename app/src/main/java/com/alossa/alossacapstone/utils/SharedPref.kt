@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPref(mContext : Context)  {
-    val login = "session_status"
-    val id = "id"
-    private val mypref = "MAIN_PRF"
     private val sp: SharedPreferences
 
     init {
@@ -25,6 +22,22 @@ class SharedPref(mContext : Context)  {
         return sp.getInt(id,0)
     }
 
+    fun setEmail(emailUser: String ? = null){
+        sp.edit().putString(email, emailUser!!).apply()
+    }
+
+    fun getEmail(): String{
+        return sp.getString(email, "").toString()
+    }
+
+    fun setName(nameUser: String ? = null){
+        sp.edit().putString(name, nameUser!!).apply()
+    }
+
+    fun getName(): String{
+        return sp.getString(name, "").toString()
+    }
+
     fun getStatusLogin() : Boolean{
         return sp.getBoolean(login, false)
     }
@@ -32,5 +45,15 @@ class SharedPref(mContext : Context)  {
     fun logout(){
         sp.edit().putBoolean(login, false).apply()
         sp.edit().putInt(id,0).apply()
+        sp.edit().putString(email, "").apply()
+        sp.edit().putString(name, "").apply()
+    }
+
+    companion object{
+        val login = "session_status"
+        val id = "id"
+        val email = "email"
+        val name = "name"
+        private val mypref = "MAIN_PRF"
     }
 }

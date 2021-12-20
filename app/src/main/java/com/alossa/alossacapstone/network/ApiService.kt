@@ -59,6 +59,12 @@ interface ApiService {
         @Field("status") status: Int
     ): Call<ResponseServe>
 
+    @GET("wishlist/update/status/{id}/{status}")
+    fun updateStatusWishlist(
+        @Path("id")id:Int,
+        @Path("status") status: Int
+    ): Call<ResponseServe>
+
     //Pengeluaran
     @GET("pengeluaran/my/{idUser}")
     fun getPengeluaranByIdUser(

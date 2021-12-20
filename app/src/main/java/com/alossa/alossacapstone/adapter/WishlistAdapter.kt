@@ -6,7 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alossa.alossacapstone.data.model.WishList
 import com.alossa.alossacapstone.databinding.ItemRowWishlistBinding
+import com.alossa.alossacapstone.ui.profile.ProfilViewModel
 import com.alossa.alossacapstone.utils.WishlistDiffCallback
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+
+import android.content.Intent
+import android.graphics.Color
+
 
 class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
 
@@ -38,10 +44,12 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>
             when(wishlist.status){
                 0 ->{
                     tvStatusPro.text = "Tidak Aktif"
+                    tvStatusPro.setTextColor(Color.RED)
                     switchWishlist.isChecked = false
                 }
                 1 ->{
                     tvStatusPro.text = "Proses"
+                    tvStatusPro.setTextColor(Color.GREEN)
                     switchWishlist.isChecked = true
                 }
                 2 ->{
@@ -51,15 +59,28 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>
             }
             tvWishlistTarget.text = "Rp.${wishlist.targetDana}"
             tvWishlistDurationBymonth.text = "${wishlist.durasi} bulan"
-            tvWishlistNominalCollected.text = (wishlist.targetDana/wishlist.durasi).toString()
+            tvWishlistNominalCollected.text = "Rp.${wishlist.danaTerkumpul}"
             tvWishlistDate.text = wishlist.createdAt
 
             switchWishlist.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
+                val wishlistId: Int = wishlist.id.toInt()
+                val intent = Intent("custom-message")
+                var status = 0
+                intent.putExtra("id", wishlistId)
+                if (isChecked)  {
                     holder.status = 1
+                    status = 1
+                    tvStatusPro.text = "Proses"
+                    tvStatusPro.setTextColor(Color.GREEN)
                 } else {
                     holder.status = 0
+                    tvStatusPro.text = "Tidak Aktif"
+                    tvStatusPro.setTextColor(Color.RED)
+                    status =0
                 }
+                intent.putExtra("status", status)
+                LocalBroadcastManager.getInstance(holder.binding.root.context).sendBroadcast(intent)
+
             }
         }
     }

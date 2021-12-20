@@ -341,6 +341,28 @@ class RemoteDataSource {
             })
     }
 
+    fun updateWihslistStatus(callback: LoadUpdateSatatusWishList, id:Int, status: Int){
+        ApiConfig.getApiService().updateStatusWishlist(id, status)
+            .enqueue(object : Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onUpdateStatusishList(response.body())
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
@@ -359,6 +381,10 @@ class RemoteDataSource {
 
     interface LoadAddWishList {
         fun onAddWishList(response: ResponseServe?)
+    }
+
+    interface LoadUpdateSatatusWishList{
+        fun onUpdateStatusishList(response: ResponseServe?)
     }
 
     interface LoadAddAlokasi {
