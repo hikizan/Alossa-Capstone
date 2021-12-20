@@ -53,28 +53,6 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         alocationAdapter = AlocationAdapter()
         sharedPref = SharedPref(root.context)
-        /*
-        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
-
-            if (alocations.isNotEmpty()){
-                alocationAdapter.setAlocation(alocations)
-                alocationAdapter.notifyDataSetChanged()
-                for (alokasiItem in alocations) {
-                    typeAlokasi += alokasiItem.namaAlokasi.toString()
-                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
-                }
-                setLayoutVisible(true)
-                setupPieCart(typeAlokasi,nominalAlokasi)
-            } else {
-                setLayoutVisible(false)
-            }
-
-        })
-
-        binding.rvAlocation.layoutManager = LinearLayoutManager(context)
-        binding.rvAlocation.setHasFixedSize(true)
-        binding.rvAlocation.adapter = alocationAdapter
-         */
 
         binding.btnInputdata.setOnClickListener {
             val moveToAddExpenditure = Intent(context,AddExpenditureActivity::class.java)
@@ -99,7 +77,7 @@ class HomeFragment : Fragment() {
                 alocationAdapter.notifyDataSetChanged()
                 for (alokasiItem in alocations) {
                     typeAlokasi += alokasiItem.namaAlokasi.toString()
-                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
+                    nominalAlokasi += alokasiItem.nominal
                 }
                 setLayoutVisible(true)
                 setupPieCart(typeAlokasi,nominalAlokasi)
@@ -107,8 +85,6 @@ class HomeFragment : Fragment() {
                 bottomProgressBar.visibility = View.INVISIBLE
             } else {
                 setLayoutVisible(false)
-                topProgressBar.visibility = View.VISIBLE
-                bottomProgressBar.visibility = View.VISIBLE
             }
 
         })
