@@ -23,6 +23,7 @@ class ExpenditureFragment : Fragment() {
     private lateinit var sharedPref: SharedPref
     private lateinit var expenditureAdapter: ExpenditureAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +41,6 @@ class ExpenditureFragment : Fragment() {
         expenditureAdapter = ExpenditureAdapter()
         sharedPref = SharedPref(root.context)
 
-        viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
-            if (expenditures.isNotEmpty()){
-                expenditureAdapter.setExpenditures(expenditures)
-                expenditureAdapter.notifyDataSetChanged()
-
-            }
-        })
-
-        binding.rvExpenditure.layoutManager = LinearLayoutManager(context)
-        binding.rvExpenditure.setHasFixedSize(true)
-        binding.rvExpenditure.adapter = expenditureAdapter
-
         binding.fabAddExpenditure.setOnClickListener {
             val moveToInput = Intent(requireContext(), InputExpenditureActivity::class.java)
             startActivity(moveToInput)
@@ -60,11 +49,15 @@ class ExpenditureFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         viewModel.getPengeluaranByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { expenditures ->
             if (expenditures.isNotEmpty()){
                 expenditureAdapter.setExpenditures(expenditures)
                 expenditureAdapter.notifyDataSetChanged()
 
+                binding.progressBar.visibility = View.INVISIBLE
+            }else{
+                //binding.progressBar.visibility = View.VISIBLE
             }
         })
 

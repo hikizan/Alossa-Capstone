@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,8 @@ class HomeFragment : Fragment() {
     private lateinit var anyCart: AnyChartView
     private lateinit var root: View
 
+    private lateinit var topProgressBar: ProgressBar
+    private lateinit var bottomProgressBar: ProgressBar
     private lateinit var viewModel: HomeViewModel
     private lateinit var factory: ViewModelFactory
     private lateinit var sharedPref: SharedPref
@@ -42,34 +45,14 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         root = binding.root
 
-
         anyCart = binding.cart
+        topProgressBar = binding.progressBarTop
+        bottomProgressBar = binding.progressBarBottom
 
         factory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         alocationAdapter = AlocationAdapter()
         sharedPref = SharedPref(root.context)
-
-        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
-
-            if (alocations.isNotEmpty()){
-                alocationAdapter.setAlocation(alocations)
-                alocationAdapter.notifyDataSetChanged()
-                for (alokasiItem in alocations) {
-                    typeAlokasi += alokasiItem.namaAlokasi.toString()
-                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
-                }
-                setLayoutVisible(true)
-                setupPieCart(typeAlokasi,nominalAlokasi)
-            } else {
-                setLayoutVisible(false)
-            }
-
-        })
-
-        binding.rvAlocation.layoutManager = LinearLayoutManager(context)
-        binding.rvAlocation.setHasFixedSize(true)
-        binding.rvAlocation.adapter = alocationAdapter
 
         binding.btnInputdata.setOnClickListener {
             val moveToAddExpenditure = Intent(context,AddExpenditureActivity::class.java)
@@ -86,6 +69,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
 
             if (alocations.isNotEmpty()){
@@ -93,10 +77,12 @@ class HomeFragment : Fragment() {
                 alocationAdapter.notifyDataSetChanged()
                 for (alokasiItem in alocations) {
                     typeAlokasi += alokasiItem.namaAlokasi.toString()
-                    nominalAlokasi += alokasiItem.nominal?.toInt() ?: 0
+                    nominalAlokasi += alokasiItem.nominal
                 }
                 setLayoutVisible(true)
                 setupPieCart(typeAlokasi,nominalAlokasi)
+                topProgressBar.visibility = View.INVISIBLE
+                bottomProgressBar.visibility = View.INVISIBLE
             } else {
                 setLayoutVisible(false)
             }
