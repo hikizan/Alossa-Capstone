@@ -28,6 +28,8 @@ class MonthlyReportActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = "Laporan Bulanan"
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val factory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, factory)[ProfilViewModel::class.java]
@@ -88,6 +90,8 @@ class MonthlyReportActivity : AppCompatActivity() {
     }
 
     fun initData(idUser:Int, month:Int, year: Int){
+
+        binding.progressBar.visibility = View.VISIBLE
         viewModel.getLaporanBulanan(idUser, month, year)
             .observe(this@MonthlyReportActivity, { laporan ->
                 if (laporan.content==404){
@@ -96,6 +100,7 @@ class MonthlyReportActivity : AppCompatActivity() {
                     binding.apply {
                         notNull.visibility = View.GONE
                         empty.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
                     }
                 }else{
                     binding.apply {
@@ -105,9 +110,15 @@ class MonthlyReportActivity : AppCompatActivity() {
                         tvMonthlyIncome.text = "Rp.${laporan.pemasukan}"
                         tvMonthlySisa.text = "Rp.${laporan.sisa}"
                         alokasiAdapter.setAlokasi(laporan.alokasi)
+                        progressBar.visibility = View.GONE
                     }
                 }
             })
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
 

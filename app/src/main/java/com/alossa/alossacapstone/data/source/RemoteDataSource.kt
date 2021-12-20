@@ -102,8 +102,8 @@ class RemoteDataSource {
             })
     }
 
-    fun getPemasukanById(callback: LoadPemasukanCallback, id: Int) {
-        ApiConfig.getApiService().getPemasukanById(id)
+    fun getPemasukanById(callback: LoadPemasukanCallback, idUser: Int) {
+        ApiConfig.getApiService().getPemasukanById(idUser)
             .enqueue(object : Callback<PemasukanResponse> {
                 override fun onResponse(
                     call: Call<PemasukanResponse>,
@@ -199,12 +199,6 @@ class RemoteDataSource {
         durasi: Int,
         status: Int
     ) {
-        println(idUser)
-        println(namaBarang)
-        println(idAlokasi)
-        println(targetDana)
-        println(durasi)
-        println(status)
 
         ApiConfig.getApiService().addWishlist(idUser, namaBarang, idAlokasi, targetDana, durasi, status)
             .enqueue(object :Callback<ResponseServe>{

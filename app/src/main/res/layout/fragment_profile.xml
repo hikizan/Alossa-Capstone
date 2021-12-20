@@ -25,15 +25,17 @@
         app:civ_border_width="3dp"
         app:layout_constraintBottom_toBottomOf="@+id/view_shape_gradient"
         app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_account_circle"
+
         app:layout_constraintTop_toTopOf="@+id/view_shape_gradient"
-        tools:src="@tools:sample/avatars" />
+       />
 
     <TextView
         android:id="@+id/tv_name_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:text="Nama User"
         android:textColor="@color/white"
@@ -51,23 +53,11 @@
         android:layout_marginEnd="16dp"
         android:text="emailuser@gmail.com"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/tv_phone_user"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="@+id/img_profile_user"
         app:layout_constraintTop_toBottomOf="@+id/tv_name_user" />
 
-    <TextView
-        android:id="@+id/tv_phone_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="+628123456789"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/img_profile_user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_profile_user" />
 
     <RelativeLayout
         android:id="@+id/border_month_report"
