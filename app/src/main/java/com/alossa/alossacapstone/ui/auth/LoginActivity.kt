@@ -66,5 +66,7 @@ class LoginActivity : AppCompatActivity() {
     fun setLogin(user: ResponseServe) {
         sharedPreferences.setStatusLogin(true)
         sharedPreferences.setId(user.id)
+        sharedPreferences.setEmail(user.email)
+        sharedPreferences.setName(user.name)
     }
 }

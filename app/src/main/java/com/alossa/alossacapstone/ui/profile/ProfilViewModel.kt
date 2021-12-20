@@ -16,4 +16,7 @@ class ProfilViewModel(private val alossaRepository: AlossaRepository) : ViewMode
 
     fun getLaporanBulanan(idUser: Int, bulan:Int, tahun:Int): LiveData<LaporanResponse> =
         alossaRepository.getLaporanBulanan(idUser, bulan, tahun)
+
+    fun updateStatusWishlist(id: Int, status: Int): LiveData<ResponseServe> =
+        alossaRepository.updateStatusWishlist(id, status)
 }

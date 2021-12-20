@@ -17,7 +17,8 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                         msg = response.msg,
                         status = response.status,
                         id = response.id,
-                        email = response.email
+                        email = response.email,
+                        name = response.name
                     )
                     serverResponse.postValue(res)
                 }
@@ -201,7 +202,8 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                             id = wishlistResponse.id,
                             status = wishlistResponse.status,
                             durasi =  wishlistResponse.durasi,
-                            namaBarang = wishlistResponse.namaBarang
+                            namaBarang = wishlistResponse.namaBarang,
+                            danaTerkumpul = wishlistResponse.danaTerkumpul
                         )
                         wishListList.add(wishList)
                     }
@@ -233,6 +235,23 @@ class AlossaRepository private constructor(private val remoteDataSource: RemoteD
                 }
             }
         }, idUser, namaBarang, idAlokasi, targetDana, durasi, status)
+        return serverResponse
+    }
+
+    override fun updateStatusWishlist(id: Int, status: Int): LiveData<ResponseServe> {
+         val serverResponse = MutableLiveData<ResponseServe>()
+        remoteDataSource.updateWihslistStatus(object : RemoteDataSource.LoadUpdateSatatusWishList{
+            override fun onUpdateStatusishList(response: ResponseServe?) {
+                if (response!=null){
+                    val res = ResponseServe(
+                        msg = response.msg,
+                        status = response.status,
+                    )
+                    serverResponse.postValue(res)
+                }
+            }
+
+        }, id, status)
         return serverResponse
     }
 

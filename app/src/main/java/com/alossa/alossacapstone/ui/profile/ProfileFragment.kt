@@ -28,6 +28,12 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        binding.apply {
+            tvNameUser.text = sharedPreferences.getName()
+            tvEmailUser.text = sharedPreferences.getEmail()
+
+        }
         binding.borderMonthReport.setOnClickListener {
             val moveToListMonth = Intent(requireContext(), MonthlyReportActivity::class.java)
             startActivity(moveToListMonth)

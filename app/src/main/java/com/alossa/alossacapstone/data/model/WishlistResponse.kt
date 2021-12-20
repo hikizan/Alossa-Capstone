@@ -38,11 +38,14 @@ data class WishList(
     val createdAt: String? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    val id: Int = 0,
 
     @field:SerializedName("durasi")
     val durasi: Int = 0,
 
     @field:SerializedName("status")
-    val status: Int? = null
+    val status: Int? = null,
+
+    @field:SerializedName("danaTerkumpul")
+    val danaTerkumpul: Int? = null
 )

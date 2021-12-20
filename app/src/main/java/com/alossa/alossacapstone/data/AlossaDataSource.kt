@@ -35,6 +35,7 @@ interface AlossaDataSource {
 
     fun addWishList(idUser: Int,namaAlokias: String,idAlokasi: Int, targetDana: Int, durasi: Int,  status: Int) : LiveData<ResponseServe>
 
+    fun updateStatusWishlist(id: Int, status: Int): LiveData<ResponseServe>
 
     //Pengeluaran
     fun getPengeluaranByIdUser(idUser: Int): LiveData<List<Pengeluaran>>

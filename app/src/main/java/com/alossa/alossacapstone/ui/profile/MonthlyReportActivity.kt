@@ -88,7 +88,6 @@ class MonthlyReportActivity : AppCompatActivity() {
     }
 
     fun initData(idUser:Int, month:Int, year: Int){
-        println("$month  |||| $year")
         viewModel.getLaporanBulanan(idUser, month, year)
             .observe(this@MonthlyReportActivity, { laporan ->
                 if (laporan.content==404){
