@@ -57,7 +57,7 @@ class ExpenditureFragment : Fragment() {
 
                 binding.progressBar.visibility = View.INVISIBLE
             }else{
-                //binding.progressBar.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
             }
         })
 

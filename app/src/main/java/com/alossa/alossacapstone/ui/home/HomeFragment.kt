@@ -85,6 +85,8 @@ class HomeFragment : Fragment() {
                 bottomProgressBar.visibility = View.INVISIBLE
             } else {
                 setLayoutVisible(false)
+                topProgressBar.visibility = View.INVISIBLE
+                bottomProgressBar.visibility = View.INVISIBLE
             }
 
         })
