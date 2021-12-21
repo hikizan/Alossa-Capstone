@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -20,6 +21,9 @@ import com.alossa.alossacapstone.adapter.AlokasiAdapter
 import com.alossa.alossacapstone.databinding.ActivityAddExpenditureBinding
 import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddExpenditureActivity : AppCompatActivity() {
 
@@ -32,6 +36,7 @@ class AddExpenditureActivity : AppCompatActivity() {
     private var pemasukan: String? = null
     var totalAlokasi = 0
     var sisaDana = 0
+    var totalDanaAlokasi  = 0
 
     private val listIdIncome = ArrayList<Int>()
     var getIdIncomesCreated: Int? = null
@@ -43,6 +48,8 @@ class AddExpenditureActivity : AppCompatActivity() {
 
         factory = ViewModelFactory.getInstance()
         pemasukan = binding.edtxPemasukan.text.toString()
+        val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+        val thisMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
 
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         sharedPref = SharedPref(this)
@@ -51,28 +58,59 @@ class AddExpenditureActivity : AppCompatActivity() {
 
         initAction()
 
+        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(this, {
+            alokasiAdapter.setAlokasi(it)
+            for (itemAlokasi in it){
+                totalDanaAlokasi += itemAlokasi.nominal
+            }
+        })
+
         viewModel.getWihsListByIdUser(sharedPref.getId()).observe(this, { wishlist ->
             for (listWishlist in wishlist) {
                 if (listWishlist.status == 1) {
-                    totalAlokasi += listWishlist.targetDana
+                    totalAlokasi += (listWishlist.targetDana/listWishlist.durasi)
                 }
             }
             binding.txtDanaAlokasi.text = totalAlokasi.toString()
+
+            viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { pemasukan ->
+                for (itemPemasukan in pemasukan) {
+                    getIdIncomesCreated = itemPemasukan.id
+                    val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    val dt = format1.parse(itemPemasukan.createdAt.toString())
+
+                    val month = DateFormat.format("MM", dt) as String
+                    val year = DateFormat.format("yyyy", dt) as String
+
+                    if (year == thisYear.toString() && month == thisMonth.toString() && itemPemasukan.status == 0) {
+                        sisaDana = (itemPemasukan.danaPemasukan -  totalAlokasi - totalDanaAlokasi)
+                        binding.txtSisaDana.text = "Rp.$sisaDana"
+                        binding.edtxPemasukan.setText(itemPemasukan.danaPemasukan.toString())
+
+                        binding.edtxPemasukan.setTextColor(Color.GRAY)
+                        binding.edtxPemasukan.inputType = InputType.TYPE_NULL
+                        binding.btnCheck.setBackgroundResource(R.drawable.red_outline)
+                        binding.btnCheck.isEnabled = false
+                        binding.btnAddAlokasi.visibility = View.VISIBLE
+                        binding.btnSubmit.visibility = View.VISIBLE
+                    }
+                }
+            })
         })
 
-        viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(this, {
-            alokasiAdapter.setAlokasi(it)
-        })
 
         binding.btnCheck.setOnClickListener {
             pemasukan = binding.edtxPemasukan.text.toString()
             if (pemasukan.isNullOrEmpty()) {
-                Toast.makeText(this,"Input field Pemasukan dulu ya", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Input field Pemasukan dulu ya", Toast.LENGTH_SHORT).show()
                 println("Empty")
                 Log.d("AddExpenditure", "onClick: btnCheck: pemasukan = $pemasukan ")
 
             } else {
-                Log.d("AddExpenditure", "onClick: btnCheck: from else branch pemasukan = $pemasukan ")
+                Log.d(
+                    "AddExpenditure",
+                    "onClick: btnCheck: from else branch pemasukan = $pemasukan "
+                )
                 if (pemasukan!!.toLong() < totalAlokasi) {
                     Toast.makeText(
                         this,
@@ -99,7 +137,7 @@ class AddExpenditureActivity : AppCompatActivity() {
         binding.btnAddAlokasi.setOnClickListener {
             Log.d("AddExpenditure", "onClick: btnAddAlokasi: idPemasukan = $getIdIncomesCreated ")
 
-            if (getIdIncomesCreated != null){
+            if (getIdIncomesCreated != null) {
 
                 Dialog(this).apply {
                     requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -149,17 +187,23 @@ class AddExpenditureActivity : AppCompatActivity() {
         }
 
         binding.btnSubmit.setOnClickListener {
-            if (sisaDana == 0){
-                finish()
-            }else{
+            if (sisaDana == 0) {
+                viewModel.updateStatusPemasukan(getIdIncomesCreated!!, sharedPref.getId(), 1)
+                    .observe(this, {response->
+                        if (response.status.equals("success")){
+                            Toast.makeText(this, "Sukses menambah data )", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                    })
+            } else {
                 Toast.makeText(this, "Alokasikan dana yang tersisa :)", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    fun onCheckedButton(){
+    fun onCheckedButton() {
         viewModel.addPemasukan(sharedPref.getId(), pemasukan!!.trim().toInt()).observe(this, {
-            if (it.status.equals("success")){
+            if (it.status.equals("success")) {
                 Log.d("AddExpenditure", "onClick: btnCheck: nominal pemasukan = ${pemasukan} ")
                 binding.edtxPemasukan.setTextColor(Color.GRAY)
                 binding.edtxPemasukan.inputType = InputType.TYPE_NULL
@@ -169,15 +213,18 @@ class AddExpenditureActivity : AppCompatActivity() {
                 binding.btnSubmit.visibility = View.VISIBLE
 
                 viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(this, { incomes ->
-                    if (incomes.isNotEmpty()){
-                        for (alokasiItem in incomes){
+                    if (incomes.isNotEmpty()) {
+                        for (alokasiItem in incomes) {
                             alokasiItem.id?.let { idPemasukan -> listIdIncome.add(idPemasukan) }
                         }
 
-                        for (getLatestPostion in 0..listIdIncome.size){
-                            if (getLatestPostion == (listIdIncome.size - 1)){
+                        for (getLatestPostion in 0..listIdIncome.size) {
+                            if (getLatestPostion == (listIdIncome.size - 1)) {
                                 getIdIncomesCreated = listIdIncome[getLatestPostion]
-                                Log.d("AddExpenditure", "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion")
+                                Log.d(
+                                    "AddExpenditure",
+                                    "onClick: btnCheck: idPemasukan = ${listIdIncome[getLatestPostion]} \npostion = $getLatestPostion"
+                                )
                             }
                         }
                     }
@@ -208,7 +255,7 @@ class AddExpenditureActivity : AppCompatActivity() {
                 val alokasi = (viewHolder as AlokasiAdapter.AlokasiViewHolder).getAlokasi
                 viewModel.deleteAlokasi(alokasi.id)
                     .observe(this@AddExpenditureActivity, { response ->
-                        Toast.makeText( this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG)
+                        Toast.makeText(this@AddExpenditureActivity, response.msg, Toast.LENGTH_LONG)
                             .show()
                         if (response.status.equals("success")) {
                             sisaDana += alokasi.nominal

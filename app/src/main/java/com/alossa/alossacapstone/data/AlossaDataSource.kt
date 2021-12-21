@@ -21,6 +21,8 @@ interface AlossaDataSource {
 
     fun addPemasukan(idUser: Int, danaPemasukan: Int): LiveData<ResponseServe>
 
+    fun updateStatusPemasukan(id: Int, idUser: Int, status: Int): LiveData<ResponseServe>
+
 
     //Alokasi
     fun getAlokasiByIdUser(id: Int): LiveData<List<Alokasi>>

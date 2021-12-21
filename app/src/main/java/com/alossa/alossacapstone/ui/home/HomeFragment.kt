@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         sharedPref = SharedPref(root.context)
 
         binding.btnInputdata.setOnClickListener {
-            val moveToAddExpenditure = Intent(context,AddExpenditureActivity::class.java)
+            val moveToAddExpenditure = Intent(context, AddExpenditureActivity::class.java)
             startActivity(moveToAddExpenditure)
         }
 
@@ -75,54 +75,49 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getPemasukanByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { pemasukan->
-            for (itemPemasukan in pemasukan){
-                val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                val dt = format1.parse(itemPemasukan.createdAt.toString())
+        viewModel.getPemasukanByIdUser(sharedPref.getId())
+            .observe(viewLifecycleOwner, { pemasukan ->
+                for (itemPemasukan in pemasukan) {
+                    val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    val dt = format1.parse(itemPemasukan.createdAt.toString())
 
-                val month = DateFormat.format("MM", dt) as String
-                val year = DateFormat.format("yyyy", dt) as String
-                val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
-                val thisMonth: Int = Calendar.getInstance().get(Calendar.MONTH)+1
+                    val month = DateFormat.format("MM", dt) as String
+                    val year = DateFormat.format("yyyy", dt) as String
+                    val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+                    val thisMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
 
-                if (year == thisYear.toString() && month == thisMonth.toString()){
-                    setLayoutVisible(true)
-                    viewModel.getAlokasiByIdUser(sharedPref.getId()).observe(viewLifecycleOwner, { alocations ->
-
-                        if (alocations.isNotEmpty()){
-                            alocationAdapter.setAlocation(alocations)
-                            alocationAdapter.notifyDataSetChanged()
-                            for (alokasiItem in alocations) {
-                                typeAlokasi += alokasiItem.namaAlokasi.toString()
-                                nominalAlokasi += alokasiItem.nominal
-                            }
-                            setLayoutVisible(true)
-                            setupPieCart(typeAlokasi,nominalAlokasi)
-                            topProgressBar.visibility = View.INVISIBLE
-                            bottomProgressBar.visibility = View.INVISIBLE
-                        } else {
-                            setLayoutVisible(false)
-                        }
-
-                    })
-                }else{
-                    setLayoutVisible(false)
+                    if (year == thisYear.toString() && month == thisMonth.toString() && itemPemasukan.status == 1) {
+                        setLayoutVisible(true)
+                        viewModel.getAlokasiByIdUser(sharedPref.getId())
+                            .observe(viewLifecycleOwner, { alocations ->
+                                if (alocations.isNotEmpty()) {
+                                    alocationAdapter.setAlocation(alocations)
+                                    alocationAdapter.notifyDataSetChanged()
+                                    for (alokasiItem in alocations) {
+                                        typeAlokasi += alokasiItem.namaAlokasi.toString()
+                                        nominalAlokasi += alokasiItem.nominal
+                                    }
+                                    setupPieCart(typeAlokasi, nominalAlokasi)
+                                    topProgressBar.visibility = View.INVISIBLE
+                                    bottomProgressBar.visibility = View.INVISIBLE
+                                } else {
+                                }
+                            })
+                    } else {
+                        setLayoutVisible(false)
+                    }
                 }
-            }
-        })
-
-
-
+            })
         binding.rvAlocation.layoutManager = LinearLayoutManager(context)
         binding.rvAlocation.setHasFixedSize(true)
         binding.rvAlocation.adapter = alocationAdapter
     }
 
-    fun setupPieCart(mTypeAlokasi: Array<String>, mNominalAlokasi: Array<Int>){
+    fun setupPieCart(mTypeAlokasi: Array<String>, mNominalAlokasi: Array<Int>) {
 
         var pie = AnyChart.pie()
         var dataEntrie = ArrayList<DataEntry>()
-        for (item in mTypeAlokasi.indices){
+        for (item in mTypeAlokasi.indices) {
             dataEntrie.add(ValueDataEntry(mTypeAlokasi[item], mNominalAlokasi[item]))
         }
 
@@ -131,8 +126,8 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun setLayoutVisible(isFill: Boolean){
-        if (isFill){
+    fun setLayoutVisible(isFill: Boolean) {
+        if (isFill) {
             binding.layoutIfnotnull.visibility = View.VISIBLE
             binding.layoutIfnull.visibility = View.GONE
         } else {

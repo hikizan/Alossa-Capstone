@@ -42,6 +42,14 @@ interface ApiService {
                      @Field("danaPemasukan") danaPemasukan: Int
     ): Call<ResponseServe>
 
+    @FormUrlEncoded
+    @POST("pemasukan/update/status")
+    fun updateStatusPemasukan(
+        @Field("id") id: Int,
+        @Field("idUser") idUser: Int,
+        @Field("status") status: Int
+    ): Call<ResponseServe>
+
     //Wishlist
     @GET("wishlist/my/{idUser}")
     fun getWishlistById(
