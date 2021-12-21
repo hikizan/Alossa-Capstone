@@ -17,6 +17,7 @@ import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import android.text.format.DateFormat
+import com.alossa.alossacapstone.data.model.Alokasi
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,6 +37,7 @@ class HomeFragment : Fragment() {
     private lateinit var factory: ViewModelFactory
     private lateinit var sharedPref: SharedPref
     private lateinit var alocationAdapter: AlocationAdapter
+    private var listNowAlocation = ArrayList<Alokasi>()
 
     var typeAlokasi: Array<String> = arrayOf()
     var nominalAlokasi: Array<Int> = arrayOf()
@@ -96,11 +98,24 @@ class HomeFragment : Fragment() {
                             viewModel.getAlokasiByIdUser(sharedPref.getId())
                                 .observe(viewLifecycleOwner, { alocations ->
                                     if (alocations.isNotEmpty()) {
-                                        alocationAdapter.setAlocation(alocations)
+                                        for (searchNowAlocation in alocations){
+                                            val dtAlokasi = format1.parse(searchNowAlocation.createdAt.toString())
+
+                                            val monthAlokasi = DateFormat.format("MM", dtAlokasi) as String
+                                            val yearAlokasi = DateFormat.format("yyyy", dtAlokasi) as String
+
+                                            if (yearAlokasi == thisYear.toString() && monthAlokasi == thisMonth.toString()){
+                                                listNowAlocation.add(searchNowAlocation)
+                                            }
+                                        }
+
+
+                                        alocationAdapter.setAlocation(listNowAlocation)
                                         alocationAdapter.notifyDataSetChanged()
-                                        for (alokasiItem in alocations) {
+                                        for (alokasiItem in listNowAlocation) {
                                             typeAlokasi += alokasiItem.namaAlokasi.toString()
                                             nominalAlokasi += alokasiItem.nominal
+
                                         }
                                         setupPieCart(typeAlokasi, nominalAlokasi)
                                         topProgressBar.visibility = View.INVISIBLE
@@ -117,7 +132,9 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
             })
+
         binding.rvAlocation.layoutManager = LinearLayoutManager(context)
         binding.rvAlocation.setHasFixedSize(true)
         binding.rvAlocation.adapter = alocationAdapter

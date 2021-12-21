@@ -41,8 +41,8 @@ class InputWishlistActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
                         if (response.status.equals("success")) {
-                           val intent = Intent(this@InputWishlistActivity, WishlistActivity::class.java)
-                            startActivity(intent)
+                           //val intent = Intent(this@InputWishlistActivity, WishlistActivity::class.java)
+                            //startActivity(intent)
                             finish()
                         }
                     })
