@@ -23,6 +23,9 @@ class WishlistActivity : AppCompatActivity() {
 
     private lateinit var _binding: ActivityWishlistBinding
     private lateinit var viewModel : ProfilViewModel
+    private lateinit var factory: ViewModelFactory
+    private lateinit var sharedPref: SharedPref
+    private lateinit var wishlistAdapter: WishlistAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +42,12 @@ class WishlistActivity : AppCompatActivity() {
             startActivity(moveToInputWishlist)
         }
 
-        val factory = ViewModelFactory.getInstance()
+        factory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, factory)[ProfilViewModel::class.java]
-        val sharedPref = SharedPref(this)
-        val wishlistAdapter = WishlistAdapter()
+        sharedPref = SharedPref(this)
+        wishlistAdapter = WishlistAdapter()
 
+        /*
         viewModel.getWishlistById(sharedPref.getId()).observe(this, {
             wishlistAdapter.setWishlist(it)
             _binding.progressBar.visibility = View.GONE
@@ -57,6 +61,7 @@ class WishlistActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = wishlistAdapter
         }
+         */
 
     }
 
@@ -70,6 +75,32 @@ class WishlistActivity : AppCompatActivity() {
                 }
             })
           }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getWishlistById(sharedPref.getId()).observe(this, {
+            if(it.isNullOrEmpty()){
+                _binding.progressBar.visibility = View.GONE
+                _binding.textView.visibility = View.VISIBLE
+                _binding.imgDatanull.visibility = View.VISIBLE
+            }else{
+                wishlistAdapter.setWishlist(it)
+                _binding.textView.visibility = View.GONE
+                _binding.imgDatanull.visibility = View.GONE
+                _binding.progressBar.visibility = View.GONE
+            }
+        })
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+            IntentFilter("custom-message")
+        );
+
+        with(_binding.rvMonthReport){
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = wishlistAdapter
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
