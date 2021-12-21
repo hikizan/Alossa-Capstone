@@ -77,34 +77,44 @@ class HomeFragment : Fragment() {
 
         viewModel.getPemasukanByIdUser(sharedPref.getId())
             .observe(viewLifecycleOwner, { pemasukan ->
-                for (itemPemasukan in pemasukan) {
-                    val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    val dt = format1.parse(itemPemasukan.createdAt.toString())
+                if (pemasukan.isEmpty()){
+                    setLayoutVisible(false)
+                    topProgressBar.visibility = View.INVISIBLE
+                    bottomProgressBar.visibility = View.INVISIBLE
+                }else{
+                    for (itemPemasukan in pemasukan) {
+                        val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                        val dt = format1.parse(itemPemasukan.createdAt.toString())
 
-                    val month = DateFormat.format("MM", dt) as String
-                    val year = DateFormat.format("yyyy", dt) as String
-                    val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
-                    val thisMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
+                        val month = DateFormat.format("MM", dt) as String
+                        val year = DateFormat.format("yyyy", dt) as String
+                        val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+                        val thisMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
 
-                    if (year == thisYear.toString() && month == thisMonth.toString() && itemPemasukan.status == 1) {
-                        setLayoutVisible(true)
-                        viewModel.getAlokasiByIdUser(sharedPref.getId())
-                            .observe(viewLifecycleOwner, { alocations ->
-                                if (alocations.isNotEmpty()) {
-                                    alocationAdapter.setAlocation(alocations)
-                                    alocationAdapter.notifyDataSetChanged()
-                                    for (alokasiItem in alocations) {
-                                        typeAlokasi += alokasiItem.namaAlokasi.toString()
-                                        nominalAlokasi += alokasiItem.nominal
+                        if (year == thisYear.toString() && month == thisMonth.toString() && itemPemasukan.status == 1) {
+                            setLayoutVisible(true)
+                            viewModel.getAlokasiByIdUser(sharedPref.getId())
+                                .observe(viewLifecycleOwner, { alocations ->
+                                    if (alocations.isNotEmpty()) {
+                                        alocationAdapter.setAlocation(alocations)
+                                        alocationAdapter.notifyDataSetChanged()
+                                        for (alokasiItem in alocations) {
+                                            typeAlokasi += alokasiItem.namaAlokasi.toString()
+                                            nominalAlokasi += alokasiItem.nominal
+                                        }
+                                        setupPieCart(typeAlokasi, nominalAlokasi)
+                                        topProgressBar.visibility = View.INVISIBLE
+                                        bottomProgressBar.visibility = View.INVISIBLE
+                                    } else {
+                                        topProgressBar.visibility = View.INVISIBLE
+                                        bottomProgressBar.visibility = View.INVISIBLE
                                     }
-                                    setupPieCart(typeAlokasi, nominalAlokasi)
-                                    topProgressBar.visibility = View.INVISIBLE
-                                    bottomProgressBar.visibility = View.INVISIBLE
-                                } else {
-                                }
-                            })
-                    } else {
-                        setLayoutVisible(false)
+                                })
+                        } else {
+                            setLayoutVisible(false)
+                            topProgressBar.visibility = View.INVISIBLE
+                            bottomProgressBar.visibility = View.INVISIBLE
+                        }
                     }
                 }
             })
