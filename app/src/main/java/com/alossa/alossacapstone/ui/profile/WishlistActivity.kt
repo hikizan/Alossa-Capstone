@@ -50,7 +50,7 @@ class WishlistActivity : AppCompatActivity() {
         })
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
              IntentFilter("custom-message")
-        );
+        )
 
         with(_binding.rvMonthReport){
             layoutManager = LinearLayoutManager(context)

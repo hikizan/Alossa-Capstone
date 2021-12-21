@@ -77,6 +77,9 @@ class HomeFragment : Fragment() {
 
         viewModel.getPemasukanByIdUser(sharedPref.getId())
             .observe(viewLifecycleOwner, { pemasukan ->
+                if (pemasukan.isEmpty()){
+                    setLayoutVisible(false)
+                }
                 for (itemPemasukan in pemasukan) {
                     val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     val dt = format1.parse(itemPemasukan.createdAt.toString())
