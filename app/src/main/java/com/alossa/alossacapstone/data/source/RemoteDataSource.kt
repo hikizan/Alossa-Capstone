@@ -102,8 +102,8 @@ class RemoteDataSource {
             })
     }
 
-    fun getPemasukanById(callback: LoadPemasukanCallback, id: Int) {
-        ApiConfig.getApiService().getPemasukanById(id)
+    fun getPemasukanById(callback: LoadPemasukanCallback, idUser: Int) {
+        ApiConfig.getApiService().getPemasukanById(idUser)
             .enqueue(object : Callback<PemasukanResponse> {
                 override fun onResponse(
                     call: Call<PemasukanResponse>,
@@ -199,12 +199,6 @@ class RemoteDataSource {
         durasi: Int,
         status: Int
     ) {
-        println(idUser)
-        println(namaBarang)
-        println(idAlokasi)
-        println(targetDana)
-        println(durasi)
-        println(status)
 
         ApiConfig.getApiService().addWishlist(idUser, namaBarang, idAlokasi, targetDana, durasi, status)
             .enqueue(object :Callback<ResponseServe>{
@@ -385,6 +379,28 @@ class RemoteDataSource {
             })
     }
 
+    fun updtaeStatusPemasukan(callback: LoadUpdateStatusPemasukan, id: Int, idUser: Int, status: Int){
+        ApiConfig.getApiService().updateStatusPemasukan(id, idUser, status)
+            .enqueue(object : Callback<ResponseServe>{
+                override fun onResponse(
+                    call: Call<ResponseServe>,
+                    response: Response<ResponseServe>
+                ) {
+                    if (response.isSuccessful){
+                        callback.onLoadUpdateStatusPemasukan(response.body())
+                        Log.d("succes", response.code().toString())
+                    }else{
+                        Log.d("fail", response.message())
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseServe>, t: Throwable) {
+                    Log.d("fail", t.message.toString())
+                }
+
+            })
+    }
+
     interface LoadAuthCallback{
         fun onLoadAuth(response: ResponseServe?)
     }
@@ -431,6 +447,10 @@ class RemoteDataSource {
 
     interface LoadLaporanBulanan{
         fun onLoadLaporanBulanan(response: LaporanResponse?)
+    }
+
+    interface LoadUpdateStatusPemasukan{
+        fun onLoadUpdateStatusPemasukan(response: ResponseServe?)
     }
 
 
