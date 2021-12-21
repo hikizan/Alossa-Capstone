@@ -45,6 +45,9 @@ class AddExpenditureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddExpenditureBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = "Input Pemasukan & Alokasi"
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         factory = ViewModelFactory.getInstance()
         pemasukan = binding.edtxPemasukan.text.toString()
@@ -270,5 +273,10 @@ class AddExpenditureActivity : AppCompatActivity() {
 
         })
         itemTouchHelper.attachToRecyclerView(recycler)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
