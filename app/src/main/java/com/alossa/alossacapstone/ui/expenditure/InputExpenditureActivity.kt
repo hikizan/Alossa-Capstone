@@ -36,6 +36,8 @@ class InputExpenditureActivity : AppCompatActivity() {
         val root: View = binding.root
         setContentView(root)
         supportActionBar?.title = "Input Pengeluaran"
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val sharedPref = SharedPref(root.context)
         factory = ViewModelFactory.getInstance()
@@ -151,6 +153,11 @@ class InputExpenditureActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun onDestroy() {
