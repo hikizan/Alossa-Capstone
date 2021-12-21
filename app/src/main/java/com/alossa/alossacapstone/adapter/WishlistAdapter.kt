@@ -49,12 +49,13 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>
                 }
                 1 ->{
                     tvStatusPro.text = "Proses"
-                    tvStatusPro.setTextColor(Color.GREEN)
+                    tvStatusPro.setTextColor(Color.YELLOW)
                     switchWishlist.isChecked = true
                 }
                 2 ->{
                     tvStatusPro.text = "Selesai"
                     switchWishlist.isClickable = false
+                    tvStatusPro.setTextColor(Color.GREEN)
                 }
             }
             tvWishlistTarget.text = "Rp.${wishlist.targetDana}"
@@ -71,7 +72,7 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>
                     holder.status = 1
                     status = 1
                     tvStatusPro.text = "Proses"
-                    tvStatusPro.setTextColor(Color.GREEN)
+                    tvStatusPro.setTextColor(Color.YELLOW)
                 } else {
                     holder.status = 0
                     tvStatusPro.text = "Tidak Aktif"

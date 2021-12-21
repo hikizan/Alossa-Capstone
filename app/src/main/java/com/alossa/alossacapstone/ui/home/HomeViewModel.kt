@@ -43,4 +43,7 @@ class HomeViewModel(private val alossaRepository: AlossaRepository) : ViewModel(
 
     fun getPemasukanByIdUser(id: Int): LiveData<List<Pemasukan>> =
         alossaRepository.getPemasukanById(id)
+
+    fun updateStatusPemasukan(id:Int, idUser:Int, status: Int): LiveData<ResponseServe> =
+        alossaRepository.updateStatusPemasukan(id, idUser, status)
 }
