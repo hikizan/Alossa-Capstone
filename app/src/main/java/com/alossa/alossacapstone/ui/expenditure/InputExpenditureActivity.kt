@@ -1,6 +1,7 @@
 package com.alossa.alossacapstone.ui.expenditure
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -12,6 +13,10 @@ import com.alossa.alossacapstone.databinding.ActivityInputExpenditureBinding
 import com.alossa.alossacapstone.ui.home.HomeViewModel
 import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
+
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class InputExpenditureActivity : AppCompatActivity() {
@@ -49,10 +54,21 @@ class InputExpenditureActivity : AppCompatActivity() {
         listNominalAlocation.add(0)
         viewModelFromHome.getAlokasiByIdUser(sharedPref.getId()).observe(this, { alocations ->
             if (alocations.isNotEmpty()) {
+                val formatDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+                val thisMonth: Int = Calendar.getInstance().get(Calendar.MONTH) + 1
+
                 for (alokasiItem in alocations) {
-                    listNameAlocation.add(alokasiItem.namaAlokasi.toString())
-                    alokasiItem.id.let { listIdAlocation.add(it) }
-                    listNominalAlocation.add(alokasiItem.nominal)
+                    val dt = formatDate.parse(alokasiItem.createdAt.toString())
+                    val month = DateFormat.format("MM", dt) as String
+                    val year = DateFormat.format("yyyy", dt) as String
+
+                    if (year == thisYear.toString() && month == thisMonth.toString()){
+                        listNameAlocation.add(alokasiItem.namaAlokasi.toString())
+                        alokasiItem.id.let { listIdAlocation.add(it) }
+                        listNominalAlocation.add(alokasiItem.nominal)
+                    }
+
                 }
 
                 addItemsOnSpinner(listNameAlocation, listIdAlocation, listNominalAlocation)
