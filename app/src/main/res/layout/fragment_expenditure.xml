@@ -23,7 +23,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/img_datanull"
@@ -32,16 +33,17 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/data_null"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:contentDescription="@string/data_null" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="History pengeluaran masih kosong!"
+            android:text="@string/history_pengeluaran_masih_kosong"
             android:textAlignment="center"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="invisible" />
 
@@ -58,7 +60,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
     
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_expenditure"
+        android:id="@+id/fabAddExpenditure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -69,6 +71,6 @@
         app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="FAB to add expenditure" />
+        android:contentDescription="@string/fab_to_add_expenditure" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

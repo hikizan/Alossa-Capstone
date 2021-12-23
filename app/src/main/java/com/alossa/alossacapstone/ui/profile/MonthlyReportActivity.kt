@@ -1,5 +1,6 @@
 package com.alossa.alossacapstone.ui.profile
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,9 +10,7 @@ import com.alossa.alossacapstone.databinding.ActivityMonthlyReportBinding
 import com.alossa.alossacapstone.utils.SharedPref
 import com.alossa.alossacapstone.utils.ViewModelFactory
 import java.util.*
-
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alossa.alossacapstone.adapter.AlokasiAdapter
@@ -89,6 +88,7 @@ class MonthlyReportActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun initData(idUser:Int, month:Int, year: Int){
 
         binding.progressBar.visibility = View.VISIBLE
@@ -98,13 +98,13 @@ class MonthlyReportActivity : AppCompatActivity() {
                     Toast.makeText(this, laporan.msg, Toast.LENGTH_LONG
                     ).show()
                     binding.apply {
-                        notNull.visibility = View.GONE
+                        notEmtpy.visibility = View.GONE
                         empty.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                     }
                 }else{
                     binding.apply {
-                        notNull.visibility = View.VISIBLE
+                        notEmtpy.visibility = View.VISIBLE
                         empty.visibility = View.GONE
                         tvMonthlyExpenditureTotal.text = "Rp.${laporan.pengeluaran}"
                         tvMonthlyIncome.text = "Rp.${laporan.pemasukan}"

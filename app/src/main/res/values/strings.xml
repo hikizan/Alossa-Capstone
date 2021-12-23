@@ -1,17 +1,10 @@
 <resources>
     <string name="app_name">Alossa</string>
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
-    <string name="previous">Previous</string>
     <string name="title_home">Home</string>
     <string name="title_expenditure">Expenditure</string>
     <string name="title_profile">Profile</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -30,7 +23,6 @@
     <string name="silahkan_masukkan_token_dan_kata_sandi_baru">Silahkan masukkan token dan kata sandi baru</string>
     <string name="kode">Kode</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="aktivitas_terbaru">Sisa tiap Alokasi</string>
     <string name="silahkan_input_pemasukan_dan_alokasi_terlebih_dahulu">Silahkan input pemasukan dan alokasi terlebih dahulu</string>
     <string name="input_data">Input Data</string>
@@ -39,16 +31,48 @@
     <string name="subtmit">Submit</string>
     <string name="check">Check</string>
     <string name="pemasukan">Pemasukan</string>
-    <string name="apakah_anda_yakin_ingin_menghapus_alokasi_ini">Apakah anda yakin ingin menghapus Alokasi ini?</string>
-    <string name="tidak">Tidak</string>
-    <string name="ya">Ya</string>
-    <string name="hapus_alokais">Hapus Alokais</string>
     <string name="atau">atau</string>
     <string name="sudah_punya_akun">Sudah punya akun?</string>
     <string name="nama_alokasi">Nama Alokasi</string>
     <string name="nominal">Nominal</string>
     <string name="_0">0</string>
     <string name="alokasi">Alokasi</string>
+    <string name="dropdown_alokasi">Dropdown Alokasi</string>
+    <string name="nama_pengeluaran">Nama Pengeluaran</string>
+    <string name="nominal_pengeluaran">Nominal Pengeluaran</string>
+    <string name="tambah_pengeluaran">Tambah Pengeluaran</string>
+    <string name="data_null">Data Null</string>
+    <string name="daftar_wishlist_masih_kosong">Daftar wishlist masih kosong!</string>
+    <string name="fab_to_add_wishlist">FAB to add wishlist</string>
+    <string name="laporan_bulanan">Laporan Bulanan</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="logout">Logout</string>
+    <string name="include_wishlist">Include Wishlist</string>
+    <string name="rp_xx_xxx_xxx">Rp xx.xxx.xxx</string>
+    <string name="pengeluaran">Pengeluaran</string>
+    <string name="sisa">Sisa</string>
+    <string name="sisa_pemasukan_per_alokasi">Sisa Pemasukan per Alokasi</string>
+    <string name="nama_wishlist">Nama Wishlist</string>
+    <string name="target_dana">Target Dana</string>
+    <string name="durasi">Durasi</string>
+    <string name="tambah_wishlist">Tambah Wishlist</string>
+    <string name="tahun">Tahun</string>
+    <string name="bulan">Bulan</string>
+    <string name="history_pengeluaran_masih_kosong">History pengeluaran masih kosong!</string>
+    <string name="fab_to_add_expenditure">FAB to add expenditure</string>
+    <string name="nama_user">Nama User</string>
+    <string name="emailuser_gmail_com">emailuser@gmail.com</string>
+    <string name="nama_tipe_alokasi">Nama Tipe Alokasi</string>
+    <string name="tipe_alokasi">Tipe Alokasi</string>
+    <string name="dd_month_yyyy">dd Month yyyy</string>
+    <string name="nama_barang">Nama Barang</string>
+    <string name="dana_tercapai">Dana Tercapai</string>
+    <string name="proses">Proses</string>
+    <string name="_3_bulan">3 Bulan</string>
+    <string name="tanggal">tanggal</string>
+    <string name="rp.">Rp.</string>
+    <string name="tidak_aktif">Tidak Aktif</string>
+    <string name="selesai">Selesai</string>
 
     <string-array name="month">
         <item>January</item>

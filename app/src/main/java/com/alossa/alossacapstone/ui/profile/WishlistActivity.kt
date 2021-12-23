@@ -65,7 +65,7 @@ class WishlistActivity : AppCompatActivity() {
 
     }
 
-    var mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private var mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             val id = intent.getIntExtra("id", 0)
             val status = intent.getIntExtra("status", 0)
@@ -94,7 +94,7 @@ class WishlistActivity : AppCompatActivity() {
         })
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
             IntentFilter("custom-message")
-        );
+        )
 
         with(_binding.rvMonthReport){
             layoutManager = LinearLayoutManager(context)

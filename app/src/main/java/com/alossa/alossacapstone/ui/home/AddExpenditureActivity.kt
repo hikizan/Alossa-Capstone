@@ -1,5 +1,8 @@
+@file:Suppress("RemoveCurlyBracesFromTemplate")
+
 package com.alossa.alossacapstone.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -34,13 +37,14 @@ class AddExpenditureActivity : AppCompatActivity() {
     private lateinit var recycler: RecyclerView
     private lateinit var binding: ActivityAddExpenditureBinding
     private var pemasukan: String? = null
-    var totalAlokasi = 0
+    private var totalAlokasi = 0
     var sisaDana = 0
-    var totalDanaAlokasi  = 0
+    private var totalDanaAlokasi  = 0
 
     private val listIdIncome = ArrayList<Int>()
-    var getIdIncomesCreated: Int? = null
+    private var getIdIncomesCreated: Int? = null
 
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddExpenditureBinding.inflate(layoutInflater)
@@ -84,7 +88,7 @@ class AddExpenditureActivity : AppCompatActivity() {
 
                     if (year == thisYear.toString() && month == thisMonth.toString() && itemPemasukan.status == 0) {
                         sisaDana = (itemPemasukan.danaPemasukan -  totalAlokasi - totalDanaAlokasi)
-                        binding.txtSisaDana.text = "Rp.$sisaDana"
+                        binding.txtSisaDana.text = "${R.string.rp_}$sisaDana"
                         binding.edtxPemasukan.setText(itemPemasukan.danaPemasukan.toString())
 
                         binding.edtxPemasukan.setTextColor(Color.GRAY)
@@ -119,7 +123,7 @@ class AddExpenditureActivity : AppCompatActivity() {
                     ).show()
                 } else {
                     sisaDana = (pemasukan!!.toLong() - totalAlokasi).toInt()
-                    binding.txtSisaDana.text = "Rp.$sisaDana"
+                    binding.txtSisaDana.text = "${R.string.rp_}$sisaDana"
 
                     onCheckedButton()
 
@@ -150,7 +154,7 @@ class AddExpenditureActivity : AppCompatActivity() {
                         if (nominal.toString().isNotEmpty()) {
                             if ((sisaDana - nominal.toString().toInt()) >= 0) {
                                 sisaDana -= nominal.toString().toInt()
-                                binding.txtSisaDana.text = "Rp.$sisaDana"
+                                binding.txtSisaDana.text = "${R.string.rp_}$sisaDana"
                                 viewModel.addAlokasi(
                                     sharedPref.getId(),
                                     namaAlokasi.toString(),
@@ -201,7 +205,7 @@ class AddExpenditureActivity : AppCompatActivity() {
         }
     }
 
-    fun onCheckedButton() {
+    private fun onCheckedButton() {
         viewModel.addPemasukan(sharedPref.getId(), pemasukan!!.trim().toInt()).observe(this, {
             if (it.status.equals("success")) {
                 Log.d("AddExpenditure", "onClick: btnCheck: nominal pemasukan = ${pemasukan} ")
@@ -234,7 +238,7 @@ class AddExpenditureActivity : AppCompatActivity() {
         })
     }
 
-    fun initAction() {
+    private fun initAction() {
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
@@ -251,6 +255,7 @@ class AddExpenditureActivity : AppCompatActivity() {
                 return false
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val alokasi = (viewHolder as AlokasiAdapter.AlokasiViewHolder).getAlokasi
                 viewModel.deleteAlokasi(alokasi.id)
@@ -259,7 +264,7 @@ class AddExpenditureActivity : AppCompatActivity() {
                             .show()
                         if (response.status.equals("success")) {
                             sisaDana += alokasi.nominal
-                            binding.txtSisaDana.text = "Rp.$sisaDana"
+                            binding.txtSisaDana.text = "${R.string.rp_}$sisaDana"
                             viewModel.getAlokasiByIdUser(sharedPref.getId())
                                 .observe(this@AddExpenditureActivity, {
                                     alokasiAdapter.setAlokasi(it)

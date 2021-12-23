@@ -16,6 +16,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/bg_radius">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,10 +85,10 @@
                     android:id="@+id/register_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_baseline_remove_red_eye"
                     android:gravity="top"
                     android:inputType="textPassword"
-                    android:lines="1"
-                    android:drawableEnd="@drawable/ic_baseline_remove_red_eye"/>
+                    android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -102,10 +103,10 @@
                     android:id="@+id/register_c_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_baseline_remove_red_eye"
                     android:gravity="top"
                     android:inputType="textPassword"
-                    android:lines="1"
-                    android:drawableEnd="@drawable/ic_baseline_remove_red_eye"/>
+                    android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -143,7 +144,7 @@
     </ScrollView>
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

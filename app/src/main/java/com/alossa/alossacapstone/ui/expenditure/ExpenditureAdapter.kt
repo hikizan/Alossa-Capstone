@@ -11,7 +11,6 @@ class ExpenditureAdapter : RecyclerView.Adapter<ExpenditureAdapter.ViewHolder>()
     private var listExpenditure = ArrayList<Pengeluaran>()
 
     fun setExpenditures(expenditures: List<Pengeluaran>){
-        if (expenditures == null) return
         this.listExpenditure.clear()
         this.listExpenditure.addAll(expenditures)
     }

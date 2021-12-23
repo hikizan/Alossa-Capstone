@@ -1,5 +1,6 @@
 package com.alossa.alossacapstone.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -30,6 +31,7 @@ class AlokasiAdapter : RecyclerView.Adapter<AlokasiAdapter.AlokasiViewHolder>() 
         return AlokasiViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: AlokasiViewHolder, position: Int) {
        val alokasi = listAlokasi[position]
         holder.getAlokasi = alokasi

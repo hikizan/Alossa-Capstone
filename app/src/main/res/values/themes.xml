@@ -19,18 +19,4 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.AlossaCapstone.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.AlossaCapstone.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:textColorHint">@color/gray</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="boxStrokeColor">@color/teal_200</item>
-    </style>
-
-    <style name="MyTextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
-        <item name="android:textColor">@android:color/black</item>
-    </style>
 </resources>

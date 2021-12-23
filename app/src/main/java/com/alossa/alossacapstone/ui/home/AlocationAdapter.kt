@@ -1,6 +1,4 @@
 package com.alossa.alossacapstone.ui.home
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +12,6 @@ class AlocationAdapter :
     private var listAlocation = ArrayList<Alokasi>()
 
     fun setAlocation(alocations: List<Alokasi>){
-        if (alocations == null) return
         this.listAlocation.clear()
         this.listAlocation.addAll(alocations)
 
@@ -22,7 +19,7 @@ class AlocationAdapter :
 
     class ViewHolder(var binding: ItemRowAlocationBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(alocation: Alokasi){
-            with(binding) {
+            binding.apply {
                 tvAlocationTypeName.text = alocation.namaAlokasi
                 tvAlocationNominal.text = alocation.nominal.toString()
             }

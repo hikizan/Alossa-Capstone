@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.alossa.alossacapstone.MainActivity
-import com.alossa.alossacapstone.R
 import com.alossa.alossacapstone.data.model.ResponseServe
 import com.alossa.alossacapstone.databinding.ActivityLoginBinding
 import com.alossa.alossacapstone.utils.SharedPref
@@ -63,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun setLogin(user: ResponseServe) {
+    private fun setLogin(user: ResponseServe) {
         sharedPreferences.setStatusLogin(true)
         sharedPreferences.setId(user.id)
         sharedPreferences.setEmail(user.email)

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="Nama Wishlist"
+            android:hint="@string/nama_wishlist"
             android:inputType="text"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="Target Dana"
+            android:hint="@string/target_dana"
             android:inputType="text"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="Durasi"
+            android:hint="@string/durasi"
             android:inputType="text"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +89,7 @@
         android:layout_marginTop="65dp"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
-        android:text="Tambah Wishlist"
+        android:text="@string/tambah_wishlist"
         android:textSize="14sp"
         android:textStyle="bold"
         app:cornerRadius="16dp"

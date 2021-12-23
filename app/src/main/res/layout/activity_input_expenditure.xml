@@ -29,8 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/ic_arrow_drop_down" />
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_arrow_drop_down"
+            android:contentDescription="@string/dropdown_alokasi" />
     </RelativeLayout>
     <!--
     <com.google.android.material.textfield.TextInputLayout
@@ -76,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:hint="Nama Pengeluaran"
+            android:hint="@string/nama_pengeluaran"
             android:inputType="text"
             android:lines="1" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Nominal Pengeluaran"
+        android:hint="@string/nominal_pengeluaran"
         app:boxBackgroundColor="@color/edt_bgcolor_light_gray"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
@@ -125,7 +126,7 @@
         android:layout_marginTop="65dp"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
-        android:text="Tambah Pengeluaran"
+        android:text="@string/tambah_pengeluaran"
         android:textSize="14sp"
         android:textStyle="bold"
         app:cornerRadius="16dp"

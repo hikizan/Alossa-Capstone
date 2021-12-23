@@ -6,12 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.alossa.alossacapstone.MainActivity
-import com.alossa.alossacapstone.R
 import com.alossa.alossacapstone.databinding.ActivityConfirmPasswordBinding
-import com.alossa.alossacapstone.databinding.ActivityForgetPasswordBinding
 import com.alossa.alossacapstone.utils.ViewModelFactory
-import java.sql.SQLOutput
 
 class ConfirmPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

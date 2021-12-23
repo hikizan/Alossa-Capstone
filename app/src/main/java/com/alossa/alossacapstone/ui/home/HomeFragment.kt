@@ -1,5 +1,6 @@
 package com.alossa.alossacapstone.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +19,6 @@ import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import android.text.format.DateFormat
 import com.alossa.alossacapstone.data.model.Alokasi
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,15 +39,15 @@ class HomeFragment : Fragment() {
     private lateinit var alocationAdapter: AlocationAdapter
     private var listNowAlocation = ArrayList<Alokasi>()
 
-    var typeAlokasi: Array<String> = arrayOf()
-    var nominalAlokasi: Array<Int> = arrayOf()
+    private var typeAlokasi: Array<String> = arrayOf()
+    private var nominalAlokasi: Array<Int> = arrayOf()
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         root = binding.root
@@ -74,6 +74,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
 
@@ -140,10 +141,10 @@ class HomeFragment : Fragment() {
         binding.rvAlocation.adapter = alocationAdapter
     }
 
-    fun setupPieCart(mTypeAlokasi: Array<String>, mNominalAlokasi: Array<Int>) {
+    private fun setupPieCart(mTypeAlokasi: Array<String>, mNominalAlokasi: Array<Int>) {
 
-        var pie = AnyChart.pie()
-        var dataEntrie = ArrayList<DataEntry>()
+        val pie = AnyChart.pie()
+        val dataEntrie = ArrayList<DataEntry>()
         for (item in mTypeAlokasi.indices) {
             dataEntrie.add(ValueDataEntry(mTypeAlokasi[item], mNominalAlokasi[item]))
         }
@@ -153,7 +154,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun setLayoutVisible(isFill: Boolean) {
+    private fun setLayoutVisible(isFill: Boolean) {
         if (isFill) {
             binding.layoutIfnotnull.visibility = View.VISIBLE
             binding.layoutIfnull.visibility = View.GONE

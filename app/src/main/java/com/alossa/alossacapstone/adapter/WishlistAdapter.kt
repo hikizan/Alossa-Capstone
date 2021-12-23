@@ -1,17 +1,18 @@
 package com.alossa.alossacapstone.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alossa.alossacapstone.data.model.WishList
 import com.alossa.alossacapstone.databinding.ItemRowWishlistBinding
-import com.alossa.alossacapstone.ui.profile.ProfilViewModel
 import com.alossa.alossacapstone.utils.WishlistDiffCallback
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import android.content.Intent
 import android.graphics.Color
+import com.alossa.alossacapstone.R
 
 
 class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
@@ -37,23 +38,24 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>
         return WishlistViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
         val wishlist = listWishlist[position]
         holder.binding.apply {
             tvWishlistName.text = wishlist.namaBarang
             when(wishlist.status){
                 0 ->{
-                    tvStatusPro.text = "Tidak Aktif"
+                    tvStatusPro.text = root.context.getString(R.string.tidak_aktif)
                     tvStatusPro.setTextColor(Color.RED)
                     switchWishlist.isChecked = false
                 }
                 1 ->{
-                    tvStatusPro.text = "Proses"
+                    tvStatusPro.text = root.context.getString(R.string.proses)
                     tvStatusPro.setTextColor(Color.YELLOW)
                     switchWishlist.isChecked = true
                 }
                 2 ->{
-                    tvStatusPro.text = "Selesai"
+                    tvStatusPro.text = root.context.getString(R.string.selesai)
                     switchWishlist.isClickable = false
                     tvStatusPro.setTextColor(Color.GREEN)
                 }
@@ -63,19 +65,19 @@ class WishlistAdapter : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>
             tvWishlistNominalCollected.text = "Rp.${wishlist.danaTerkumpul}"
             tvWishlistDate.text = wishlist.createdAt
 
-            switchWishlist.setOnCheckedChangeListener { buttonView, isChecked ->
-                val wishlistId: Int = wishlist.id.toInt()
+            switchWishlist.setOnCheckedChangeListener { _, isChecked ->
+                val wishlistId: Int = wishlist.id
                 val intent = Intent("custom-message")
-                var status = 0
+                val status: Int
                 intent.putExtra("id", wishlistId)
                 if (isChecked)  {
                     holder.status = 1
                     status = 1
-                    tvStatusPro.text = "Proses"
+                    tvStatusPro.text = root.context.getString(R.string.proses)
                     tvStatusPro.setTextColor(Color.YELLOW)
                 } else {
                     holder.status = 0
-                    tvStatusPro.text = "Tidak Aktif"
+                    tvStatusPro.text = root.context.getString(R.string.tidak_aktif)
                     tvStatusPro.setTextColor(Color.RED)
                     status =0
                 }

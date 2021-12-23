@@ -1,5 +1,6 @@
 package com.alossa.alossacapstone.ui.expenditure
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -47,6 +48,7 @@ class ExpenditureFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
 

@@ -1,7 +1,6 @@
 package com.alossa.alossacapstone.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.alossa.alossacapstone.data.model.Alokasi
 import com.alossa.alossacapstone.data.model.WishList
 
 class WishlistDiffCallback (private val mOldWishlist: List<WishList>, private val mNewWishlist: List<WishList>): DiffUtil.Callback() {

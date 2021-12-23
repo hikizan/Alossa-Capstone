@@ -1,3 +1,5 @@
+@file:Suppress("UsePropertyAccessSyntax")
+
 package com.alossa.alossacapstone.ui.expenditure
 
 import android.os.Bundle
@@ -106,7 +108,7 @@ class InputExpenditureActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this,
-                        "Sisa dana pada alokasi ${getNameAlocationSelected} \ntidak mencukupi",
+                        "Sisa dana pada alokasi $getNameAlocationSelected \ntidak mencukupi",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -117,7 +119,7 @@ class InputExpenditureActivity : AppCompatActivity() {
 
     }
 
-    fun addItemsOnSpinner(
+    private fun addItemsOnSpinner(
         mListNameAlocation: ArrayList<String>,
         mListIdAlocation: ArrayList<Int>,
         mListNominalAlocation: ArrayList<Int>

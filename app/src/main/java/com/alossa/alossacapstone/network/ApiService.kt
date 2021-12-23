@@ -2,7 +2,6 @@ package com.alossa.alossacapstone.network
 
 import com.alossa.alossacapstone.data.model.*
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface ApiService {
@@ -114,11 +113,6 @@ interface ApiService {
         @Path("idAlokasi") idAlokasi: Int
     ): Call<ResponseServe>
 
-    @FormUrlEncoded
-    @POST()
-    fun updateAlokasi(
-
-    )
 
 
     //Laporan

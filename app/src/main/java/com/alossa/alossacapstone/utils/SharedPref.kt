@@ -4,11 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPref(mContext : Context)  {
-    private val sp: SharedPreferences
-
-    init {
-        sp = mContext.getSharedPreferences(mypref, Context.MODE_PRIVATE)
-    }
+    private val sp: SharedPreferences = mContext.getSharedPreferences(mypref, Context.MODE_PRIVATE)
 
     fun setStatusLogin(status : Boolean){
         sp.edit().putBoolean(login, status).apply()
@@ -50,10 +46,10 @@ class SharedPref(mContext : Context)  {
     }
 
     companion object{
-        val login = "session_status"
-        val id = "id"
-        val email = "email"
-        val name = "name"
-        private val mypref = "MAIN_PRF"
+        const val login = "session_status"
+        const val id = "id"
+        const val email = "email"
+        const val name = "name"
+        private const val mypref = "MAIN_PRF"
     }
 }

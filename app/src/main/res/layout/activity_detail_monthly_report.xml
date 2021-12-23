@@ -23,16 +23,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Pemasukan"
+            android:text="@string/pemasukan"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_monthly_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Rp xx.xxx.xxx"
+            android:text="@string/rp_xx_xxx_xxx"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
@@ -54,16 +53,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Pengeluaran"
+            android:text="@string/pengeluaran"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_monthly_expenditure_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Rp xx.xxx.xxx"
+            android:text="@string/rp_xx_xxx_xxx"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
@@ -85,20 +83,20 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="24dp"
             android:gravity="center_vertical"
-            android:text="Sisa"
+            android:text="@string/sisa"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_monthly_sisa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="24dp"
             android:gravity="center_vertical"
-            android:text="Rp x.xxx.xxx"
+            android:text="@string/rp_xx_xxx_xxx"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
@@ -120,7 +118,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sisa Pemasukan per Alokasi"
+                android:text="@string/sisa_pemasukan_per_alokasi"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:layout_marginTop="16dp"
@@ -129,7 +127,6 @@
                 android:gravity="center_horizontal"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_expenditure"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

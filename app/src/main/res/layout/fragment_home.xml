@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
-        android:id="@+id/layout_ifnotnull"
+        android:id="@+id/layoutIfnotnull"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/aktivitas_terbaru"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_ifnull"
+        android:id="@+id/layoutIfnull"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,7 +98,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/data_null" />
 
         <TextView
             android:id="@+id/textView"
@@ -108,7 +109,7 @@
             android:padding="20dp"
             android:text="@string/silahkan_input_pemasukan_dan_alokasi_terlebih_dahulu"
             android:textAlignment="center"
-            android:textSize="23dp"
+            android:textSize="23sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +117,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_inputdata"
+            android:id="@+id/btnInputdata"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

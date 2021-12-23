@@ -11,7 +11,7 @@
         android:id="@+id/tv_tahun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tahun"
+        android:text="@string/tahun"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +27,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_bulan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bulan"
+        android:text="@string/bulan"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/month_spinner"
@@ -47,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/notNull"
+        android:id="@+id/not_emtpy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/yearspin"
@@ -70,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Pemasukan"
+                android:text="@string/pemasukan"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -79,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Rp xx.xxx.xxx"
+                android:text="@string/rp_xx_xxx_xxx"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -101,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Pengeluaran"
+                android:text="@string/pengeluaran"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -110,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Rp xx.xxx.xxx"
+                android:text="@string/rp_xx_xxx_xxx"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -132,7 +131,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="24dp"
                 android:gravity="center_vertical"
-                android:text="Sisa"
+                android:text="@string/sisa"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -143,9 +142,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="24dp"
                 android:gravity="center_vertical"
-                android:text="Rp x.xxx.xxx"
+                android:text="@string/rp_xx_xxx_xxx"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="RelativeOverlap" />
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
@@ -170,7 +170,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:gravity="center_horizontal"
-                    android:text="Sisa Pemasukan per Alokasi"
+                    android:text="@string/sisa_pemasukan_per_alokasi"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -191,14 +191,15 @@
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_baseline_hourglass_empty"
+        android:src="@drawable/data_null"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/yearspin"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:contentDescription="@string/data_null" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
