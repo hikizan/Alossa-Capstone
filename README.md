@@ -16,3 +16,6 @@ Guide / How to use app :
 3. Pada halaman Pengeluaran / Expenditure pengguna dapat menginputkan pengeluaran berdasarkan tipe alokasi dari pengeluaran tersebut, pengguna dapat mengtrack pengeluaran dari halaman ini dimana terdapat list dari pengeluran yang dilakukan.
 4.  Pada halaman profile terdapat 2 fitur yaitu wishlist dan laporan bulanan, kami menerapkan fitur wishlist agar pengguna dapat membuat wishlist produk yang diinginkan dengan cara menginputkan target dana yang dibutuhkan beserta durasi peng-alokasiannya sehingga dana yang perlu ditabung untuk produk tersebut secara otomatis dapat teralokasi dibulan yang diinginkan pengguna. Untuk fitur laporan bulanan dapat menampilkan total pemasukan, total pengeluaran, dana yang tersisa baik berdasarkan alokasi maupun totalnya.
 5.  Selain itu pengguna pun dapat melakukan reset password jika pengguna lupa akan password akunnya, cukup dengan memasukkan email yang didaftarkan lalu memasukkan token yang akan dikirim melalui email pengguna, setelah itu pengguna dapat memasukan password baru pada akun tersebut. 
+
+
+Demo Project/App : https://drive.google.com/file/d/1h-yS1NZTuXiM4Ni54r-EcC9y2Gh6rfxW/view?usp=sharing
